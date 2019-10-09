@@ -174,15 +174,15 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 	}
 }
 
-func (g *Gossiper) HandleClientMsg(msg *Message) {
-	fmt.Println(msg)
-	g.PrintPeers()
-	newMsg := g.CreateClientPacket(msg)
-	newGossipPacket := &GossipPacket{Simple: newMsg}
+// func (g *Gossiper) HandleClientMsg(msg *Message) {
+// 	fmt.Println(msg)
+// 	g.PrintPeers()
+// 	newMsg := g.CreateClientPacket(msg)
+// 	newGossipPacket := &GossipPacket{Simple: newMsg}
 
-	// we need to exclude the node sending info
-	g.BroadcastPacket(newGossipPacket, nil)
-}
+// 	// we need to exclude the node sending info
+// 	g.BroadcastPacket(newGossipPacket, nil)
+// }
 
 func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	msg := cmw.msg
@@ -300,17 +300,17 @@ func MessageReceive(conn *net.UDPConn) <-chan *MessageReceived {
 	return res
 }
 
-func (g *Gossiper) HandleNodeMsg(gossipPacket *GossipPacket) {
-	fmt.Println(gossipPacket)
-	g.PrintPeers()
-	newMsg := g.CreateForwardPacket(gossipPacket.Simple)
-	newGossipPacket := &GossipPacket{Simple: newMsg}
+// func (g *Gossiper) HandleNodeMsg(gossipPacket *GossipPacket) {
+// 	fmt.Println(gossipPacket)
+// 	g.PrintPeers()
+// 	newMsg := g.CreateForwardPacket(gossipPacket.Simple)
+// 	newGossipPacket := &GossipPacket{Simple: newMsg}
 
-	// add to the peers
-	g.AddPeer(gossipPacket.Simple.RelayPeerAddr)
+// 	// add to the peers
+// 	g.AddPeer(gossipPacket.Simple.RelayPeerAddr)
 
-	g.BroadcastPacket(newGossipPacket, GenerateStringSetSingleton(gossipPacket.Simple.RelayPeerAddr))
-}
+// 	g.BroadcastPacket(newGossipPacket, GenerateStringSetSingleton(gossipPacket.Simple.RelayPeerAddr))
+// }
 
 func (g *Gossiper) CreateForwardPacket(m *SimpleMessage) *SimpleMessage {
 	return &SimpleMessage{
@@ -370,26 +370,26 @@ func (g *Gossiper) AddPeer(p string) {
 
 // backup code let's see
 
-func (g *Gossiper) ListenClientMsg() {
-	msgBytes := make([]byte, UDP_DATAGRAM_MAX_SIZE)
-	// init the data structure
-	var msg Message
+// func (g *Gossiper) ListenClientMsg() {
+// 	msgBytes := make([]byte, UDP_DATAGRAM_MAX_SIZE)
+// 	// init the data structure
+// 	var msg Message
 
-	for {
-		g.uiConn.ReadFromUDP(msgBytes)
-		protobuf.Decode(msgBytes, &msg)
-		g.HandleClientMsg(&msg)
-	}
-}
+// 	for {
+// 		g.uiConn.ReadFromUDP(msgBytes)
+// 		protobuf.Decode(msgBytes, &msg)
+// 		g.HandleClientMsg(&msg)
+// 	}
+// }
 
-func (g *Gossiper) ListenNodeMsg() {
-	gossipBytes := make([]byte, UDP_DATAGRAM_MAX_SIZE)
-	// init the data structure
-	var gossipPacket GossipPacket
+// func (g *Gossiper) ListenNodeMsg() {
+// 	gossipBytes := make([]byte, UDP_DATAGRAM_MAX_SIZE)
+// 	// init the data structure
+// 	var gossipPacket GossipPacket
 
-	for {
-		g.conn.ReadFromUDP(gossipBytes)
-		protobuf.Decode(gossipBytes, &gossipPacket)
-		g.HandleNodeMsg(&gossipPacket)
-	}
-}
+// 	for {
+// 		g.conn.ReadFromUDP(gossipBytes)
+// 		protobuf.Decode(gossipBytes, &gossipPacket)
+// 		g.HandleNodeMsg(&gossipPacket)
+// 	}
+// }
