@@ -11,6 +11,7 @@
 #### Gossiper
 ##### Finished
 - ``` func (g *Gossiper) Run() ```
+Gossiper start to run
 - ``` func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListener <-chan *ClientMessageWrapper)  ```
 - ```func (g *Gossiper) ReceiveFromPeers() <-chan *GossipPacketWrapper ```
 - ```func (g *Gossiper) ReceiveFromClients() <-chan *ClientMessageWrapper``` 

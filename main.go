@@ -43,6 +43,7 @@ type Gossiper struct {
 	simpleList   map[string]([]SimpleMessage)
 	brain        *Handler
 	currentID    uint32
+	toSendChan   chan *GossipPacketWrapper
 }
 
 type Handler struct {
@@ -87,9 +88,9 @@ func main() {
 
 	gossiper := NewGossiper(*gossipAddr, *uiPort, *name, peersList, *simple)
 
-	go gossiper.ListenClientMsg()
-	gossiper.ListenNodeMsg()
-
+	// go gossiper.ListenClientMsg()
+	// gossiper.ListenNodeMsg()
+	gossiper.Run()
 }
 
 func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, simple bool) *Gossiper {
@@ -133,6 +134,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		simpleList:   make(map[string]([]SimpleMessage)),
 		brain:        nil,
 		currentID:    0,
+		toSendChan:   make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
 	}
 }
 
@@ -150,8 +152,11 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 			g.HandlePeerMessage(gpw)
 		case cmw := <-clientListener:
 			g.HandleClientMessage(cmw)
-		}
+		case gpw := <-g.toSendChan:
+			gp := gpw.gossipPacket
+			peerUDPAddr := gpw.sender
 
+		}
 	}
 }
 
@@ -167,10 +172,10 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 		g.HandleSimplePacket(packet.Simple)
 	case packet.Rumor != nil:
 		fmt.Println(packet.Rumor.SenderString(sender.String()))
-		g.HandleRumorPacket(packet.Rumor)
+		g.HandleRumorPacket(packet.Rumor, sender)
 	case packet.Status != nil:
 		fmt.Println(packet.Status.SenderString(sender.String()))
-		g.HandleStatusPacket(packet.Status)
+		g.HandleStatusPacket(packet.Status, sender)
 	}
 }
 
@@ -196,9 +201,9 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	} else {
 		fmt.Println("Create Rumor")
 		newRumorMsg := g.CreateRumorPacket(msg)
+		// ID count increase
 		g.currentID++
 		g.HandleRumorPacket(newRumorMsg, g.address)
-
 	}
 }
 
@@ -224,13 +229,13 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 	case diff < 0:
 		fmt.Println("The rumor is behind our record")
 	}
-	// broadcast
+	// broadcast to other peer
 	if senderAddr == g.address {
-
+		// g.BroadcastPacket()
 	}
 }
 
-func (g *Gossiper) HandleStatusPacket(s *StatusPacket) {
+func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 
 }
 
