@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt" // check the type of variable
+	"math/rand"
 	"net"
 	"strings"
 	"time"
@@ -153,7 +154,6 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 		case gpw := <-g.toSendChan:
 			gp := gpw.gossipPacket
 			peerUDPAddr := gpw.sender
-
 			packetBytes, err := protobuf.Encode(gp)
 
 			if err != nil {
@@ -246,8 +246,27 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 	}
 	// broadcast to other peer
 	if senderAddr == g.address {
-		// g.BroadcastPacket()
+		// g.RumorMongering(r, target)
 	}
+}
+
+// func (g *GOssiper) RumorMongering(r)
+
+func (g *Gossiper) SelectRandomNeighbor(excludedPeer *StringSet) (string, bool) {
+	peers := g.peersList.ToArray()
+	notExcluded := make([]string, 0)
+
+	for _, peer := range peers {
+		if !excludedPeer.Has(peer) {
+			notExcluded = append(notExcluded, peer)
+		}
+	}
+
+	if len(notExcluded) == 0 {
+		return "", false
+	}
+
+	return notExcluded[rand.Intn(len(notExcluded))], true
 }
 
 func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
@@ -275,7 +294,23 @@ func (g *Gossiper) RumorStatusCheck(r *RumorMessage) int {
 
 func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 	// 1. put the rumor in the list
-	// 2. update the peer status
+	// 2. update the peer status:
+	origin := r.Origin
+	messageID := r.ID
+
+	_, ok := g.rumorList[origin]
+
+	if ok {
+		g.rumorList[origin][messageID] = *r
+		g.peerStatuses[r.Origin] = PeerStatus{
+			Identifier: r.Origin,
+			NextID:     messageID + 1,
+		}
+	} else {
+		// this has been done during the *RumorStatusCheck* for the case not ok
+		g.rumorList[origin] = make(map[uint32]RumorMessage)
+		g.rumorList[origin][messageID] = *r
+	}
 }
 
 func (g *Gossiper) ReceiveFromPeers() <-chan *GossipPacketWrapper {
@@ -332,6 +367,17 @@ func (g *Gossiper) SendGossipPacketStrAddr(gp *GossipPacket, targetStr string) {
 	}
 
 	g.SendGossipPacket(gp, targetUDPAddr)
+}
+
+func (g *Gossiper) SendClientAck(client *net.UDPAddr) {
+	resp := &Message{Text: "Ok"}
+	packetBytes, err := protobuf.Encode(resp)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	_, err = g.uiConn.WriteToUDP(packetBytes, client)
 }
 
 // func (g *Gossiper) HandleNodeMsg(gossipPacket *GossipPacket) {
