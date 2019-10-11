@@ -88,8 +88,6 @@ func main() {
 
 	gossiper := NewGossiper(*gossipAddr, *uiPort, *name, peersList, *simple)
 
-	// go gossiper.ListenClientMsg()
-	// gossiper.ListenNodeMsg()
 	gossiper.Run()
 }
 
@@ -156,6 +154,18 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 			gp := gpw.gossipPacket
 			peerUDPAddr := gpw.sender
 
+			packetBytes, err := protobuf.Encode(gp)
+
+			if err != nil {
+				fmt.Println(err)
+			}
+
+			_, err = g.conn.WriteToUDP(packetBytes, peerUDPAddr)
+
+			if err != nil {
+				fmt.Println(err)
+			}
+
 		}
 	}
 }
@@ -169,7 +179,7 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 	switch {
 	case packet.Simple != nil:
 		fmt.Println(packet.Simple)
-		g.HandleSimplePacket(packet.Simple)
+		g.HandleSimplePacket(packet.Simple, sender.String())
 	case packet.Rumor != nil:
 		fmt.Println(packet.Rumor.SenderString(sender.String()))
 		g.HandleRumorPacket(packet.Rumor, sender)
@@ -196,7 +206,6 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	if g.simple {
 		newMsg := g.CreateClientPacket(msg)
 		newGossipPacket := &GossipPacket{Simple: newMsg}
-
 		g.BroadcastPacket(newGossipPacket, nil)
 	} else {
 		fmt.Println("Create Rumor")
@@ -207,8 +216,14 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	}
 }
 
-func (g *Gossiper) HandleSimplePacket(s *SimpleMessage) {
+func (g *Gossiper) HandleSimplePacket(s *SimpleMessage, sender string) {
+	fmt.Println("Deal with simple packet")
+	gp := &GossipPacket{Simple: s}
 
+	// has already add as soon as receive the packet
+	g.peersList.Add(sender)
+
+	g.BroadcastPacket(gp, GenerateStringSetSingleton(sender))
 }
 
 func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
@@ -303,6 +318,20 @@ func MessageReceive(conn *net.UDPConn) <-chan *MessageReceived {
 	}()
 
 	return res
+}
+
+func (g *Gossiper) SendGossipPacket(gp *GossipPacket, target *net.UDPAddr) {
+	g.toSendChan <- &GossipPacketWrapper{sender: target, gossipPacket: gp}
+}
+
+func (g *Gossiper) SendGossipPacketStrAddr(gp *GossipPacket, targetStr string) {
+	targetUDPAddr, err := net.ResolveUDPAddr("udp4", targetStr)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	g.SendGossipPacket(gp, targetUDPAddr)
 }
 
 // func (g *Gossiper) HandleNodeMsg(gossipPacket *GossipPacket) {
