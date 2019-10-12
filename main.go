@@ -246,18 +246,40 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 	}
 	// broadcast to other peer
 	if senderAddr == g.address {
-		// g.RumorMongering(r, target)
+		g.RumorMongeringPrepare(r, nil)
 	}
 }
 
-// func (g *GOssiper) RumorMongering(r)
+func (g *Gossiper) RumorMongeringPrepare(rumor *RumorMessage, excludedPeers *StringSet) (string, bool) {
+	randomNeighbor, present := g.SelectRandomNeighbor(excludedPeers)
+
+	if present {
+		g.RumorMongeringAddrStr(rumor, randomNeighbor)
+	}
+
+	return randomNeighbor, present
+}
+
+func (g *Gossiper) RumorMongeringAddrStr(rumor *RumorMessage, peerStr string) {
+	peerAddr, _ := net.ResolveUDPAddr("udp4", peerStr)
+	g.RumorMongering(rumor, peerAddr)
+}
+
+func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
+	go func() {
+		// TODO: monitor the ack from the receiver
+	}()
+
+	fmt.Println("MONGERING WITH PEER ", peerAddr)
+	g.SendGossipPacket(&GossipPacket{Rumor: rumor}, peerAddr)
+}
 
 func (g *Gossiper) SelectRandomNeighbor(excludedPeer *StringSet) (string, bool) {
 	peers := g.peersList.ToArray()
 	notExcluded := make([]string, 0)
 
 	for _, peer := range peers {
-		if !excludedPeer.Has(peer) {
+		if excludedPeer == nil && !excludedPeer.Has(peer) {
 			notExcluded = append(notExcluded, peer)
 		}
 	}
