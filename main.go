@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"net"
 	"strings"
+	"sync"
 	"time"
 
 	. "github.com/TRUMANCFY/Peerster/message"
@@ -23,36 +24,30 @@ const STATUS_MESSAGE_TIMEOUT = 10 * time.Second
 // 2. We need to record the peer status we have received from other peers, data format: map[string](map[string]PeerStatus) peerName => peerName => PeerStatus
 // 3. Also, we need to record the rumour we are maintain data format: map[string](map[int]RumorMessage) peerName => sequential number => rumorMessage
 
-// GoRoutine Handler
+// GoRoutine Dispatcher
 // 1. we need one routine to receive GossipPacket from peers: func ReceiveFromPeers()
 // 2. we need one routine to receive Message from clients: func ReceiveFromClients()
 // 3.
-
-type PeerStatusObserver (chan<- PeerStatus)
-
 type Gossiper struct {
-	address      *net.UDPAddr
-	conn         *net.UDPConn
-	uiAddr       *net.UDPAddr
-	uiConn       *net.UDPConn
-	name         string
-	peersList    *StringSet
-	simple       bool
-	peerStatuses map[string]PeerStatus
-	peerWantList map[string](map[string]PeerStatus)
-	rumorList    map[string](map[uint32]RumorMessage)
-	simpleList   map[string]([]SimpleMessage)
-	brain        *Handler
-	currentID    uint32
-	toSendChan   chan *GossipPacketWrapper
-}
-
-type Handler struct {
-	input chan PeerStatusObserver
+	address          *net.UDPAddr
+	conn             *net.UDPConn
+	uiAddr           *net.UDPAddr
+	uiConn           *net.UDPConn
+	name             string
+	peersList        *StringSet
+	simple           bool
+	peerStatuses     map[string]PeerStatus
+	peerWantList     map[string](map[string]PeerStatus)
+	peerWantListLock *sync.RWMutex
+	rumorList        map[string](map[uint32]RumorMessage)
+	rumorListLock    *sync.RWMutex
+	simpleList       map[string]([]SimpleMessage)
+	dispatcher       *Dispatcher
+	currentID        uint32
+	toSendChan       chan *GossipPacketWrapper
 }
 
 // advance and combined data structure
-
 type GossipPacketWrapper struct {
 	sender       *net.UDPAddr
 	gossipPacket *GossipPacket
@@ -66,6 +61,36 @@ type ClientMessageWrapper struct {
 type MessageReceived struct {
 	sender        *net.UDPAddr
 	packetContent []byte
+}
+
+type RegisterMessageType int
+
+const (
+	Register   RegisterMessageType = 0
+	Unregister RegisterMessageType = 1
+)
+
+type PeerStatusObserver (chan<- PeerStatus)
+
+type RegisterMessage struct {
+	observerChan    PeerStatusObserver
+	tagger          StatusTagger
+	registerMsgType RegisterMessageType
+}
+
+type StatusTagger struct {
+	sender     string
+	identifier string
+}
+
+type PeerStatusWrapper struct {
+	sender       string
+	peerStatuses []PeerStatus
+}
+
+type Dispatcher struct {
+	statusListener   chan PeerStatusWrapper
+	registerListener chan RegisterMessage
 }
 
 var uiPort = flag.String("UIPort", "8001", "please provide UI Port")
@@ -120,20 +145,22 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 	fmt.Println("Created")
 
 	return &Gossiper{
-		address:      udpAddr,
-		conn:         udpConn,
-		uiAddr:       udpUIAddr,
-		uiConn:       udpUIConn,
-		name:         name,
-		peersList:    peersStr,
-		simple:       simple,
-		peerStatuses: make(map[string]PeerStatus),
-		peerWantList: make(map[string](map[string]PeerStatus)),
-		rumorList:    make(map[string](map[uint32]RumorMessage)),
-		simpleList:   make(map[string]([]SimpleMessage)),
-		brain:        nil,
-		currentID:    0,
-		toSendChan:   make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
+		address:          udpAddr,
+		conn:             udpConn,
+		uiAddr:           udpUIAddr,
+		uiConn:           udpUIConn,
+		name:             name,
+		peersList:        peersStr,
+		simple:           simple,
+		peerStatuses:     make(map[string]PeerStatus),
+		peerWantList:     make(map[string](map[string]PeerStatus)),
+		peerWantListLock: &sync.RWMutex{},
+		rumorList:        make(map[string](map[uint32]RumorMessage)),
+		rumorListLock:    &sync.RWMutex{},
+		simpleList:       make(map[string]([]SimpleMessage)),
+		currentID:        0,
+		dispatcher:       nil,
+		toSendChan:       make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
 	}
 }
 
@@ -141,6 +168,7 @@ func (g *Gossiper) Run() {
 	peerListener := g.ReceiveFromPeers()
 	clientListener := g.ReceiveFromClients()
 
+	g.dispatcher = StartPeerStatusDispatcher()
 	g.Listen(peerListener, clientListener)
 }
 
@@ -166,6 +194,83 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 				fmt.Println(err)
 			}
 
+		}
+	}
+}
+
+func StartPeerStatusDispatcher() *Dispatcher {
+	// TODO: whether the statusListener and registerListener should be buffered or unbuffered
+	sListener := make(chan PeerStatusWrapper, CHANNEL_BUFFER_SIZE)
+	rListener := make(chan RegisterMessage, CHANNEL_BUFFER_SIZE)
+
+	dispatch := &Dispatcher{statusListener: sListener, registerListener: rListener}
+	go dispatch.Run()
+	return dispatch
+}
+
+func (d *Dispatcher) Run() {
+	taggers := make(map[StatusTagger](map[PeerStatusObserver]bool))
+	observers := make(map[PeerStatusObserver]StatusTagger)
+
+	for {
+		select {
+		case registerMsg := <-d.registerListener:
+			switch registerMsg.registerMsgType {
+			case Register:
+				tagger := registerMsg.tagger
+
+				psoMap, present := taggers[tagger]
+
+				if !present {
+					taggers[tagger] = make(map[PeerStatusObserver]bool)
+				}
+
+				// the boolean value "true" is useless for this case
+				psoMap[registerMsg.observerChan] = true
+				observers[registerMsg.observerChan] = tagger
+
+			case Unregister:
+				// Close the channel
+				toClosedObserver := registerMsg.observerChan
+				tagger, present := observers[toClosedObserver]
+
+				if present {
+					// remove tagger from the local mapping
+					delete(taggers[tagger], toClosedObserver)
+					delete(observers, toClosedObserver)
+
+					// close the channel
+					close(toClosedObserver)
+				} else {
+					panic(fmt.Sprintf("Origin: %s; Sender: %s NOT REGISTERED", registerMsg.tagger.identifier, registerMsg.tagger.sender))
+
+				}
+
+			}
+		case comingPeerStatusWrapper := <-d.statusListener:
+			// peerStatusWrapper : {sender string; peerStatuses []PeerStatus}
+			// the peerstatus of another peer
+			sender := comingPeerStatusWrapper.sender
+			comingPeerStatuses := comingPeerStatusWrapper.peerStatuses
+
+			for _, peerStatus := range comingPeerStatuses {
+				tagger := StatusTagger{sender: sender, identifier: peerStatus.Identifier}
+				// taggers: map[StatusTagger](map[PeerStatusObserver]bool)
+
+				// it will returns the channel which the target is sender, and the origin is identifier
+				activeChans, present := taggers[tagger]
+
+				if !present {
+					continue
+				}
+
+				// activeChans is map[PeerStatusObserver]bool
+				// add the coming peerStauts into the activeChan
+				for activeChan, _ := range activeChans {
+					// observerChan is renamed as activeChan here
+					activeChan <- peerStatus
+				}
+			}
 		}
 	}
 }
@@ -238,6 +343,8 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 	switch {
 	case diff == 0:
 		// accept the rumor
+		// TODO: as soon as received, mongering should start
+		// TODO: update the table, maybe have been done in acceptrumor function
 		g.AcceptRumor(r)
 	case diff > 0:
 		fmt.Println("The rumor is ahead of our record")
@@ -245,8 +352,8 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		fmt.Println("The rumor is behind our record")
 	}
 	// broadcast to other peer
-	if senderAddr == g.address {
-		g.RumorMongeringPrepare(r, nil)
+	if senderAddr != g.address {
+		// TODO send the status message to sender
 	}
 }
 
@@ -268,10 +375,153 @@ func (g *Gossiper) RumorMongeringAddrStr(rumor *RumorMessage, peerStr string) {
 func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 	go func() {
 		// TODO: monitor the ack from the receiver
+		observerChan := make(chan PeerStatus, CHANNEL_BUFFER_SIZE)
+		timer := time.NewTimer(STATUS_MESSAGE_TIMEOUT)
+		peerStr := peerAddr.String()
+
+		// Register First
+		g.dispatcher.registerListener <- RegisterMessage{
+			observerChan: observerChan,
+			tagger: StatusTagger{
+				sender:     peerStr,
+				identifier: rumor.Origin,
+			},
+			registerMsgType: Register,
+		}
+
+		unregister := func() {
+			timer.Stop()
+			g.dispatcher.registerListener <- RegisterMessage{
+				observerChan:    observerChan,
+				registerMsgType: Unregister,
+			}
+		}
+
+		for {
+			select {
+			case peerStatus, ok := <-observerChan:
+				// the channel has been closed by dispatcher
+				if !ok {
+					return
+				}
+				// this means that the peer has received the rumor (in this case, ps.nextID=rumor.ID+1)
+				// or it already contains more advanced
+
+				if peerStatus.NextID > rumor.ID {
+					g.updatePeerStatusList(peerStr, peerStatus)
+					// check whether the peer has been synced
+					if g.syncWithPeer(peerStr) {
+						// flip a coin to choose the next one
+						g.flipCoinRumorMongering(rumor, GenerateStringSetSingleton(peerStr))
+					}
+
+					// channel exit
+					unregister()
+				}
+			}
+		}
+
 	}()
 
 	fmt.Println("MONGERING WITH PEER ", peerAddr)
 	g.SendGossipPacket(&GossipPacket{Rumor: rumor}, peerAddr)
+}
+
+func (g *Gossiper) updatePeerStatusList(peerStr string, peerStatus PeerStatus) bool {
+	// add the new peerStatus in the local peer
+	g.peerWantListLock.RLock()
+	defer g.peerWantListLock.RUnlock()
+
+	_, present := g.peerWantList[peerStr]
+
+	if !present {
+		g.peerWantList[peerStr] = make(map[string]PeerStatus)
+	}
+
+	// check whether there is oldValue
+	previousPeerStatus, present := g.peerWantList[peerStr][peerStatus.Identifier]
+
+	if !present {
+		g.peerWantList[peerStr][peerStatus.Identifier] = peerStatus
+		return true
+	} else {
+		// TODO: cornor state: whether equality should be put into the consideration of update
+		if previousPeerStatus.NextID > peerStatus.NextID {
+			return false
+		} else {
+			g.peerWantList[peerStr][peerStatus.Identifier] = peerStatus
+			return true
+		}
+	}
+}
+
+func (g *Gossiper) syncWithPeer(peerStr string) bool {
+	// peerWant is a map[origin]PeerStatus
+	peerWant := g.getOwnPeerSlice(peerStr)
+	rumorToSend, rumorToAsk := g.ComputePeerStatusDiff(peerWant)
+	return len(rumorToSend) == 0 && len(rumorToAsk) == 0
+}
+
+func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, rumorToAsk []PeerStatus) {
+	rumorToSend = make([]PeerStatus, 0)
+	rumorToSend = make([]PeerStatus, 0)
+	// record the ww
+	peerOrigins := make([]string, 0)
+
+	// local peerstatus : map[origin]PeerStatus
+
+	for _, pw := range peerWant {
+		peerOrigins = append(peerOrigins, pw.Identifier)
+
+		localStatus, present := g.peerStatuses[pw.Identifier]
+
+		if !present {
+			rumorToAsk = append(rumorToAsk, PeerStatus{Identifier: pw.Identifier, NextID: 0})
+		} else if localStatus.NextID < pw.NextID {
+			// it means we can ask the peer what we want
+			rumorToAsk = append(rumorToAsk, localStatus)
+		} else if localStatus.NextID > pw.NextID {
+			rumorToSend = append(rumorToSend, pw)
+		}
+	}
+	// our StringSet has provided some useful api
+	peerOriginsSet := GenerateStringSet(peerOrigins)
+
+	for localPeer, _ := range g.peerStatuses {
+		if !peerOriginsSet.Has(localPeer) {
+			rumorToSend = append(rumorToSend, PeerStatus{Identifier: localPeer, NextID: 0})
+		}
+	}
+	return
+}
+
+func (g *Gossiper) getOwnPeerSlice(peerStr string) []PeerStatus {
+	// First, we are sure that our peerlist must contain this peer, no need to check
+	// so we could directly find their list
+	// map[string](map[string]PeerStatus)
+
+	// [origin]PeerStatus
+	peerStatusMap, present := g.peerWantList[peerStr]
+	peerSlice := make([]PeerStatus, 0)
+
+	if present {
+		for _, ps := range peerStatusMap {
+			peerSlice = append(peerSlice, ps)
+		}
+	}
+
+	return peerSlice
+}
+
+func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *StringSet) {
+	// 50 - 50
+	if rand.Intn(2) == 0 {
+		neighborPeer, present := g.RumorMongeringPrepare(rumor, excludedPeers)
+
+		if present {
+			fmt.Println("FLIP COIN RumorMongering to ", neighborPeer)
+		}
+	}
 }
 
 func (g *Gossiper) SelectRandomNeighbor(excludedPeer *StringSet) (string, bool) {
@@ -292,7 +542,26 @@ func (g *Gossiper) SelectRandomNeighbor(excludedPeer *StringSet) (string, bool) 
 }
 
 func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
+	// rumorToSend, and rumorToAsk is []PeerStatus
+	rumorToSend, rumorToAsk := g.ComputePeerStatusDiff(s.Want)
 
+	if len(rumorToSend) > 0 {
+		firstPeerStatus := rumorToSend[0]
+		g.rumorListLock.Lock()
+		firstRumor := g.rumorList[firstPeerStatus.Identifier][firstPeerStatus.NextID]
+
+		// put the peerstatus to the channel
+		g.dispatcher.statusListener <- PeerStatusWrapper{
+			sender:       sender.String(),
+			peerStatuses: s.Want,
+		}
+		g.RumorMongering(&firstRumor, sender)
+	} else if len(rumorToAsk) > 0 {
+		// TODO deal with the case to send rumorToAsk
+		// g.sendgossippacket
+	} else {
+		// TODO: print out sync
+	}
 }
 
 func (g *Gossiper) RumorStatusCheck(r *RumorMessage) int {
@@ -319,6 +588,9 @@ func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 	// 2. update the peer status:
 	origin := r.Origin
 	messageID := r.ID
+
+	g.rumorListLock.Lock()
+	defer g.rumorListLock.Unlock()
 
 	_, ok := g.rumorList[origin]
 
@@ -437,6 +709,8 @@ func (g *Gossiper) CreateRumorPacket(m *Message) *RumorMessage {
 		Text:   m.Text,
 	}
 }
+
+func (g *Gossiper) CreateStatusPacket() *Rumor
 
 func (g *Gossiper) BroadcastPacket(gp *GossipPacket, excludedPeers *StringSet) {
 	for _, p := range g.peersList.ToArray() {

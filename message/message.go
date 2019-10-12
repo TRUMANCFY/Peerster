@@ -7,6 +7,14 @@ import (
 
 // N2N communication
 
+// Status Packet
+type StatusPacketType int
+
+const (
+	antiEntropy   StatusPacketType = 0
+	rumorResponse StatusPacketType = 1
+)
+
 type GossipPacket struct {
 	Simple *SimpleMessage
 	Rumor  *RumorMessage
@@ -31,13 +39,61 @@ type PeerStatus struct {
 }
 
 type StatusPacket struct {
-	Want []PeerStatus
+	Want   []PeerStatus
+	spType StatusPacketType
 }
 
 // client to node message
 type Message struct {
 	Text string
 }
+
+// advanced data structure
+
+// type GossipPacketWrapper struct {
+// 	sender       *net.UDPAddr
+// 	gossipPacket *GossipPacket
+// }
+
+// type ClientMessageWrapper struct {
+// 	sender *net.UDPAddr
+// 	msg    *Message
+// }
+
+// type MessageReceived struct {
+// 	sender        *net.UDPAddr
+// 	packetContent []byte
+// }
+
+// type RegisterMessageType int
+
+// const (
+// 	Register   RegisterMessageType = 0
+// 	Unregister RegisterMessageType = 1
+// )
+
+// type PeerStatusObserver (chan<- PeerStatus)
+
+// type RegisterMessage struct {
+// 	observerChan    PeerStatusObserver
+// 	tagger          StatusTagger
+// 	registerMsgType RegisterMessageType
+// }
+
+// type StatusTagger struct {
+// 	sender     string
+// 	identifier string
+// }
+
+// type PeerStatusWrapper struct {
+// 	sender       string
+// 	peerStatuses []PeerStatus
+// }
+
+// type Dispatcher struct {
+// 	statusListener   chan PeerStatusWrapper
+// 	registerListener chan RegisterMessage
+// }
 
 // String member function is actually overrided method
 // please refer to https://stackoverflow.com/questions/13247644/tostring-function-in-go
