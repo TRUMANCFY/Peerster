@@ -16,7 +16,7 @@ import (
 
 const UDP_DATAGRAM_MAX_SIZE = 1024
 const CHANNEL_BUFFER_SIZE = 1024
-const STATUS_MESSAGE_TIMEOUT = 10 * time.Second
+const STATUS_MESSAGE_TIMEOUT = 1 * time.Second
 
 // Memory arrangement
 // Think about the process and what dataframe do we need
@@ -142,8 +142,6 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		panic(fmt.Sprintln("Error when creating udpUIConn", err))
 	}
 
-	fmt.Println("Created")
-
 	return &Gossiper{
 		address:          udpAddr,
 		conn:             udpConn,
@@ -158,7 +156,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		rumorList:        make(map[string](map[uint32]RumorMessage)),
 		rumorListLock:    &sync.RWMutex{},
 		simpleList:       make(map[string]([]SimpleMessage)),
-		currentID:        0,
+		currentID:        1,
 		dispatcher:       nil,
 		toSendChan:       make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
 	}
@@ -177,21 +175,23 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 		select {
 		case gpw := <-peerListener:
 			g.HandlePeerMessage(gpw)
+			g.PrintPeers()
 		case cmw := <-clientListener:
 			g.HandleClientMessage(cmw)
 		case gpw := <-g.toSendChan:
 			gp := gpw.gossipPacket
+
 			peerUDPAddr := gpw.sender
 			packetBytes, err := protobuf.Encode(gp)
 
 			if err != nil {
-				fmt.Println(err)
+				panic(err)
 			}
 
 			_, err = g.conn.WriteToUDP(packetBytes, peerUDPAddr)
 
 			if err != nil {
-				fmt.Println(err)
+				panic(err)
 			}
 
 		}
@@ -219,14 +219,14 @@ func (d *Dispatcher) Run() {
 			case Register:
 				tagger := registerMsg.tagger
 
-				psoMap, present := taggers[tagger]
+				_, present := taggers[tagger]
 
 				if !present {
 					taggers[tagger] = make(map[PeerStatusObserver]bool)
 				}
 
 				// the boolean value "true" is useless for this case
-				psoMap[registerMsg.observerChan] = true
+				taggers[tagger][registerMsg.observerChan] = true
 				observers[registerMsg.observerChan] = tagger
 
 			case Unregister:
@@ -283,12 +283,25 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 
 	switch {
 	case packet.Simple != nil:
-		fmt.Println(packet.Simple)
+		// TODO double check with the embedded print later
+		// OUTPUT
+		fmt.Printf("SIMPLE MESSAGE origin %s from %s contents %s \n",
+			packet.Simple.OriginalName,
+			packet.Simple.RelayPeerAddr,
+			packet.Simple.Contents)
+
 		g.HandleSimplePacket(packet.Simple, sender.String())
 	case packet.Rumor != nil:
-		fmt.Println(packet.Rumor.SenderString(sender.String()))
+		// OUTPUT
+		fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
+			packet.Rumor.Origin,
+			sender,
+			packet.Rumor.ID,
+			packet.Rumor.Text)
+
 		g.HandleRumorPacket(packet.Rumor, sender)
 	case packet.Status != nil:
+		// OUTPUT
 		fmt.Println(packet.Status.SenderString(sender.String()))
 		g.HandleStatusPacket(packet.Status, sender)
 	}
@@ -306,23 +319,24 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 
 func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	msg := cmw.msg
-	fmt.Println(msg)
 
 	if g.simple {
 		newMsg := g.CreateClientPacket(msg)
 		newGossipPacket := &GossipPacket{Simple: newMsg}
 		g.BroadcastPacket(newGossipPacket, nil)
 	} else {
-		fmt.Println("Create Rumor")
 		newRumorMsg := g.CreateRumorPacket(msg)
 		// ID count increase
 		g.currentID++
+		fmt.Println("CURRENTID is ", g.currentID)
+		// the second arguement is the last-step source of the message
+		// here include the case that we receive it from the client
 		g.HandleRumorPacket(newRumorMsg, g.address)
 	}
 }
 
 func (g *Gossiper) HandleSimplePacket(s *SimpleMessage, sender string) {
-	fmt.Println("Deal with simple packet")
+	// fmt.Println("Deal with simple packet")
 	gp := &GossipPacket{Simple: s}
 
 	// has already add as soon as receive the packet
@@ -338,22 +352,42 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 	// if sender is self, broadcast (mongering) the rumor
 	diff := g.RumorStatusCheck(r)
 
-	fmt.Printf("The difference between the comming rumor and current peerstatus is %d \n", diff)
+	// CHECKOUT
+	fmt.Println("DIFF is", diff)
+
+	// fmt.Printf("The difference between the comming rumor and current peerstatus is %d \n", diff)
 
 	switch {
 	case diff == 0:
 		// accept the rumor
-		// TODO: as soon as received, mongering should start
-		// TODO: update the table, maybe have been done in acceptrumor function
+		// as soon as received, mongering should start
+		// update the table, maybe have been done in acceptrumor function
+
+		// CHECK
+		fmt.Println("Accept Rumor")
 		g.AcceptRumor(r)
+
+		if g.address == senderAddr {
+			// CHECK
+			// fmt.Println("Message from Local Client")
+			g.RumorMongeringPrepare(r, nil)
+		} else {
+			g.RumorMongeringPrepare(r, GenerateStringSetSingleton(senderAddr.String()))
+		}
+
 	case diff > 0:
+		// TODO: consider the out-of-order problem
 		fmt.Println("The rumor is ahead of our record")
 	case diff < 0:
 		fmt.Println("The rumor is behind our record")
 	}
-	// broadcast to other peer
+
+	// Send the StatusMessageToSender
 	if senderAddr != g.address {
-		// TODO send the status message to sender
+		// send the status message to sender
+		fmt.Printf("Send Status to %s \n", senderAddr.String())
+		gpToSend := g.CreateStatusPacket()
+		g.SendGossipPacket(gpToSend, senderAddr)
 	}
 }
 
@@ -373,13 +407,16 @@ func (g *Gossiper) RumorMongeringAddrStr(rumor *RumorMessage, peerStr string) {
 }
 
 func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
+	// OUTPUT
+	fmt.Printf("MONGERING with %s \n", peerAddr.String())
 	go func() {
-		// TODO: monitor the ack from the receiver
+		// monitor the ack from the receiver
 		observerChan := make(chan PeerStatus, CHANNEL_BUFFER_SIZE)
 		timer := time.NewTimer(STATUS_MESSAGE_TIMEOUT)
 		peerStr := peerAddr.String()
 
 		// Register First
+		fmt.Printf("Register Identifier: %s Sender: %s \n", rumor.Origin, peerStr)
 		g.dispatcher.registerListener <- RegisterMessage{
 			observerChan: observerChan,
 			tagger: StatusTagger{
@@ -390,6 +427,7 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 		}
 
 		unregister := func() {
+			fmt.Println("Unregister")
 			timer.Stop()
 			g.dispatcher.registerListener <- RegisterMessage{
 				observerChan:    observerChan,
@@ -401,13 +439,15 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 			select {
 			case peerStatus, ok := <-observerChan:
 				// the channel has been closed by dispatcher
+
+				fmt.Println("*********")
 				if !ok {
 					return
 				}
 				// this means that the peer has received the rumor (in this case, ps.nextID=rumor.ID+1)
 				// or it already contains more advanced
 
-				if peerStatus.NextID > rumor.ID {
+				if peerStatus.NextID >= rumor.ID {
 					g.updatePeerStatusList(peerStr, peerStatus)
 					// check whether the peer has been synced
 					if g.syncWithPeer(peerStr) {
@@ -418,12 +458,16 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 					// channel exit
 					unregister()
 				}
+			case <-timer.C: // Timed out
+				// Resend the rumor to another neighbor with prob 1/2
+				g.flipCoinRumorMongering(rumor, GenerateStringSetSingleton(peerStr))
+				unregister()
 			}
 		}
 
 	}()
 
-	fmt.Println("MONGERING WITH PEER ", peerAddr)
+	// fmt.Println("MONGERING WITH PEER ", peerAddr)
 	g.SendGossipPacket(&GossipPacket{Rumor: rumor}, peerAddr)
 }
 
@@ -476,7 +520,7 @@ func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, ru
 		localStatus, present := g.peerStatuses[pw.Identifier]
 
 		if !present {
-			rumorToAsk = append(rumorToAsk, PeerStatus{Identifier: pw.Identifier, NextID: 0})
+			rumorToAsk = append(rumorToAsk, PeerStatus{Identifier: pw.Identifier, NextID: 1})
 		} else if localStatus.NextID < pw.NextID {
 			// it means we can ask the peer what we want
 			rumorToAsk = append(rumorToAsk, localStatus)
@@ -489,7 +533,7 @@ func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, ru
 
 	for localPeer, _ := range g.peerStatuses {
 		if !peerOriginsSet.Has(localPeer) {
-			rumorToSend = append(rumorToSend, PeerStatus{Identifier: localPeer, NextID: 0})
+			rumorToSend = append(rumorToSend, PeerStatus{Identifier: localPeer, NextID: 1})
 		}
 	}
 	return
@@ -519,7 +563,7 @@ func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *St
 		neighborPeer, present := g.RumorMongeringPrepare(rumor, excludedPeers)
 
 		if present {
-			fmt.Println("FLIP COIN RumorMongering to ", neighborPeer)
+			fmt.Printf("FLIPPED COIN sending rumor to %s \n", neighborPeer)
 		}
 	}
 }
@@ -529,7 +573,7 @@ func (g *Gossiper) SelectRandomNeighbor(excludedPeer *StringSet) (string, bool) 
 	notExcluded := make([]string, 0)
 
 	for _, peer := range peers {
-		if excludedPeer == nil && !excludedPeer.Has(peer) {
+		if excludedPeer == nil || !excludedPeer.Has(peer) {
 			notExcluded = append(notExcluded, peer)
 		}
 	}
@@ -549,18 +593,22 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 		firstPeerStatus := rumorToSend[0]
 		g.rumorListLock.Lock()
 		firstRumor := g.rumorList[firstPeerStatus.Identifier][firstPeerStatus.NextID]
+		// TODO: mongering first or send the status to the dispatcher first????
+		g.RumorMongering(&firstRumor, sender)
 
 		// put the peerstatus to the channel
 		g.dispatcher.statusListener <- PeerStatusWrapper{
 			sender:       sender.String(),
 			peerStatuses: s.Want,
 		}
-		g.RumorMongering(&firstRumor, sender)
+
 	} else if len(rumorToAsk) > 0 {
-		// TODO deal with the case to send rumorToAsk
-		// g.sendgossippacket
+		// deal with the case to send rumorToAsk
+		g.SendGossipPacket(g.CreateStatusPacket(), sender)
+
 	} else {
-		// TODO: print out sync
+		// print out sync
+		fmt.Printf("IN SYNC WITH %s \n", sender)
 	}
 }
 
@@ -569,23 +617,24 @@ func (g *Gossiper) RumorStatusCheck(r *RumorMessage) int {
 	// If diff == 0, rightly updated, therefore
 	// If diff > 0, the rumorMessage is head of the record peerStatus
 	// if diff < 0, the rumorMessage is behind the record peerStatus
-	peerStatus, ok := g.peerStatuses[r.Origin]
+	_, ok := g.peerStatuses[r.Origin]
 
 	if !ok {
+		// fmt.Println("This origin does not EXIST")
 		peerStatus := PeerStatus{
 			Identifier: r.Origin,
-			NextID:     0,
+			NextID:     1,
 		}
 		g.peerStatuses[r.Origin] = peerStatus
 	}
 
-	return int(peerStatus.NextID) - int(r.ID)
+	return int(g.peerStatuses[r.Origin].NextID) - int(r.ID)
 
 }
 
 func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 	// 1. put the rumor in the list
-	// 2. update the peer status:
+	// 2. update the peer status
 	origin := r.Origin
 	messageID := r.ID
 
@@ -604,6 +653,10 @@ func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 		// this has been done during the *RumorStatusCheck* for the case not ok
 		g.rumorList[origin] = make(map[uint32]RumorMessage)
 		g.rumorList[origin][messageID] = *r
+		g.peerStatuses[r.Origin] = PeerStatus{
+			Identifier: r.Origin,
+			NextID:     messageID + 1,
+		}
 	}
 }
 
@@ -615,7 +668,7 @@ func (g *Gossiper) ReceiveFromPeers() <-chan *GossipPacketWrapper {
 		for {
 			var packetReceived GossipPacket
 			msg := <-messageReceiver
-			protobuf.Decode(msg.packetContent, packetReceived)
+			protobuf.Decode(msg.packetContent, &packetReceived)
 			res <- &GossipPacketWrapper{sender: msg.sender, gossipPacket: &packetReceived}
 		}
 	}()
@@ -624,15 +677,17 @@ func (g *Gossiper) ReceiveFromPeers() <-chan *GossipPacketWrapper {
 }
 
 func (g *Gossiper) ReceiveFromClients() <-chan *ClientMessageWrapper {
-	res := make(chan *ClientMessageWrapper, CHANNEL_BUFFER_SIZE)
+	res := make(chan *ClientMessageWrapper)
 	messageReceiver := MessageReceive(g.uiConn)
 
 	go func() {
 		for {
 			var packetReceived Message
 			msg := <-messageReceiver
-			protobuf.Decode(msg.packetContent, packetReceived)
+			protobuf.Decode(msg.packetContent, &packetReceived)
 			res <- &ClientMessageWrapper{sender: msg.sender, msg: &packetReceived}
+			// OUTPUT
+			fmt.Printf("CLIENT MESSAGE %s \n", packetReceived.Text)
 		}
 	}()
 	return res
@@ -641,9 +696,12 @@ func (g *Gossiper) ReceiveFromClients() <-chan *ClientMessageWrapper {
 func MessageReceive(conn *net.UDPConn) <-chan *MessageReceived {
 	res := make(chan *MessageReceived, CHANNEL_BUFFER_SIZE)
 	go func() {
-		packageBytes := make([]byte, UDP_DATAGRAM_MAX_SIZE)
-		_, sender, _ := conn.ReadFromUDP(packageBytes)
-		res <- &MessageReceived{sender: sender, packetContent: packageBytes}
+		for {
+			packageBytes := make([]byte, UDP_DATAGRAM_MAX_SIZE)
+			_, sender, _ := conn.ReadFromUDP(packageBytes)
+			fmt.Println(sender)
+			res <- &MessageReceived{sender: sender, packetContent: packageBytes}
+		}
 	}()
 
 	return res
@@ -657,7 +715,7 @@ func (g *Gossiper) SendGossipPacketStrAddr(gp *GossipPacket, targetStr string) {
 	targetUDPAddr, err := net.ResolveUDPAddr("udp4", targetStr)
 
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 
 	g.SendGossipPacket(gp, targetUDPAddr)
@@ -668,7 +726,7 @@ func (g *Gossiper) SendClientAck(client *net.UDPAddr) {
 	packetBytes, err := protobuf.Encode(resp)
 
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 
 	_, err = g.uiConn.WriteToUDP(packetBytes, client)
@@ -710,7 +768,18 @@ func (g *Gossiper) CreateRumorPacket(m *Message) *RumorMessage {
 	}
 }
 
-func (g *Gossiper) CreateStatusPacket() *Rumor
+func (g *Gossiper) CreateStatusPacket() *GossipPacket {
+	wantSlice := make([]PeerStatus, 0)
+
+	for _, ps := range g.peerStatuses {
+		wantSlice = append(wantSlice, ps)
+	}
+
+	// TODO Why there is a bug for the spType entry
+	sp := &StatusPacket{Want: wantSlice}
+
+	return sp.ToGossipPacket()
+}
 
 func (g *Gossiper) BroadcastPacket(gp *GossipPacket, excludedPeers *StringSet) {
 	for _, p := range g.peersList.ToArray() {
@@ -724,13 +793,13 @@ func (g *Gossiper) SendPacket(gp *GossipPacket, peerAddr string) {
 	packetBytes, err := protobuf.Encode(gp)
 
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 
 	conn, err := net.Dial("udp4", peerAddr)
 
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
 
 	conn.Write(packetBytes)

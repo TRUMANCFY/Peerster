@@ -8,18 +8,6 @@ import (
 // N2N communication
 
 // Status Packet
-type StatusPacketType int
-
-const (
-	antiEntropy   StatusPacketType = 0
-	rumorResponse StatusPacketType = 1
-)
-
-type GossipPacket struct {
-	Simple *SimpleMessage
-	Rumor  *RumorMessage
-	Status *StatusPacket
-}
 
 type RumorMessage struct {
 	Origin string
@@ -38,14 +26,27 @@ type PeerStatus struct {
 	NextID     uint32
 }
 
+// client to node message
+type Message struct {
+	Text string
+}
+
+const (
+	antiEntropy   StatusPacketType = 0
+	rumorResponse StatusPacketType = 1
+)
+
 type StatusPacket struct {
 	Want   []PeerStatus
 	spType StatusPacketType
 }
 
-// client to node message
-type Message struct {
-	Text string
+type StatusPacketType int
+
+type GossipPacket struct {
+	Simple *SimpleMessage
+	Rumor  *RumorMessage
+	Status *StatusPacket
 }
 
 // advanced data structure
@@ -114,11 +115,11 @@ func (sp *StatusPacket) SenderString(sender string) string {
 	for _, ps := range sp.Want {
 		wantString = append(wantString, ps.String())
 	}
-	return fmt.Sprintf("STATUS from %s, %s", sender, strings.Join(wantString, " "))
+	return fmt.Sprintf("STATUS from %s %s", sender, strings.Join(wantString, " "))
 }
 
 func (ps *PeerStatus) String() string {
-	return fmt.Sprintf("peer %s next %d", ps.Identifier, ps.NextID)
+	return fmt.Sprintf("peer %s nextID %d", ps.Identifier, ps.NextID)
 }
 
 // convert the member element to gossip packet
