@@ -290,7 +290,7 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 			packet.Simple.RelayPeerAddr,
 			packet.Simple.Contents)
 
-		g.HandleSimplePacket(packet.Simple, sender.String())
+		g.HandleSimplePacket(packet.Simple)
 	case packet.Rumor != nil:
 		// OUTPUT
 		fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
@@ -335,14 +335,14 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	}
 }
 
-func (g *Gossiper) HandleSimplePacket(s *SimpleMessage, sender string) {
+func (g *Gossiper) HandleSimplePacket(s *SimpleMessage) {
 	// fmt.Println("Deal with simple packet")
-	gp := &GossipPacket{Simple: s}
+	gp := &GossipPacket{Simple: g.CreateForwardPacket(s)}
 
 	// has already add as soon as receive the packet
-	g.peersList.Add(sender)
+	g.peersList.Add(s.RelayPeerAddr)
 
-	g.BroadcastPacket(gp, GenerateStringSetSingleton(sender))
+	g.BroadcastPacket(gp, GenerateStringSetSingleton(s.RelayPeerAddr))
 }
 
 func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
@@ -699,7 +699,6 @@ func MessageReceive(conn *net.UDPConn) <-chan *MessageReceived {
 		for {
 			packageBytes := make([]byte, UDP_DATAGRAM_MAX_SIZE)
 			_, sender, _ := conn.ReadFromUDP(packageBytes)
-			fmt.Println(sender)
 			res <- &MessageReceived{sender: sender, packetContent: packageBytes}
 		}
 	}()
@@ -784,26 +783,26 @@ func (g *Gossiper) CreateStatusPacket() *GossipPacket {
 func (g *Gossiper) BroadcastPacket(gp *GossipPacket, excludedPeers *StringSet) {
 	for _, p := range g.peersList.ToArray() {
 		if excludedPeers == nil || !excludedPeers.Has(p) {
-			g.SendPacket(gp, p)
+			g.SendGossipPacketStrAddr(gp, p)
 		}
 	}
 }
 
-func (g *Gossiper) SendPacket(gp *GossipPacket, peerAddr string) {
-	packetBytes, err := protobuf.Encode(gp)
+// func (g *Gossiper) SendPacket(gp *GossipPacket, peerAddr string) {
+// 	packetBytes, err := protobuf.Encode(gp)
 
-	if err != nil {
-		panic(err)
-	}
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	conn, err := net.Dial("udp4", peerAddr)
+// 	conn, err := net.Dial("udp4", peerAddr)
 
-	if err != nil {
-		panic(err)
-	}
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	conn.Write(packetBytes)
-}
+// 	conn.Write(packetBytes)
+// }
 
 func (g *Gossiper) PrintPeers() {
 	fmt.Printf("PEERS %s\n", strings.Join(g.peersList.ToArray(), ","))
