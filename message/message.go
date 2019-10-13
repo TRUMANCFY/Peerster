@@ -37,8 +37,8 @@ const (
 )
 
 type StatusPacket struct {
-	Want   []PeerStatus
-	spType StatusPacketType
+	Want []PeerStatus
+	// spType StatusPacketType
 }
 
 type StatusPacketType int
