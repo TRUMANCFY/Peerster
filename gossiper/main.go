@@ -2,8 +2,10 @@ package gossiper
 
 import (
 	"fmt" // check the type of variable
+	"log"
 	"math/rand"
 	"net"
+	"net/http"
 	"strings"
 	"sync"
 	"time"
@@ -11,11 +13,13 @@ import (
 	. "github.com/TRUMANCFY/Peerster/message"
 	. "github.com/TRUMANCFY/Peerster/util"
 	"github.com/dedis/protobuf"
+	"github.com/gorilla/mux"
 )
 
 const UDP_DATAGRAM_MAX_SIZE = 1024
 const CHANNEL_BUFFER_SIZE = 1024
-const STATUS_MESSAGE_TIMEOUT = 1 * time.Second
+const STATUS_MESSAGE_TIMEOUT = 10 * time.Second
+const GUI_ADDR = "127.0.0.1:8080"
 
 // Memory arrangement
 // Think about the process and what dataframe do we need
@@ -137,6 +141,8 @@ func (g *Gossiper) Run() {
 	if g.antiEntropy > 0 {
 		go g.AntiEntropy()
 	}
+
+	// Here to run the server
 
 	g.dispatcher = StartPeerStatusDispatcher()
 	g.Listen(peerListener, clientListener)
@@ -265,9 +271,6 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		// update the table, maybe have been done in acceptrumor function
 
 		// CHECK
-		fmt.Println("Accept Rumor")
-		g.AcceptRumor(r)
-
 		if g.address == senderAddr {
 			// CHECK
 			// The message is from local client
@@ -276,11 +279,19 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 			g.RumorMongeringPrepare(r, GenerateStringSetSingleton(senderAddr.String()))
 		}
 
+		fmt.Println("Accept Rumor")
+		g.AcceptRumor(r)
+
 	case diff > 0:
 		// TODO: consider the out-of-order problem
 		fmt.Println("The rumor is ahead of our record")
+		// TODO: Still send the status packet to ask for the rumor
+		// g.SendGossipPacket(g.CreateStatusPacket(), senderAddr)
 	case diff < 0:
 		fmt.Println("The rumor is behind our record")
+		// send the rumor the sender want
+		newRumor := g.rumorList[r.Origin][r.ID]
+		g.SendGossipPacket(&GossipPacket{Rumor: &newRumor}, senderAddr)
 	}
 
 	// Send the StatusMessageToSender if the rumor is not from self
@@ -360,6 +371,7 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 				}
 			case <-timer.C: // Timed out
 				// Resend the rumor to another neighbor with prob 1/2
+				fmt.Println("TIMEOUT")
 				g.flipCoinRumorMongering(rumor, GenerateStringSetSingleton(peerStr))
 				unregister()
 			}
@@ -390,7 +402,7 @@ func (g *Gossiper) updatePeerStatusList(peerStr string, peerStatus PeerStatus) b
 		return true
 	} else {
 		// TODO: cornor state: whether equality should be put into the consideration of update
-		if previousPeerStatus.NextID > peerStatus.NextID {
+		if previousPeerStatus.NextID >= peerStatus.NextID {
 			return false
 		} else {
 			g.peerWantList[peerStr][peerStatus.Identifier] = peerStatus
@@ -536,6 +548,7 @@ func (g *Gossiper) RumorStatusCheck(r *RumorMessage) int {
 func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 	// 1. put the rumor in the list
 	// 2. update the peer status
+	fmt.Printf("Accept Rumor Origin: %s ID: %d \n", r.Origin, r.ID)
 	origin := r.Origin
 	messageID := r.ID
 
@@ -713,3 +726,68 @@ func (g *Gossiper) AddPeer(p string) {
 
 // 	conn.Write(packetBytes)
 // }
+
+// func (g *Gossiper) GetAllRumors() {
+
+// }
+
+// func (g *Gossiper) GetAllPeers() {
+
+// }
+
+// func (g *Gossiper) GetPeerID() {
+
+// }
+
+func (g *Gossiper) MessageHandler(w http.ResponseWriter, r *http.Request) {
+	// TODO Message Handler
+	switch r.Method {
+	case "GET":
+		fmt.Println("MESSAGE GET")
+
+		// m := TestMessage{"Alice", "Hello", 1294706395881547000}
+		// json.NewEncoder(w).Encode(m)
+	case "POST":
+		fmt.Println("MESSAGE POST")
+	}
+}
+
+func (g *Gossiper) NodeHandler(w http.ResponseWriter, r *http.Request) {
+	// TODO Node Handler
+	switch r.Method {
+	case "GET":
+		fmt.Println("NODE GET")
+	case "POST":
+		fmt.Println("NODE POST")
+	}
+}
+
+func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
+	// TODO ID Handler
+	if r.Method != "GET" {
+		panic("Wrong Method, GET required")
+	}
+
+	fmt.Println("PeerID GET")
+
+}
+
+func (g *Gossiper) ListenToGUI() {
+	// receiveResp := make(chan *Response, MAX_RESP)
+
+	r := mux.NewRouter()
+
+	// set up routers
+	r.HandleFunc("/message", g.MessageHandler).Methods("GET", "POST")
+	r.HandleFunc("/node", g.NodeHandler).Methods("GET", "POST")
+	r.HandleFunc("/id", g.IDHandler).Methods("GET")
+
+	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../webserver/gui/dist/"))))
+	srv := &http.Server{
+		Handler:           r,
+		Addr:              GUI_ADDR,
+		WriteTimeout:      15 * time.Second,
+		ReadHeaderTimeout: 15 * time.Second,
+	}
+	log.Fatal(srv.ListenAndServe())
+}
