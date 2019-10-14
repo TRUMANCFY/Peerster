@@ -2,10 +2,8 @@ package gossiper
 
 import (
 	"fmt" // check the type of variable
-	"log"
 	"math/rand"
 	"net"
-	"net/http"
 	"strings"
 	"sync"
 	"time"
@@ -13,7 +11,6 @@ import (
 	. "github.com/TRUMANCFY/Peerster/message"
 	. "github.com/TRUMANCFY/Peerster/util"
 	"github.com/dedis/protobuf"
-	"github.com/gorilla/mux"
 )
 
 const UDP_DATAGRAM_MAX_SIZE = 1024
@@ -385,8 +382,8 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 
 func (g *Gossiper) updatePeerStatusList(peerStr string, peerStatus PeerStatus) bool {
 	// add the new peerStatus in the local peer
-	g.peerWantListLock.RLock()
-	defer g.peerWantListLock.RUnlock()
+	g.peerWantListLock.Lock()
+	defer g.peerWantListLock.Unlock()
 
 	_, present := g.peerWantList[peerStr]
 
@@ -591,7 +588,7 @@ func (g *Gossiper) ReceiveFromPeers() <-chan *GossipPacketWrapper {
 }
 
 func (g *Gossiper) ReceiveFromClients() <-chan *ClientMessageWrapper {
-	res := make(chan *ClientMessageWrapper)
+	res := make(chan *ClientMessageWrapper, CHANNEL_BUFFER_SIZE)
 	messageReceiver := ReceiveFromConn(g.uiConn)
 
 	go func() {
@@ -739,55 +736,55 @@ func (g *Gossiper) AddPeer(p string) {
 
 // }
 
-func (g *Gossiper) MessageHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO Message Handler
-	switch r.Method {
-	case "GET":
-		fmt.Println("MESSAGE GET")
+// func (g *Gossiper) MessageHandler(w http.ResponseWriter, r *http.Request) {
+// 	// TODO Message Handler
+// 	switch r.Method {
+// 	case "GET":
+// 		fmt.Println("MESSAGE GET")
 
-		// m := TestMessage{"Alice", "Hello", 1294706395881547000}
-		// json.NewEncoder(w).Encode(m)
-	case "POST":
-		fmt.Println("MESSAGE POST")
-	}
-}
+// 		// m := TestMessage{"Alice", "Hello", 1294706395881547000}
+// 		// json.NewEncoder(w).Encode(m)
+// 	case "POST":
+// 		fmt.Println("MESSAGE POST")
+// 	}
+// }
 
-func (g *Gossiper) NodeHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO Node Handler
-	switch r.Method {
-	case "GET":
-		fmt.Println("NODE GET")
-	case "POST":
-		fmt.Println("NODE POST")
-	}
-}
+// func (g *Gossiper) NodeHandler(w http.ResponseWriter, r *http.Request) {
+// 	// TODO Node Handler
+// 	switch r.Method {
+// 	case "GET":
+// 		fmt.Println("NODE GET")
+// 	case "POST":
+// 		fmt.Println("NODE POST")
+// 	}
+// }
 
-func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO ID Handler
-	if r.Method != "GET" {
-		panic("Wrong Method, GET required")
-	}
+// func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
+// 	// TODO ID Handler
+// 	if r.Method != "GET" {
+// 		panic("Wrong Method, GET required")
+// 	}
 
-	fmt.Println("PeerID GET")
+// 	fmt.Println("PeerID GET")
 
-}
+// }
 
-func (g *Gossiper) ListenToGUI() {
-	// receiveResp := make(chan *Response, MAX_RESP)
+// func (g *Gossiper) ListenToGUI() {
+// 	// receiveResp := make(chan *Response, MAX_RESP)
 
-	r := mux.NewRouter()
+// 	r := mux.NewRouter()
 
-	// set up routers
-	r.HandleFunc("/message", g.MessageHandler).Methods("GET", "POST")
-	r.HandleFunc("/node", g.NodeHandler).Methods("GET", "POST")
-	r.HandleFunc("/id", g.IDHandler).Methods("GET")
+// 	// set up routers
+// 	r.HandleFunc("/message", g.MessageHandler).Methods("GET", "POST")
+// 	r.HandleFunc("/node", g.NodeHandler).Methods("GET", "POST")
+// 	r.HandleFunc("/id", g.IDHandler).Methods("GET")
 
-	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../webserver/gui/dist/"))))
-	srv := &http.Server{
-		Handler:           r,
-		Addr:              GUI_ADDR,
-		WriteTimeout:      15 * time.Second,
-		ReadHeaderTimeout: 15 * time.Second,
-	}
-	log.Fatal(srv.ListenAndServe())
-}
+// 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../webserver/gui/dist/"))))
+// 	srv := &http.Server{
+// 		Handler:           r,
+// 		Addr:              GUI_ADDR,
+// 		WriteTimeout:      15 * time.Second,
+// 		ReadHeaderTimeout: 15 * time.Second,
+// 	}
+// 	log.Fatal(srv.ListenAndServe())
+// }
