@@ -7,7 +7,9 @@ import (
 	"strings"
 	"sync"
 	"time"
-
+	"net/http"
+	"log"
+	"github.com/gorilla/mux"
 	. "github.com/TRUMANCFY/Peerster/message"
 	. "github.com/TRUMANCFY/Peerster/util"
 	"github.com/dedis/protobuf"
@@ -30,7 +32,7 @@ type Gossiper struct {
 	uiAddr           *net.UDPAddr
 	uiConn           *net.UDPConn
 	name             string
-	peersList        *StringSet
+	peersList        *PeersList
 	simple           bool
 	peerStatuses     map[string]PeerStatus
 	peerWantList     map[string](map[string]PeerStatus)
@@ -44,6 +46,11 @@ type Gossiper struct {
 	antiEntropy      int
 }
 
+type PeersList struct {
+
+	PeersList *StringSet 
+	Mux sync.Mutex
+}
 // advance and combined data structure
 type GossipPacketWrapper struct {
 	sender       *net.UDPAddr
@@ -116,7 +123,9 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		uiAddr:           udpUIAddr,
 		uiConn:           udpUIConn,
 		name:             name,
-		peersList:        peersStr,
+		peersList:        &PeersList{
+							PeersList : peersStr,
+						},
 		simple:           simple,
 		peerStatuses:     make(map[string]PeerStatus),
 		peerWantList:     make(map[string](map[string]PeerStatus)),
@@ -146,13 +155,15 @@ func (g *Gossiper) Run() {
 }
 
 func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListener <-chan *ClientMessageWrapper) {
+
 	for {
 		select {
 		case gpw := <-peerListener:
-			g.HandlePeerMessage(gpw)
+			go g.HandlePeerMessage(gpw)
 			g.PrintPeers()
 		case cmw := <-clientListener:
-			g.HandleClientMessage(cmw)
+
+			go g.HandleClientMessage(cmw)
 		case gpw := <-g.toSendChan:
 			gp := gpw.gossipPacket
 
@@ -183,6 +194,7 @@ func (g *Gossiper) AntiEntropy() {
 		case <-ticker.C:
 			neighbor, present := g.SelectRandomNeighbor(nil)
 			if present {
+				fmt.Println("Anti entropy " + neighbor)
 				g.SendGossipPacketStrAddr(g.CreateStatusPacket(), neighbor)
 			}
 		}
@@ -244,8 +256,9 @@ func (g *Gossiper) HandleSimplePacket(s *SimpleMessage) {
 	gp := &GossipPacket{Simple: g.CreateForwardPacket(s)}
 
 	// has already add as soon as receive the packet
-	g.peersList.Add(s.RelayPeerAddr)
-
+	g.peersList.Mux.Lock()
+	g.peersList.PeersList.Add(s.RelayPeerAddr)
+	g.peersList.Mux.Unlock()
 	g.BroadcastPacket(gp, GenerateStringSetSingleton(s.RelayPeerAddr))
 }
 
@@ -429,7 +442,7 @@ func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, ru
 		localStatus, present := g.peerStatuses[pw.Identifier]
 
 		if !present {
-			rumorToAsk = append(rumorToAsk, PeerStatus{Identifier: pw.Identifier, NextID: 1})
+			//rumorToAsk = append(rumorToAsk, PeerStatus{Identifier: pw.Identifier, NextID: 1})
 		} else if localStatus.NextID < pw.NextID {
 			// it means we can ask the peer what we want
 			rumorToAsk = append(rumorToAsk, localStatus)
@@ -442,7 +455,7 @@ func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, ru
 
 	for localPeer, _ := range g.peerStatuses {
 		if !peerOriginsSet.Has(localPeer) {
-			rumorToSend = append(rumorToSend, PeerStatus{Identifier: localPeer, NextID: 1})
+			//rumorToSend = append(rumorToSend, PeerStatus{Identifier: localPeer, NextID: 1})
 		}
 	}
 	return
@@ -479,7 +492,9 @@ func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *St
 }
 
 func (g *Gossiper) SelectRandomNeighbor(excludedPeer *StringSet) (string, bool) {
-	peers := g.peersList.ToArray()
+	g.peersList.Mux.Lock()
+	peers := g.peersList.PeersList.ToArray()
+	g.peersList.Mux.Unlock()
 	notExcluded := make([]string, 0)
 
 	for _, peer := range peers {
@@ -531,11 +546,13 @@ func (g *Gossiper) RumorStatusCheck(r *RumorMessage) int {
 
 	if !ok {
 		// fmt.Println("This origin does not EXIST")
-		peerStatus := PeerStatus{
-			Identifier: r.Origin,
-			NextID:     1,
+		if r.ID == 1 {
+			peerStatus := PeerStatus{
+				Identifier: r.Origin,
+				NextID:     1,
+			}
+			g.peerStatuses[r.Origin] = peerStatus
 		}
-		g.peerStatuses[r.Origin] = peerStatus
 	}
 
 	return int(g.peerStatuses[r.Origin].NextID) - int(r.ID)
@@ -618,6 +635,7 @@ func ReceiveFromConn(conn *net.UDPConn) <-chan *MessageReceived {
 }
 
 func (g *Gossiper) SendGossipPacket(gp *GossipPacket, target *net.UDPAddr) {
+
 	g.toSendChan <- &GossipPacketWrapper{sender: target, gossipPacket: gp}
 }
 
@@ -692,7 +710,9 @@ func (g *Gossiper) CreateStatusPacket() *GossipPacket {
 }
 
 func (g *Gossiper) BroadcastPacket(gp *GossipPacket, excludedPeers *StringSet) {
-	for _, p := range g.peersList.ToArray() {
+	g.peersList.Mux.Lock()
+	defer g.peersList.Mux.Unlock()
+	for _, p := range g.peersList.PeersList.ToArray() {
 		if excludedPeers == nil || !excludedPeers.Has(p) {
 			g.SendGossipPacketStrAddr(gp, p)
 		}
@@ -700,11 +720,15 @@ func (g *Gossiper) BroadcastPacket(gp *GossipPacket, excludedPeers *StringSet) {
 }
 
 func (g *Gossiper) PrintPeers() {
-	fmt.Printf("PEERS %s\n", strings.Join(g.peersList.ToArray(), ","))
+	g.peersList.Mux.Lock()
+	defer g.peersList.Mux.Unlock()
+	fmt.Printf("PEERS %s\n", strings.Join(g.peersList.PeersList.ToArray(), ","))
 }
 
 func (g *Gossiper) AddPeer(p string) {
-	g.peersList.Add(p)
+	g.peersList.Mux.Lock()
+	g.peersList.PeersList.Add(p)
+	g.peersList.Mux.Unlock()
 }
 
 // send method used for the first part
@@ -736,55 +760,56 @@ func (g *Gossiper) AddPeer(p string) {
 
 // }
 
-// func (g *Gossiper) MessageHandler(w http.ResponseWriter, r *http.Request) {
-// 	// TODO Message Handler
-// 	switch r.Method {
-// 	case "GET":
-// 		fmt.Println("MESSAGE GET")
 
-// 		// m := TestMessage{"Alice", "Hello", 1294706395881547000}
-// 		// json.NewEncoder(w).Encode(m)
-// 	case "POST":
-// 		fmt.Println("MESSAGE POST")
-// 	}
-// }
+func (g *Gossiper) MessageHandler(w http.ResponseWriter, r *http.Request) {
+	// TODO Message Handler
+	switch r.Method {
+	case "GET":
+		fmt.Println("MESSAGE GET")
 
-// func (g *Gossiper) NodeHandler(w http.ResponseWriter, r *http.Request) {
-// 	// TODO Node Handler
-// 	switch r.Method {
-// 	case "GET":
-// 		fmt.Println("NODE GET")
-// 	case "POST":
-// 		fmt.Println("NODE POST")
-// 	}
-// }
+		// m := TestMessage{"Alice", "Hello", 1294706395881547000}
+		// json.NewEncoder(w).Encode(m)
+	case "POST":
+		fmt.Println("MESSAGE POST")
+	}
+}
 
-// func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
-// 	// TODO ID Handler
-// 	if r.Method != "GET" {
-// 		panic("Wrong Method, GET required")
-// 	}
+func (g *Gossiper) NodeHandler(w http.ResponseWriter, r *http.Request) {
+	// TODO Node Handler
+	switch r.Method {
+	case "GET":
+		fmt.Println("NODE GET")
+	case "POST":
+		fmt.Println("NODE POST")
+	}
+}
 
-// 	fmt.Println("PeerID GET")
+func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
+	// TODO ID Handler
+	if r.Method != "GET" {
+		panic("Wrong Method, GET required")
+	}
 
-// }
+	fmt.Println("PeerID GET")
 
-// func (g *Gossiper) ListenToGUI() {
-// 	// receiveResp := make(chan *Response, MAX_RESP)
+}
 
-// 	r := mux.NewRouter()
+func (g *Gossiper) ListenToGUI() {
+	// receiveResp := make(chan *Response, MAX_RESP)
 
-// 	// set up routers
-// 	r.HandleFunc("/message", g.MessageHandler).Methods("GET", "POST")
-// 	r.HandleFunc("/node", g.NodeHandler).Methods("GET", "POST")
-// 	r.HandleFunc("/id", g.IDHandler).Methods("GET")
+	r := mux.NewRouter()
 
-// 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../webserver/gui/dist/"))))
-// 	srv := &http.Server{
-// 		Handler:           r,
-// 		Addr:              GUI_ADDR,
-// 		WriteTimeout:      15 * time.Second,
-// 		ReadHeaderTimeout: 15 * time.Second,
-// 	}
-// 	log.Fatal(srv.ListenAndServe())
-// }
+	// set up routers
+	r.HandleFunc("/message", g.MessageHandler).Methods("GET", "POST")
+	r.HandleFunc("/node", g.NodeHandler).Methods("GET", "POST")
+	r.HandleFunc("/id", g.IDHandler).Methods("GET")
+
+	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../webserver/gui/dist/"))))
+	srv := &http.Server{
+		Handler:           r,
+		Addr:              GUI_ADDR,
+		WriteTimeout:      15 * time.Second,
+		ReadHeaderTimeout: 15 * time.Second,
+	}
+	log.Fatal(srv.ListenAndServe())
+}
