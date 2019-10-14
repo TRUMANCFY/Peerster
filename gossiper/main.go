@@ -2,17 +2,18 @@ package gossiper
 
 import (
 	"fmt" // check the type of variable
+	"log"
 	"math/rand"
 	"net"
+	"net/http"
 	"strings"
 	"sync"
 	"time"
-	"net/http"
-	"log"
-	"github.com/gorilla/mux"
+
 	. "github.com/TRUMANCFY/Peerster/message"
 	. "github.com/TRUMANCFY/Peerster/util"
 	"github.com/dedis/protobuf"
+	"github.com/gorilla/mux"
 )
 
 const UDP_DATAGRAM_MAX_SIZE = 1024
@@ -44,13 +45,14 @@ type Gossiper struct {
 	currentID        uint32
 	toSendChan       chan *GossipPacketWrapper
 	antiEntropy      int
+	guiAddr          string
 }
 
 type PeersList struct {
-
-	PeersList *StringSet 
-	Mux sync.Mutex
+	PeersList *StringSet
+	Mux       sync.Mutex
 }
+
 // advance and combined data structure
 type GossipPacketWrapper struct {
 	sender       *net.UDPAddr
@@ -117,15 +119,19 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		panic(fmt.Sprintln("Error when creating udpUIConn", err))
 	}
 
+	guiAddrStrSlice := strings.Split(gossipAddr, "")
+	guiAddrStrSlice[10] = "8"
+	guiAddrStr := strings.Join(guiAddrStrSlice, "")
+
 	return &Gossiper{
-		address:          udpAddr,
-		conn:             udpConn,
-		uiAddr:           udpUIAddr,
-		uiConn:           udpUIConn,
-		name:             name,
-		peersList:        &PeersList{
-							PeersList : peersStr,
-						},
+		address: udpAddr,
+		conn:    udpConn,
+		uiAddr:  udpUIAddr,
+		uiConn:  udpUIConn,
+		name:    name,
+		peersList: &PeersList{
+			PeersList: peersStr,
+		},
 		simple:           simple,
 		peerStatuses:     make(map[string]PeerStatus),
 		peerWantList:     make(map[string](map[string]PeerStatus)),
@@ -137,6 +143,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		dispatcher:       nil,
 		toSendChan:       make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
 		antiEntropy:      antiEntropy,
+		guiAddr:          guiAddrStr,
 	}
 }
 
@@ -149,6 +156,7 @@ func (g *Gossiper) Run() {
 	}
 
 	// Here to run the server
+	go g.ListenToGUI()
 
 	g.dispatcher = StartPeerStatusDispatcher()
 	g.Listen(peerListener, clientListener)
@@ -760,7 +768,6 @@ func (g *Gossiper) AddPeer(p string) {
 
 // }
 
-
 func (g *Gossiper) MessageHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO Message Handler
 	switch r.Method {
@@ -807,7 +814,7 @@ func (g *Gossiper) ListenToGUI() {
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("../webserver/gui/dist/"))))
 	srv := &http.Server{
 		Handler:           r,
-		Addr:              GUI_ADDR,
+		Addr:              g.guiAddr,
 		WriteTimeout:      15 * time.Second,
 		ReadHeaderTimeout: 15 * time.Second,
 	}
