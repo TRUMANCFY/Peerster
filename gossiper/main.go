@@ -23,10 +23,6 @@ const STATUS_MESSAGE_TIMEOUT = 1 * time.Second
 // 2. We need to record the peer status we have received from other peers, data format: map[string](map[string]PeerStatus) peerName => peerName => PeerStatus
 // 3. Also, we need to record the rumour we are maintain data format: map[string](map[int]RumorMessage) peerName => sequential number => rumorMessage
 
-// GoRoutine Dispatcher
-// 1. we need one routine to receive GossipPacket from peers: func ReceiveFromPeers()
-// 2. we need one routine to receive Message from clients: func ReceiveFromClients()
-// 3.
 type Gossiper struct {
 	address          *net.UDPAddr
 	conn             *net.UDPConn
@@ -63,29 +59,29 @@ type MessageReceived struct {
 	packetContent []byte
 }
 
-type RegisterMessageType int
+type TaggerMessageType int
 
 const (
-	Register   RegisterMessageType = 0
-	Unregister RegisterMessageType = 1
+	TakeIn  TaggerMessageType = 0
+	TakeOut TaggerMessageType = 1
 )
 
 type PeerStatusObserver (chan<- PeerStatus)
 
-type RegisterMessage struct {
-	observerChan    PeerStatusObserver
-	tagger          StatusTagger
-	registerMsgType RegisterMessageType
-}
-
-type StatusTagger struct {
-	sender     string
-	identifier string
+type TaggerMessage struct {
+	observerChan  PeerStatusObserver
+	tagger        StatusTagger
+	taggerMsgType TaggerMessageType
 }
 
 type PeerStatusWrapper struct {
 	sender       string
 	peerStatuses []PeerStatus
+}
+
+type StatusTagger struct {
+	sender     string
+	identifier string
 }
 
 func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, simple bool, antiEntropy int) *Gossiper {
@@ -138,7 +134,9 @@ func (g *Gossiper) Run() {
 	peerListener := g.ReceiveFromPeers()
 	clientListener := g.ReceiveFromClients()
 
-	go g.AntiEntropy()
+	if g.antiEntropy > 0 {
+		go g.AntiEntropy()
+	}
 
 	g.dispatcher = StartPeerStatusDispatcher()
 	g.Listen(peerListener, clientListener)
@@ -155,14 +153,14 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 		case gpw := <-g.toSendChan:
 			gp := gpw.gossipPacket
 
-			peerUDPAddr := gpw.sender
+			peerAddr := gpw.sender
 			packetBytes, err := protobuf.Encode(gp)
 
 			if err != nil {
 				panic(err)
 			}
 
-			_, err = g.conn.WriteToUDP(packetBytes, peerUDPAddr)
+			_, err = g.conn.WriteToUDP(packetBytes, peerAddr)
 
 			if err != nil {
 				panic(err)
@@ -272,7 +270,7 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 
 		if g.address == senderAddr {
 			// CHECK
-			// fmt.Println("Message from Local Client")
+			// The message is from local client
 			g.RumorMongeringPrepare(r, nil)
 		} else {
 			g.RumorMongeringPrepare(r, GenerateStringSetSingleton(senderAddr.String()))
@@ -285,7 +283,7 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		fmt.Println("The rumor is behind our record")
 	}
 
-	// Send the StatusMessageToSender
+	// Send the StatusMessageToSender if the rumor is not from self
 	if senderAddr != g.address {
 		// send the status message to sender
 		fmt.Printf("Send Status to %s \n", senderAddr.String())
@@ -320,21 +318,20 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 
 		// Register First
 		fmt.Printf("Register Identifier: %s Sender: %s \n", rumor.Origin, peerStr)
-		g.dispatcher.registerListener <- RegisterMessage{
+		g.dispatcher.taggerListener <- TaggerMessage{
 			observerChan: observerChan,
 			tagger: StatusTagger{
 				sender:     peerStr,
 				identifier: rumor.Origin,
 			},
-			registerMsgType: Register,
+			taggerMsgType: TakeIn,
 		}
 
 		unregister := func() {
-			fmt.Println("Unregister")
 			timer.Stop()
-			g.dispatcher.registerListener <- RegisterMessage{
-				observerChan:    observerChan,
-				registerMsgType: Unregister,
+			g.dispatcher.taggerListener <- TaggerMessage{
+				observerChan:  observerChan,
+				taggerMsgType: TakeOut,
 			}
 		}
 
@@ -462,7 +459,8 @@ func (g *Gossiper) getOwnPeerSlice(peerStr string) []PeerStatus {
 
 func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *StringSet) {
 	// 50 - 50
-	if rand.Intn(2) == 0 {
+	randInt := rand.Intn(2)
+	if randInt == 0 {
 		neighborPeer, present := g.RumorMongeringPrepare(rumor, excludedPeers)
 
 		if present {
@@ -565,7 +563,7 @@ func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 
 func (g *Gossiper) ReceiveFromPeers() <-chan *GossipPacketWrapper {
 	res := make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE)
-	messageReceiver := MessageReceive(g.conn)
+	messageReceiver := ReceiveFromConn(g.conn)
 
 	go func() {
 		for {
@@ -581,7 +579,7 @@ func (g *Gossiper) ReceiveFromPeers() <-chan *GossipPacketWrapper {
 
 func (g *Gossiper) ReceiveFromClients() <-chan *ClientMessageWrapper {
 	res := make(chan *ClientMessageWrapper)
-	messageReceiver := MessageReceive(g.uiConn)
+	messageReceiver := ReceiveFromConn(g.uiConn)
 
 	go func() {
 		for {
@@ -596,7 +594,7 @@ func (g *Gossiper) ReceiveFromClients() <-chan *ClientMessageWrapper {
 	return res
 }
 
-func MessageReceive(conn *net.UDPConn) <-chan *MessageReceived {
+func ReceiveFromConn(conn *net.UDPConn) <-chan *MessageReceived {
 	res := make(chan *MessageReceived, CHANNEL_BUFFER_SIZE)
 	go func() {
 		for {
@@ -691,6 +689,15 @@ func (g *Gossiper) BroadcastPacket(gp *GossipPacket, excludedPeers *StringSet) {
 	}
 }
 
+func (g *Gossiper) PrintPeers() {
+	fmt.Printf("PEERS %s\n", strings.Join(g.peersList.ToArray(), ","))
+}
+
+func (g *Gossiper) AddPeer(p string) {
+	g.peersList.Add(p)
+}
+
+// send method used for the first part
 // func (g *Gossiper) SendPacket(gp *GossipPacket, peerAddr string) {
 // 	packetBytes, err := protobuf.Encode(gp)
 
@@ -706,11 +713,3 @@ func (g *Gossiper) BroadcastPacket(gp *GossipPacket, excludedPeers *StringSet) {
 
 // 	conn.Write(packetBytes)
 // }
-
-func (g *Gossiper) PrintPeers() {
-	fmt.Printf("PEERS %s\n", strings.Join(g.peersList.ToArray(), ","))
-}
-
-func (g *Gossiper) AddPeer(p string) {
-	g.peersList.Add(p)
-}

@@ -1,22 +1,29 @@
 package gossiper
 
-import "fmt"
+import (
+	"fmt"
+)
 
+// GoRoutine Dispatcher
+// 1. we need one routine to receive GossipPacket from peers: func ReceiveFromPeers()
+// 2. we need one routine to receive Message from clients: func ReceiveFromClients()
 type Dispatcher struct {
-	statusListener   chan PeerStatusWrapper
-	registerListener chan RegisterMessage
+	statusListener chan PeerStatusWrapper
+	taggerListener chan TaggerMessage
 }
 
 func (d *Dispatcher) Run() {
+	// tagger will indicate the origin(identifier) and the target(sender) to classifier the peerStatus received
 	taggers := make(map[StatusTagger](map[PeerStatusObserver]bool))
+	// observer is received key-value of taggers
 	observers := make(map[PeerStatusObserver]StatusTagger)
 
 	for {
 		select {
-		case registerMsg := <-d.registerListener:
-			switch registerMsg.registerMsgType {
-			case Register:
-				tagger := registerMsg.tagger
+		case taggerMsg := <-d.taggerListener:
+			switch taggerMsg.taggerMsgType {
+			case TakeIn:
+				tagger := taggerMsg.tagger
 
 				_, present := taggers[tagger]
 
@@ -25,12 +32,12 @@ func (d *Dispatcher) Run() {
 				}
 
 				// the boolean value "true" is useless for this case
-				taggers[tagger][registerMsg.observerChan] = true
-				observers[registerMsg.observerChan] = tagger
+				taggers[tagger][taggerMsg.observerChan] = true
+				observers[taggerMsg.observerChan] = tagger
 
-			case Unregister:
+			case TakeOut:
 				// Close the channel
-				toClosedObserver := registerMsg.observerChan
+				toClosedObserver := taggerMsg.observerChan
 				tagger, present := observers[toClosedObserver]
 
 				if present {
@@ -41,7 +48,7 @@ func (d *Dispatcher) Run() {
 					// close the channel
 					close(toClosedObserver)
 				} else {
-					panic(fmt.Sprintf("Origin: %s; Sender: %s NOT REGISTERED", registerMsg.tagger.identifier, registerMsg.tagger.sender))
+					panic(fmt.Sprintf("Origin: %s; Sender: %s NOT REGISTERED", taggerMsg.tagger.identifier, taggerMsg.tagger.sender))
 
 				}
 
@@ -77,9 +84,9 @@ func (d *Dispatcher) Run() {
 func StartPeerStatusDispatcher() *Dispatcher {
 	// TODO: whether the statusListener and registerListener should be buffered or unbuffered
 	sListener := make(chan PeerStatusWrapper, CHANNEL_BUFFER_SIZE)
-	rListener := make(chan RegisterMessage, CHANNEL_BUFFER_SIZE)
+	rListener := make(chan TaggerMessage, CHANNEL_BUFFER_SIZE)
 
-	dispatch := &Dispatcher{statusListener: sListener, registerListener: rListener}
+	dispatch := &Dispatcher{statusListener: sListener, taggerListener: rListener}
 	go dispatch.Run()
 	return dispatch
 }
