@@ -78,13 +78,16 @@ do
 	fi
 	gossipPort=$(($gossipPort+1))
 	if !(grep -q "$msgLine" "${outputFiles[$i]}") ; then
+		echo $gossipPort
    		failed="T"
 	fi
 	if !(grep -q "$peersLine" "${outputFiles[$i]}") ; then
-        failed="T"
+        echo $gossipPort
+		failed="T"
     fi
 	if !(grep -q "$msgLine2" "${outputFiles[$i]}") ; then
-        failed="T"
+        echo $gossipPort
+		failed="T"
     fi
 done
 

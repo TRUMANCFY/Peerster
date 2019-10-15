@@ -154,7 +154,7 @@ func (g *Gossiper) Run() {
 	peerListener := g.ReceiveFromPeers()
 	clientListener := g.ReceiveFromClients()
 
-	if g.antiEntropy > 0 {
+	if g.antiEntropy > 0 && !g.simple {
 		go g.AntiEntropy()
 	}
 
@@ -820,7 +820,7 @@ func (g *Gossiper) BroadcastPacket(gp *GossipPacket, excludedPeers *StringSet) {
 	g.peersList.Mux.Lock()
 	defer g.peersList.Mux.Unlock()
 
-	excludedPeers = nil
+	// excludedPeers = nil
 
 	fmt.Println(g.peersList.PeersList.ToArray())
 
