@@ -48,6 +48,8 @@ type Gossiper struct {
 	toSendChan       chan *GossipPacketWrapper
 	antiEntropy      int
 	guiAddr          string
+	gui              bool
+	guiPort          string
 }
 
 type PeersList struct {
@@ -96,7 +98,7 @@ type StatusTagger struct {
 	identifier string
 }
 
-func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, simple bool, antiEntropy int) *Gossiper {
+func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, simple bool, antiEntropy int, gui bool, guiPort string) *Gossiper {
 	// gossip
 	udpAddr, err := net.ResolveUDPAddr("udp4", gossipAddr)
 
@@ -121,9 +123,12 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		panic(fmt.Sprintln("Error when creating udpUIConn", err))
 	}
 
-	guiAddrStrSlice := strings.Split(gossipAddr, "")
-	guiAddrStrSlice[10] = "8"
-	guiAddrStr := strings.Join(guiAddrStrSlice, "")
+	// guiAddrStrSlice := strings.Split(gossipAddr, "")
+	// guiAddrStrSlice[10] = "8"
+	// guiAddrStr := strings.Join(guiAddrStrSlice, "")
+
+	guiAddr := fmt.Sprintf("127.0.0.1:%s", guiPort)
+	fmt.Printf("GUI Port is %s \n", guiAddr)
 
 	return &Gossiper{
 		address: udpAddr,
@@ -146,7 +151,8 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		dispatcher:       nil,
 		toSendChan:       make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
 		antiEntropy:      antiEntropy,
-		guiAddr:          guiAddrStr,
+		guiAddr:          guiAddr,
+		gui:              gui,
 	}
 }
 
@@ -159,7 +165,9 @@ func (g *Gossiper) Run() {
 	}
 
 	// Here to run the server
-	go g.ListenToGUI()
+	if g.gui {
+		go g.ListenToGUI()
+	}
 
 	g.dispatcher = StartPeerStatusDispatcher()
 	g.Listen(peerListener, clientListener)
@@ -1010,7 +1018,11 @@ func (g *Gossiper) ListenToGUI() {
 
 	fmt.Printf("Server runs at %s \n", g.guiAddr)
 
-	g.guiAddr = "127.0.0.1:8080"
+	// if g.fixed {
+	// 	fmt.Println("GUI Port is 127.0.0.1:8080")
+	// 	g.guiAddr = "127.0.0.1:8080"
+	// }
+
 	srv := &http.Server{
 		Handler:           r,
 		Addr:              g.guiAddr,
