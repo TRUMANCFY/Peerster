@@ -1,6 +1,7 @@
 package gossiper
 
 import (
+	"encoding/json"
 	"fmt" // check the type of variable
 	"log"
 	"math/rand"
@@ -872,17 +873,63 @@ func (g *Gossiper) AddPeer(p string) {
 
 // }
 
+type TestMessage struct {
+	Name     string
+	Messsage string
+	Id       int
+}
+
+func (g *Gossiper) GetMessages() []RumorMessage {
+	buffer := make([]RumorMessage, 0)
+
+	for _, l1 := range g.rumorList {
+		for _, l2 := range l1 {
+			buffer = append(buffer, l2)
+		}
+	}
+
+	return buffer
+}
+
 func (g *Gossiper) MessageHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO Message Handler
 	switch r.Method {
 	case "GET":
 		fmt.Println("MESSAGE GET")
 
-		// m := TestMessage{"Alice", "Hello", 1294706395881547000}
-		// json.NewEncoder(w).Encode(m)
+		var messages struct {
+			Messages []RumorMessage `json:"messages"`
+		}
+
+		messages.Messages = g.GetMessages()
+
+		json.NewEncoder(w).Encode(messages)
 	case "POST":
 		fmt.Println("MESSAGE POST")
+
+		var message struct {
+			Text string `json:"text"`
+		}
+
+		json.NewDecoder(r.Body).Decode(&message)
+
+		fmt.Printf("Receive %v \n", message)
+		go g.HandleNewMsg(message.Text)
+
+		g.AckPost(true, w)
+
 	}
+}
+
+func (g *Gossiper) HandleNewMsg(text string) {
+	cmw := &ClientMessageWrapper{
+		msg: &Message{
+			Text: text,
+		},
+		sender: nil,
+	}
+
+	g.HandleClientMessage(cmw)
 }
 
 func (g *Gossiper) NodeHandler(w http.ResponseWriter, r *http.Request) {
@@ -890,8 +937,28 @@ func (g *Gossiper) NodeHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		fmt.Println("NODE GET")
+
+		var peers struct {
+			Nodes []string `json:"nodes"`
+		}
+
+		peers.Nodes = g.peersList.PeersList.ToArray()
+
+		json.NewEncoder(w).Encode(peers)
+
 	case "POST":
 		fmt.Println("NODE POST")
+		var peer struct {
+			Addr string `json:"addr"`
+		}
+
+		json.NewDecoder(r.Body).Decode(&peer)
+
+		g.AddPeer(peer.Addr)
+
+		g.PrintPeers()
+
+		g.AckPost(true, w)
 	}
 }
 
@@ -903,9 +970,32 @@ func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("PeerID GET")
 
+	var id struct {
+		ID string `json:"id"`
+	}
+
+	id.ID = g.name
+
+	json.NewEncoder(w).Encode(id)
+}
+
+func (g *Gossiper) AckPost(success bool, w http.ResponseWriter) {
+	var response struct {
+		Success bool `json:"success"`
+	}
+	response.Success = success
+	json.NewEncoder(w).Encode(response)
 }
 
 func (g *Gossiper) ListenToGUI() {
+	// fake message
+	// g.rumorList["a"] = make(map[uint32]RumorMessage)
+	// g.rumorList["a"][0] = RumorMessage{
+	// 	Origin: "B",
+	// 	ID:     2,
+	// 	Text:   "I am good",
+	// }
+
 	// receiveResp := make(chan *Response, MAX_RESP)
 
 	r := mux.NewRouter()
@@ -918,6 +1008,7 @@ func (g *Gossiper) ListenToGUI() {
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./webserver/gui/dist/"))))
 
 	fmt.Printf("Server runs at %s \n", g.guiAddr)
+	// g.guiAddr = "127.0.0.1:8080"
 	srv := &http.Server{
 		Handler:           r,
 		Addr:              g.guiAddr,
