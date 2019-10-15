@@ -346,10 +346,10 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		// g.SendGossipPacket(g.CreateStatusPacket(), senderAddr)
 		fmt.Println("The rumor is behind our record")
 		// send the rumor the sender want
-		if diff > 1 {
-			newRumor := g.rumorList[r.Origin][r.ID+1]
-			g.SendGossipPacket(&GossipPacket{Rumor: &newRumor}, senderAddr)
-		}
+		// if diff > 1 {
+		// 	newRumor := g.rumorList[r.Origin][r.ID+1]
+		// 	g.SendGossipPacket(&GossipPacket{Rumor: &newRumor}, senderAddr)
+		// }
 	case diff < 0:
 		fmt.Println("The rumor is ahead of our record")
 	}
@@ -810,7 +810,6 @@ func (g *Gossiper) CreateStatusPacket() *GossipPacket {
 		wantSlice = append(wantSlice, ps)
 	}
 
-	// TODO Why there is a bug for the spType entry
 	sp := &StatusPacket{Want: wantSlice}
 
 	return sp.ToGossipPacket()
@@ -820,6 +819,8 @@ func (g *Gossiper) BroadcastPacket(gp *GossipPacket, excludedPeers *StringSet) {
 	g.peersList.Mux.Lock()
 	defer g.peersList.Mux.Unlock()
 
+	// just for the test of inf
+	// failed on my own laptop
 	// excludedPeers = nil
 
 	fmt.Println(g.peersList.PeersList.ToArray())
@@ -1008,7 +1009,8 @@ func (g *Gossiper) ListenToGUI() {
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./webserver/gui/dist/"))))
 
 	fmt.Printf("Server runs at %s \n", g.guiAddr)
-	// g.guiAddr = "127.0.0.1:8080"
+
+	g.guiAddr = "127.0.0.1:8080"
 	srv := &http.Server{
 		Handler:           r,
 		Addr:              g.guiAddr,

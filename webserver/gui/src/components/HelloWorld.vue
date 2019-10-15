@@ -74,7 +74,8 @@ export default {
       peerMsg: [],
       peerMsgStr: "",      
       newPeer: "",
-      msgToSend: ""
+      msgToSend: "",
+      regExp: /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$/
     }
   },
   methods: {
@@ -114,6 +115,12 @@ export default {
        return
      }
 
+     if (!self.matchExact(self.regExp, self.newPeer)) {
+       alert("Please input the valid address")
+       self.newPeer = ""
+       return
+      }
+
       // test the communicatioon
       var payload = {"Addr": self.newPeer}
       
@@ -130,6 +137,10 @@ export default {
       }
 
     },
+    matchExact: function(r, str) {
+      var match = str.match(r);
+      return match && str === match[0];
+    },
     sortMsgStr: function(s1, s2) {
       var as = s1.toLowerCase();
       var bs = s2.toLowerCase();
@@ -139,7 +150,7 @@ export default {
     updateOtherComp: function() {
       var self = this
       var tmpNodes = []
-      
+
       self.knownNodes["nodes"].map(a => {
         tmpNodes.push(a)
       })
