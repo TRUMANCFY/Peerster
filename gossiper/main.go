@@ -146,7 +146,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		currentID:        1,
 		dispatcher:       nil,
 		toSendChan:       make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
-		antiEntropy:      1,
+		antiEntropy:      antiEntropy,
 		guiAddr:          guiAddr,
 		gui:              gui,
 	}
