@@ -1,12 +1,9 @@
 package gossiper
 
 import (
-	"encoding/json"
 	"fmt" // check the type of variable
-	"log"
 	"math/rand"
 	"net"
-	"net/http"
 	"strings"
 	"sync"
 	"time"
@@ -14,7 +11,6 @@ import (
 	. "github.com/TRUMANCFY/Peerster/message"
 	. "github.com/TRUMANCFY/Peerster/util"
 	"github.com/dedis/protobuf"
-	"github.com/gorilla/mux"
 )
 
 const UDP_DATAGRAM_MAX_SIZE = 1024
@@ -48,6 +44,8 @@ type Gossiper struct {
 	toSendChan       chan *GossipPacketWrapper
 	antiEntropy      int
 	guiAddr          string
+	gui              bool
+	guiPort          string
 }
 
 type PeersList struct {
@@ -96,7 +94,7 @@ type StatusTagger struct {
 	identifier string
 }
 
-func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, simple bool, antiEntropy int) *Gossiper {
+func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, simple bool, antiEntropy int, gui bool, guiPort string) *Gossiper {
 	// gossip
 	udpAddr, err := net.ResolveUDPAddr("udp4", gossipAddr)
 
@@ -121,9 +119,12 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		panic(fmt.Sprintln("Error when creating udpUIConn", err))
 	}
 
-	guiAddrStrSlice := strings.Split(gossipAddr, "")
-	guiAddrStrSlice[10] = "8"
-	guiAddrStr := strings.Join(guiAddrStrSlice, "")
+	// guiAddrStrSlice := strings.Split(gossipAddr, "")
+	// guiAddrStrSlice[10] = "8"
+	// guiAddrStr := strings.Join(guiAddrStrSlice, "")
+
+	guiAddr := fmt.Sprintf("127.0.0.1:%s", guiPort)
+	fmt.Printf("GUI Port is %s \n", guiAddr)
 
 	return &Gossiper{
 		address: udpAddr,
@@ -145,8 +146,9 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		currentID:        1,
 		dispatcher:       nil,
 		toSendChan:       make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
-		antiEntropy:      antiEntropy,
-		guiAddr:          guiAddrStr,
+		antiEntropy:      1,
+		guiAddr:          guiAddr,
+		gui:              gui,
 	}
 }
 
@@ -159,7 +161,9 @@ func (g *Gossiper) Run() {
 	}
 
 	// Here to run the server
-	go g.ListenToGUI()
+	if g.gui {
+		go g.ListenToGUI()
+	}
 
 	g.dispatcher = StartPeerStatusDispatcher()
 	g.Listen(peerListener, clientListener)
@@ -171,7 +175,6 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 		select {
 		case gpw := <-peerListener:
 			go g.HandlePeerMessage(gpw)
-			g.PrintPeers()
 		case cmw := <-clientListener:
 			fmt.Println("Handle Client Msg")
 			go g.HandleClientMessage(cmw)
@@ -198,18 +201,24 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 func (g *Gossiper) AntiEntropy() {
 	fmt.Println("Start antiEntropy")
 	// time.Duration can convert int to time type
-	ticker := time.NewTimer(time.Duration(g.antiEntropy) * time.Second)
 
-	for {
-		select {
-		case <-ticker.C:
+	go func() {
+		fmt.Println("The value of antientropy is ", g.antiEntropy)
+
+		ticker := time.NewTicker(time.Duration(g.antiEntropy) * time.Second)
+
+		for t := range ticker.C {
+
+			_ = t
+
 			neighbor, present := g.SelectRandomNeighbor(nil)
 			if present {
 				fmt.Println("Anti entropy " + neighbor)
 				g.SendGossipPacketStrAddr(g.CreateStatusPacket(), neighbor)
 			}
 		}
-	}
+
+	}()
 }
 
 func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
@@ -217,6 +226,7 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 	sender := gpw.sender
 
 	g.AddPeer(sender.String())
+	g.PrintPeers()
 
 	switch {
 	case packet.Simple != nil:
@@ -346,10 +356,7 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		// g.SendGossipPacket(g.CreateStatusPacket(), senderAddr)
 		fmt.Println("The rumor is behind our record")
 		// send the rumor the sender want
-		// if diff > 1 {
-		// 	newRumor := g.rumorList[r.Origin][r.ID+1]
-		// 	g.SendGossipPacket(&GossipPacket{Rumor: &newRumor}, senderAddr)
-		// }
+
 	case diff < 0:
 		fmt.Println("The rumor is ahead of our record")
 	}
@@ -388,7 +395,7 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 		peerStr := peerAddr.String()
 
 		// Register First
-		fmt.Printf("Register Identifier: %s Sender: %s \n", rumor.Origin, peerStr)
+		// fmt.Printf("Register Identifier: %s Sender: %s \n", rumor.Origin, peerStr)
 		g.dispatcher.taggerListener <- TaggerMessage{
 			observerChan: observerChan,
 			tagger: StatusTagger{
@@ -410,15 +417,18 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 			select {
 			case peerStatus, ok := <-observerChan:
 				// the channel has been closed by dispatcher
-
-				fmt.Println("*********")
 				if !ok {
+					fmt.Println("Read peer status wrong")
+					fmt.Println(peerStatus)
 					return
 				}
+
+				fmt.Printf("Receive Peer Status Origin: %s, NextID: %d \n", peerStatus.Identifier, peerStatus.NextID)
+
 				// this means that the peer has received the rumor (in this case, ps.nextID=rumor.ID+1)
 				// or it already contains more advanced
 
-				if peerStatus.NextID >= rumor.ID {
+				if peerStatus.NextID > rumor.ID {
 					g.updatePeerStatusList(peerStr, peerStatus)
 					// check whether the peer has been synced
 					if g.syncWithPeer(peerStr) {
@@ -571,13 +581,18 @@ func (g *Gossiper) getOwnPeerSlice(peerStr string) []PeerStatus {
 
 func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *StringSet) {
 	// 50 - 50
+	fmt.Println("Prepare to flip the coin")
 	randInt := rand.Intn(2)
 	if randInt == 0 {
 		neighborPeer, present := g.RumorMongeringPrepare(rumor, excludedPeers)
 
 		if present {
 			fmt.Printf("FLIPPED COIN sending rumor to %s \n", neighborPeer)
+		} else {
+			fmt.Println("FLIPPED COIN not exist")
 		}
+	} else {
+		fmt.Println("Choose not to flip the coin")
 	}
 }
 
@@ -601,6 +616,13 @@ func (g *Gossiper) SelectRandomNeighbor(excludedPeer *StringSet) (string, bool) 
 }
 
 func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
+
+	// put the peerstatus to the channel
+	g.dispatcher.statusListener <- PeerStatusWrapper{
+		sender:       sender.String(),
+		peerStatuses: s.Want,
+	}
+
 	// rumorToSend, and rumorToAsk is []PeerStatus
 	rumorToSend, rumorToAsk := g.ComputePeerStatusDiff(s.Want)
 
@@ -620,20 +642,19 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 			g.rumorListLock.Unlock()
 			firstRumor = &firstObject
 		}
-		g.RumorMongering(firstRumor, sender)
 
-		// put the peerstatus to the channel
-		g.dispatcher.statusListener <- PeerStatusWrapper{
-			sender:       sender.String(),
-			peerStatuses: s.Want,
-		}
+		go g.RumorMongering(firstRumor, sender)
 
-	} else if len(rumorToAsk) > 0 {
+	}
+
+	if len(rumorToAsk) > 0 {
 		// deal with the case to send rumorToAsk
-		g.SendGossipPacket(g.CreateStatusPacket(), sender)
+		go g.SendGossipPacket(g.CreateStatusPacket(), sender)
 
-	} else {
-		// print out sync
+	}
+
+	if len(rumorToSend) == 0 && len(rumorToAsk) == 0 {
+		// Sync
 		fmt.Printf("IN SYNC WITH %s \n", sender)
 	}
 }
@@ -873,149 +894,3 @@ func (g *Gossiper) AddPeer(p string) {
 // func (g *Gossiper) GetPeerID() {
 
 // }
-
-type TestMessage struct {
-	Name     string
-	Messsage string
-	Id       int
-}
-
-func (g *Gossiper) GetMessages() []RumorMessage {
-	buffer := make([]RumorMessage, 0)
-
-	for _, l1 := range g.rumorList {
-		for _, l2 := range l1 {
-			buffer = append(buffer, l2)
-		}
-	}
-
-	return buffer
-}
-
-func (g *Gossiper) MessageHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO Message Handler
-	switch r.Method {
-	case "GET":
-		fmt.Println("MESSAGE GET")
-
-		var messages struct {
-			Messages []RumorMessage `json:"messages"`
-		}
-
-		messages.Messages = g.GetMessages()
-
-		json.NewEncoder(w).Encode(messages)
-	case "POST":
-		fmt.Println("MESSAGE POST")
-
-		var message struct {
-			Text string `json:"text"`
-		}
-
-		json.NewDecoder(r.Body).Decode(&message)
-
-		fmt.Printf("Receive %v \n", message)
-		go g.HandleNewMsg(message.Text)
-
-		g.AckPost(true, w)
-
-	}
-}
-
-func (g *Gossiper) HandleNewMsg(text string) {
-	cmw := &ClientMessageWrapper{
-		msg: &Message{
-			Text: text,
-		},
-		sender: nil,
-	}
-
-	g.HandleClientMessage(cmw)
-}
-
-func (g *Gossiper) NodeHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO Node Handler
-	switch r.Method {
-	case "GET":
-		fmt.Println("NODE GET")
-
-		var peers struct {
-			Nodes []string `json:"nodes"`
-		}
-
-		peers.Nodes = g.peersList.PeersList.ToArray()
-
-		json.NewEncoder(w).Encode(peers)
-
-	case "POST":
-		fmt.Println("NODE POST")
-		var peer struct {
-			Addr string `json:"addr"`
-		}
-
-		json.NewDecoder(r.Body).Decode(&peer)
-
-		g.AddPeer(peer.Addr)
-
-		g.PrintPeers()
-
-		g.AckPost(true, w)
-	}
-}
-
-func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO ID Handler
-	if r.Method != "GET" {
-		panic("Wrong Method, GET required")
-	}
-
-	fmt.Println("PeerID GET")
-
-	var id struct {
-		ID string `json:"id"`
-	}
-
-	id.ID = g.name
-
-	json.NewEncoder(w).Encode(id)
-}
-
-func (g *Gossiper) AckPost(success bool, w http.ResponseWriter) {
-	var response struct {
-		Success bool `json:"success"`
-	}
-	response.Success = success
-	json.NewEncoder(w).Encode(response)
-}
-
-func (g *Gossiper) ListenToGUI() {
-	// fake message
-	// g.rumorList["a"] = make(map[uint32]RumorMessage)
-	// g.rumorList["a"][0] = RumorMessage{
-	// 	Origin: "B",
-	// 	ID:     2,
-	// 	Text:   "I am good",
-	// }
-
-	// receiveResp := make(chan *Response, MAX_RESP)
-
-	r := mux.NewRouter()
-
-	// set up routers
-	r.HandleFunc("/message", g.MessageHandler).Methods("GET", "POST")
-	r.HandleFunc("/node", g.NodeHandler).Methods("GET", "POST")
-	r.HandleFunc("/id", g.IDHandler).Methods("GET")
-
-	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./webserver/gui/dist/"))))
-
-	fmt.Printf("Server runs at %s \n", g.guiAddr)
-
-	g.guiAddr = "127.0.0.1:8080"
-	srv := &http.Server{
-		Handler:           r,
-		Addr:              g.guiAddr,
-		WriteTimeout:      15 * time.Second,
-		ReadHeaderTimeout: 15 * time.Second,
-	}
-	log.Fatal(srv.ListenAndServe())
-}
