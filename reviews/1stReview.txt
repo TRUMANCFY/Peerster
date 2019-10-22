@@ -1,0 +1,78 @@
+Review Homework 1 CS-438 Fall 2019
+
+Reviewer Name: Fengyu Cai
+
+----------
+Review 0
+----------
+Score (min 1, max 5): 5
+
+Advantages and Disadvantages (150-300 words):
+1. Advantages:
+a) Callback function:
+The wide application of callback function can help a lot in the capsulation.
+For example, we find that the function ``` NewTicker ``` can be used as
+interfaces for other functions, which can help a lot the implementation of
+process start and process termination.
+
+b) Use tickers to memorize the rumor mongering status:
+Also, as mentioned above, because there is tickers to memorize the launch and termination
+of a process, we can take advantage of this to implement the process of rumor mongering.
+
+
+c) Accelerate the process of information exchange:
+I think this one is quite good, as I did not implement this way. In this way, the efficiency
+of the information exchange is higher because of this. When receiving the status packet, this
+code compares it with local wantlist. In this way, during one receipt of status packet, the gossiper
+not only send the status packet to the sender if he has found that some of the packets have been missed,
+but also, if there are some rumors that the sender missed, it can also start rumormongering to the sender
+with the missing rumor.
+
+2. Disadvantages:
+a) The design of the lock:
+All of the locks used as a member of gossiper object, it may perhaps cause the lock of the whole object.
+I think this could be the reason why there is deadlock for the tick checking. It will be a better design
+that the lock can be put inside the member of the object 'gossiper'.
+
+For example:
+LastSent and LastSentLock can be combined as
+LastSentObject {
+    LastSent map[string]*hu.RumorMessage
+    LastSentLock sync.RWMutex
+}
+
+Design recommendations (100-200 words):
+
+
+----------
+Review 1
+----------
+Score (min 1, max 5): 5
+
+Advantages and Disadvantages (150-300 words):
+Advantages:
+a) Very good OOP design
+In this implementation, the most attractive point for me is that the members of gossiper have been modulized, such as
+peerBook and database which is used to record the data. It will be easy to develop other features in the future.
+What is more, it is also convenient for the test, e.g. in this implementation, we have database_test, daemons_test and 
+
+
+b) 
+
+c) Clear logger:
+Compared with other implementations, the most impressive feature of this implementation is the clear logging.
+There is a logger object. And each object can have a logging member, which is much more easier for the record.
+ 
+
+
+Design recommendations (100-200 words):
+
+
+----------
+Review 2
+----------
+Score (min 1, max 5):
+
+Advantages and Disadvantages (150-300 words):
+
+Design recommendations (100-200 words):
