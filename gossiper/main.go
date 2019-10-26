@@ -341,9 +341,9 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		if g.address == senderAddr {
 			// CHECK
 			// The message is from local client
-			g.RumorMongeringPrepare(r, nil)
+			go g.RumorMongeringPrepare(r, nil)
 		} else {
-			g.RumorMongeringPrepare(r, GenerateStringSetSingleton(senderAddr.String()))
+			go g.RumorMongeringPrepare(r, GenerateStringSetSingleton(senderAddr.String()))
 		}
 
 		fmt.Println("Accept Rumor")
@@ -374,7 +374,7 @@ func (g *Gossiper) RumorMongeringPrepare(rumor *RumorMessage, excludedPeers *Str
 	randomNeighbor, present := g.SelectRandomNeighbor(excludedPeers)
 
 	if present {
-		g.RumorMongeringAddrStr(rumor, randomNeighbor)
+		go g.RumorMongeringAddrStr(rumor, randomNeighbor)
 	}
 
 	return randomNeighbor, present
