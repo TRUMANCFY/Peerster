@@ -46,11 +46,17 @@ type Gossiper struct {
 	guiAddr          string
 	gui              bool
 	guiPort          string
+	routeTable       *RouteTable
+}
+
+type RouteTable struct {
+	routeTable map[string]string
+	Mux        *sync.Mutex
 }
 
 type PeersList struct {
 	PeersList *StringSet
-	Mux       sync.Mutex
+	Mux       *sync.Mutex
 }
 
 // advance and combined data structure
@@ -126,6 +132,13 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 	guiAddr := fmt.Sprintf("127.0.0.1:%s", guiPort)
 	fmt.Printf("GUI Port is %s \n", guiAddr)
 
+	routeTable := make(map[string]string)
+
+	routeTableObject := RouteTable{
+		routeTable: routeTable,
+		Mux:        &sync.Mutex{},
+	}
+
 	return &Gossiper{
 		address: udpAddr,
 		conn:    udpConn,
@@ -134,6 +147,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		name:    name,
 		peersList: &PeersList{
 			PeersList: peersStr,
+			Mux:       &sync.Mutex{},
 		},
 		simple:           simple,
 		peerStatuses:     make(map[string]PeerStatus),
@@ -149,6 +163,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		antiEntropy:      antiEntropy,
 		guiAddr:          guiAddr,
 		gui:              gui,
+		routeTable:       &routeTableObject,
 	}
 }
 
@@ -349,16 +364,22 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		fmt.Println("Accept Rumor")
 		g.AcceptRumor(r)
 
+		// TODO-2: update the rumorTable
+		g.updateRouteTable(r, senderAddr.String())
+
 	case diff > 0:
 		// TODO: consider the out-of-order problem
 
 		// TODO: Still send the status packet to ask for the rumor
 		// g.SendGossipPacket(g.CreateStatusPacket(), senderAddr)
-		fmt.Println("The rumor is behind our record")
+		fmt.Println("The new coming rumor ID is larger than our local")
 		// send the rumor the sender want
 
+		// TODO-2: update the rumorTable
+		g.updateRouteTable(r, senderAddr.String())
+
 	case diff < 0:
-		fmt.Println("The rumor is ahead of our record")
+		fmt.Println("The new coming rumor ID is smaller than our local")
 	}
 
 	// Send the StatusMessageToSender if the rumor is not from self
@@ -865,32 +886,3 @@ func (g *Gossiper) AddPeer(p string) {
 	g.peersList.PeersList.Add(p)
 	g.peersList.Mux.Unlock()
 }
-
-// send method used for the first part
-// func (g *Gossiper) SendPacket(gp *GossipPacket, peerAddr string) {
-// 	packetBytes, err := protobuf.Encode(gp)
-
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	conn, err := net.Dial("udp4", peerAddr)
-
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	conn.Write(packetBytes)
-// }
-
-// func (g *Gossiper) GetAllRumors() {
-
-// }
-
-// func (g *Gossiper) GetAllPeers() {
-
-// }
-
-// func (g *Gossiper) GetPeerID() {
-
-// }
