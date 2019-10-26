@@ -11,6 +11,7 @@ import (
 
 var uiPort = flag.String("UIPort", "1234", "please provide UI Port")
 var msg = flag.String("msg", "Hello", "Please provide the message broadcasted")
+var dest = flag.String("dest", "", "destination for the private message")
 
 func main() {
 	flag.Parse()
@@ -19,7 +20,7 @@ func main() {
 
 	address := fmt.Sprintf("127.0.0.1:%s", *uiPort)
 
-	sendMessage := &Message{Text: *msg}
+	sendMessage := &Message{Text: *msg, Destination: dest}
 	packetBytes, err := protobuf.Encode(sendMessage)
 	// fmt.Println(packetBytes)
 	if err != nil {

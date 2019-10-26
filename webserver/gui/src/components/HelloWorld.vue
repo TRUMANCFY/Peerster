@@ -6,7 +6,7 @@
       <b-form>
         <div class="form-group">
           <label>Chat Box</label>
-          <textarea class="form-control" id="ChatBox" rows="10" v-model="peerMsgStr" readonly></textarea>
+          <textarea class="form-control" id="ChatBox" rows="5" v-model="peerMsgStr" readonly></textarea>
         </div>
 
         <div class="form-group">
@@ -41,7 +41,38 @@
         ></b-form-input>
         <br>
         <b-button class='float-right' @click="addPeer">Add Peer</b-button>
+      <br>
+      <br>
+      <br>
+      <div class="form-group">
+        <div>
+          <label>Private Message</label>
+        </div>
+        <div style="width:20%;float:left">
+          <select v-model="peerSelected" style="width:100%" multiple>
+              <option v-for="(peer,index) in originReceived" :key="`peer-${index}`">
+                {{ peer }}
+              </option>
+          </select>
+        </div>
+        <div style="width:80%;float:right;">
+          <div style="height:50%">
+          <b-form-input
+          id="PrivateMessage"
+          placeholder="Private Message"
+          v-model="privateMsgToSend"
+          style="width:80%;margin: 0 auto"
+        ></b-form-input>
+          </div>
+          <div style="height:50%">
+            <b-button class='float-center' style="margin-top: 5%">Send Private</b-button>
+          </div>
+        </div>
+        
+      </div>
     </b-form>
+
+    
     </b-col>
   </b-row>
 </b-container>
@@ -75,6 +106,9 @@ export default {
       peerMsgStr: "",      
       newPeer: "",
       msgToSend: "",
+      peerSelected: [],
+      originReceived: ['A', 'B'],
+      privateMsgToSend: "",
       regExp: /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$/
     }
   },
@@ -168,8 +202,12 @@ export default {
         }
       })
       var tmpMsg = []
+      self.originReceived = []
       tmpMsgSorted.map(a => {
         tmpMsg.push(a.Origin + " " + a.ID + " " + a.Text + '\n')
+        if (!self.originReceived.includes(a.Origin)) {
+          self.originReceived.push(a.Origin)
+        }
       })
       self.peerMsgStr = tmpMsg.join('\n')
     },
@@ -234,7 +272,7 @@ export default {
   },
   mounted() {
     // setInterval(this.refresh, 1000)
-    setInterval(this.refresh, 1000)
+    // setInterval(this.refresh, 1000)
   }
 }
 </script>

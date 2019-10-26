@@ -28,7 +28,18 @@ type PeerStatus struct {
 
 // client to node message
 type Message struct {
-	Text string
+	Text        string
+	Destination *string
+	File        *string
+	Request     *[]byte
+}
+
+type PrivateMessage struct {
+	Origin      string
+	ID          uint32
+	Text        string
+	Destination string
+	HopLimit    uint32
 }
 
 // Actually, we donot have to be confused with the different types of status packet
@@ -46,9 +57,10 @@ type StatusPacket struct {
 }
 
 type GossipPacket struct {
-	Simple *SimpleMessage
-	Rumor  *RumorMessage
-	Status *StatusPacket
+	Simple  *SimpleMessage
+	Rumor   *RumorMessage
+	Status  *StatusPacket
+	Private *PrivateMessage
 }
 
 func (sp *StatusPacket) SenderString(sender string) string {

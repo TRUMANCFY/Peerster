@@ -13,6 +13,10 @@ import (
 	"github.com/dedis/protobuf"
 )
 
+// ./Peerster -gossipAddr=127.0.0.1:5001 -gui -GUIPort=8081 -peers=127.0.0.1:5002 -name=A -UIPort=8001
+// ./Peerster -gossipAddr=127.0.0.1:5002 -gui -GUIPort=8082 -peers=127.0.0.1:5003 -name=A -UIPort=8002
+// ./Peerster -gossipAddr=127.0.0.1:5003 -gui -GUIPort=8083 -peers=127.0.0.1:5001 -name=A -UIPort=8003
+
 const UDP_DATAGRAM_MAX_SIZE = 1024
 const CHANNEL_BUFFER_SIZE = 1024
 const STATUS_MESSAGE_TIMEOUT = 10 * time.Second
@@ -47,6 +51,7 @@ type Gossiper struct {
 	gui              bool
 	guiPort          string
 	routeTable       *RouteTable
+	rtimer           time.Duration
 }
 
 type RouteTable struct {
@@ -100,7 +105,7 @@ type StatusTagger struct {
 	identifier string
 }
 
-func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, simple bool, antiEntropy int, gui bool, guiPort string) *Gossiper {
+func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, rtimer int, simple bool, antiEntropy int, gui bool, guiPort string) *Gossiper {
 	// gossip
 	udpAddr, err := net.ResolveUDPAddr("udp4", gossipAddr)
 
@@ -164,6 +169,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		guiAddr:          guiAddr,
 		gui:              gui,
 		routeTable:       &routeTableObject,
+		rtimer:           time.Duration(rtimer) * time.Second,
 	}
 }
 
@@ -178,6 +184,11 @@ func (g *Gossiper) Run() {
 	// Here to run the server
 	if g.gui {
 		go g.ListenToGUI()
+	}
+
+	// send route message
+	if g.rtimer > 0 {
+		go g.RunRoutingMessage()
 	}
 
 	g.dispatcher = StartPeerStatusDispatcher()
@@ -276,6 +287,13 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 
 func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	msg := cmw.msg
+
+	// Check whether it is a private message first
+	// this is a private message
+	if *cmw.msg.Destination != "" {
+		// OUTPUT
+		fmt.Printf("CLIENT MESSAGE %s dest %s \n", cmw.msg.Text, *cmw.msg.Destination)
+	}
 
 	if g.simple {
 		newMsg := g.CreateClientPacket(msg)
