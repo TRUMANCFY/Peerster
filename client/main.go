@@ -12,6 +12,7 @@ import (
 var uiPort = flag.String("UIPort", "1234", "please provide UI Port")
 var msg = flag.String("msg", "Hello", "Please provide the message broadcasted")
 var dest = flag.String("dest", "", "destination for the private message")
+var file = flag.String("file", "", "file to be indexed by the gossiper, or filename of the requested file")
 
 func main() {
 	flag.Parse()

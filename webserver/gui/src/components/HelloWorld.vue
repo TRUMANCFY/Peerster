@@ -73,8 +73,20 @@
             <b-button class='float-center' style="margin-top: 5%" @click="submitPrivateMsg">Send Private</b-button>
           </div>
         </div>
-        
       </div>
+    
+      <div style="margin-top: 8em">
+        <label>Select file to share</label>
+        <b-form-file
+        v-model="file"
+        :state="Boolean(file)"
+        placeholder="Choose a file or drop it here..."
+        drop-placeholder="Drop file here..."
+      ></b-form-file>
+      <b-button class='float-center' style="margin-top:1em" @click="sendFile">Send File</b-button>
+      </div>
+
+       
     </b-form>
 
     
@@ -116,6 +128,7 @@ export default {
       privateMsgToSend: "",
       privateMsg: [],
       privateMsgStr: "",
+      file: null,
       regExp: /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$/
     }
   },
@@ -371,18 +384,23 @@ export default {
 
     },
 
+    sendFile: function() {
+      var self = this;
+      console.log(self.file)
+    },
+
     refresh: function() {
       console.log('refresh')
-      this.pullMessage()
-      this.pullPeerID()
-      this.pullNodes()
-      this.pullPrivateMsg()
-      this.pullRouteTarget()
-      this.updateOtherComp()
+      // this.pullMessage()
+      // this.pullPeerID()
+      // this.pullNodes()
+      // this.pullPrivateMsg()
+      // this.pullRouteTarget()
+      // this.updateOtherComp()
     }
   },
   mounted() {
-    setInterval(this.refresh, 1000)
+    // setInterval(this.refresh, 1000)
   }
 }
 </script>
