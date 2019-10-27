@@ -11,6 +11,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// TODO donot return the emtpy text
 func (g *Gossiper) GetMessages() []RumorMessage {
 	buffer := make([]RumorMessage, 0)
 

@@ -29,29 +29,40 @@ const GUI_ADDR = "127.0.0.1:8080"
 // 3. Also, we need to record the rumour we are maintain data format: map[string](map[int]RumorMessage) peerName => sequential number => rumorMessage
 
 type Gossiper struct {
-	address          *net.UDPAddr
-	conn             *net.UDPConn
-	uiAddr           *net.UDPAddr
-	uiConn           *net.UDPConn
-	name             string
-	peersList        *PeersList
-	simple           bool
-	peerStatuses     map[string]PeerStatus
-	peerWantList     map[string](map[string]PeerStatus)
-	peerWantListLock *sync.RWMutex
-	rumorList        map[string](map[uint32]RumorMessage)
-	rumorListLock    *sync.RWMutex
-	simpleList       map[string](map[string]bool)
-	simpleListLock   *sync.RWMutex
-	dispatcher       *Dispatcher
-	currentID        uint32
-	toSendChan       chan *GossipPacketWrapper
-	antiEntropy      int
-	guiAddr          string
-	gui              bool
-	guiPort          string
-	routeTable       *RouteTable
-	rtimer           time.Duration
+	address            *net.UDPAddr
+	conn               *net.UDPConn
+	uiAddr             *net.UDPAddr
+	uiConn             *net.UDPConn
+	name               string
+	peersList          *PeersList
+	simple             bool
+	peerStatuses       map[string]PeerStatus
+	peerWantList       map[string](map[string]PeerStatus)
+	peerWantListLock   *sync.RWMutex
+	rumorList          map[string](map[uint32]RumorMessage)
+	rumorListLock      *sync.RWMutex
+	simpleList         map[string](map[string]bool)
+	simpleListLock     *sync.RWMutex
+	dispatcher         *Dispatcher
+	currentID          *CurrentID
+	toSendChan         chan *GossipPacketWrapper
+	antiEntropy        int
+	guiAddr            string
+	gui                bool
+	guiPort            string
+	routeTable         *RouteTable
+	rtimer             time.Duration
+	privateMessageList *PrivateMessageList
+}
+
+type CurrentID struct {
+	currentID uint32
+	Mux       *sync.Mutex
+}
+
+type PrivateMessageList struct {
+	privateMessageList map[string][]string
+	Mux                *sync.Mutex
 }
 
 type RouteTable struct {
@@ -144,6 +155,16 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		Mux:        &sync.Mutex{},
 	}
 
+	privateMessageList := PrivateMessageList{
+		privateMessageList: make(map[string][]string),
+		Mux:                &sync.Mutex{},
+	}
+
+	currentID := CurrentID{
+		currentID: 1,
+		Mux:       &sync.Mutex{},
+	}
+
 	return &Gossiper{
 		address: udpAddr,
 		conn:    udpConn,
@@ -154,22 +175,23 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 			PeersList: peersStr,
 			Mux:       &sync.Mutex{},
 		},
-		simple:           simple,
-		peerStatuses:     make(map[string]PeerStatus),
-		peerWantList:     make(map[string](map[string]PeerStatus)),
-		peerWantListLock: &sync.RWMutex{},
-		rumorList:        make(map[string](map[uint32]RumorMessage)),
-		rumorListLock:    &sync.RWMutex{},
-		simpleList:       make(map[string](map[string]bool)),
-		simpleListLock:   &sync.RWMutex{},
-		currentID:        1,
-		dispatcher:       nil,
-		toSendChan:       make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
-		antiEntropy:      antiEntropy,
-		guiAddr:          guiAddr,
-		gui:              gui,
-		routeTable:       &routeTableObject,
-		rtimer:           time.Duration(rtimer) * time.Second,
+		simple:             simple,
+		peerStatuses:       make(map[string]PeerStatus),
+		peerWantList:       make(map[string](map[string]PeerStatus)),
+		peerWantListLock:   &sync.RWMutex{},
+		rumorList:          make(map[string](map[uint32]RumorMessage)),
+		rumorListLock:      &sync.RWMutex{},
+		simpleList:         make(map[string](map[string]bool)),
+		simpleListLock:     &sync.RWMutex{},
+		currentID:          &currentID,
+		dispatcher:         nil,
+		toSendChan:         make(chan *GossipPacketWrapper, CHANNEL_BUFFER_SIZE),
+		antiEntropy:        antiEntropy,
+		guiAddr:            guiAddr,
+		gui:                gui,
+		routeTable:         &routeTableObject,
+		rtimer:             time.Duration(rtimer) * time.Second,
+		privateMessageList: &privateMessageList,
 	}
 }
 
@@ -282,6 +304,9 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 		// OUTPUT
 		fmt.Println(packet.Status.SenderString(sender.String()))
 		g.HandleStatusPacket(packet.Status, sender)
+
+	case packet.Private != nil:
+		g.HandlePrivatePacket(packet.Private, sender)
 	}
 }
 
@@ -293,6 +318,8 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	if *cmw.msg.Destination != "" {
 		// OUTPUT
 		fmt.Printf("CLIENT MESSAGE %s dest %s \n", cmw.msg.Text, *cmw.msg.Destination)
+		g.HandleClientPrivate(cmw)
+		return
 	}
 
 	if g.simple {
@@ -301,8 +328,7 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 		g.BroadcastPacket(newGossipPacket, nil)
 	} else {
 		newRumorMsg := g.CreateRumorPacket(msg)
-		// ID count increase
-		g.currentID++
+
 		fmt.Println("CURRENTID is ", g.currentID)
 		// the second arguement is the last-step source of the message
 		// here include the case that we receive it from the client
@@ -856,11 +882,18 @@ func (g *Gossiper) CreateClientPacket(m *Message) *SimpleMessage {
 }
 
 func (g *Gossiper) CreateRumorPacket(m *Message) *RumorMessage {
-	return &RumorMessage{
+	g.currentID.Mux.Lock()
+	defer g.currentID.Mux.Unlock()
+
+	res := &RumorMessage{
 		Origin: g.name,
-		ID:     g.currentID,
+		ID:     g.currentID.currentID,
 		Text:   m.Text,
 	}
+
+	g.currentID.currentID++
+
+	return res
 }
 
 func (g *Gossiper) CreateStatusPacket() *GossipPacket {
