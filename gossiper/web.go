@@ -11,7 +11,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// TODO donot return the emtpy text
 func (g *Gossiper) GetMessages() []RumorMessage {
 	buffer := make([]RumorMessage, 0)
 
@@ -89,7 +88,6 @@ func (g *Gossiper) HandleNewMsg(text string) {
 }
 
 func (g *Gossiper) NodeHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO Node Handler
 	switch r.Method {
 	case "GET":
 		// fmt.Println("NODE GET")
@@ -161,7 +159,6 @@ func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
 func (g *Gossiper) PrivateHandler(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		fmt.Println("Private GET")
 
 		var privateMsgs struct {
 			Msgs []PrivateMessage `json:"msgs"`
@@ -169,12 +166,10 @@ func (g *Gossiper) PrivateHandler(w http.ResponseWriter, r *http.Request) {
 
 		privateMsgs.Msgs = g.GetPrivateMsgs()
 
-		fmt.Println(privateMsgs.Msgs)
-
 		json.NewEncoder(w).Encode(privateMsgs)
 
 	case "POST":
-		fmt.Println("Private POST")
+		// fmt.Println("Private POST")
 		var privateMsgDest struct {
 			Text string `json:"text"`
 			Dest string `json:"dest"`
@@ -189,6 +184,8 @@ func (g *Gossiper) PrivateHandler(w http.ResponseWriter, r *http.Request) {
 			Destination: privateMsgDest.Dest,
 			HopLimit:    HOPLIMIT,
 		}
+
+		fmt.Println(privateMsg)
 
 		go g.SendPrivateMessage(&privateMsg)
 
@@ -206,8 +203,6 @@ func (g *Gossiper) RouteHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	routes.Targets = g.GetRoutes()
-
-	fmt.Println(routes.Targets)
 
 	json.NewEncoder(w).Encode(routes)
 }
@@ -229,7 +224,7 @@ func (g *Gossiper) ListenToGUI() {
 	// 	Text:   "I am good",
 	// }
 
-	// fake data
+	// fake data for private message
 
 	g.routeTable.routeTable["A"] = "127.0.0.1:5002"
 	g.routeTable.routeTable["B"] = "127.0.0.1:5003"

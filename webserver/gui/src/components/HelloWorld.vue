@@ -242,14 +242,38 @@ export default {
         else {
           return self.sortMsgStr(a.Origin, b.Origin)
         }
-      })
-      var tmpMsg = []
+      });
+
+      var tmpMsg = [];
       tmpMsgSorted.map(a => {
         tmpMsg.push(a.Origin + " " + a.ID + " " + a.Text + '\n')
-      })
-      self.peerMsgStr = tmpMsg.join('\n')
-
+      });
       
+      self.peerMsgStr = tmpMsg.join('\n');
+
+      // Deal with PrivateMessage
+      var tmpPrivateMsgSorted = self.privateMsg.sort((a, b) => {
+        if (a.Origin == b.Origin) {
+          return self.sortMsgStr(a.Text, b.Text)
+        }
+        else {
+          return self.sortMsgStr(a.Origin, b.Origin)
+        }
+      })
+
+      console.log(tmpPrivateMsgSorted)
+      
+      var tmpPrivateMsg = [];
+
+      tmpPrivateMsgSorted.map(a => {
+        tmpPrivateMsg.push(a.Origin + " " + a.Text)
+      })
+
+      console.log(tmpMsgSorted)
+
+      self.privateMsgStr = tmpPrivateMsg.join("\n")
+
+      console.log(self.privateMsgStr)
     },
 
     pullMessage: async function() {
@@ -281,6 +305,7 @@ export default {
 
       console.log(self.knownNodes)
     },
+
     pullPeerID: async function() {
       var self = this
       self.peerID = await fetch('/id', {method: 'GET', mode: 'cors'})
@@ -299,6 +324,7 @@ export default {
       console.log(self.peerID)
       
     },
+
     pullPrivateMsg: async function() {
       // Get the private message
       var self = this;
@@ -314,8 +340,11 @@ export default {
         console.log(err)
       })
 
+      self.privateMsg = self.privateMsg.msgs;
+
       console.log(self.privateMsg)
     },
+
     pullRouteTarget: async function() {
       // Get available target
       var self = this;
@@ -331,17 +360,25 @@ export default {
         console.log(err)
       })
 
+      self.originTarget = self.originTarget.targets;
+
+      // Sort the targets
+      self.originTarget = self.originTarget.sort((a, b) => {
+        return self.sortMsgStr(a, b)
+      })
+
       console.log(self.originTarget)
 
     },
+
     refresh: function() {
       console.log('refresh')
-      // this.pullMessage()
-      // this.pullPeerID()
-      // this.pullNodes()
+      this.pullMessage()
+      this.pullPeerID()
+      this.pullNodes()
       this.pullPrivateMsg()
       this.pullRouteTarget()
-      // this.updateOtherComp()
+      this.updateOtherComp()
     }
   },
   mounted() {
