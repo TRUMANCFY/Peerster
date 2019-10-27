@@ -61,7 +61,7 @@ type CurrentID struct {
 }
 
 type PrivateMessageList struct {
-	privateMessageList map[string][]string
+	privateMessageList map[string][]PrivateMessage
 	Mux                *sync.Mutex
 }
 
@@ -156,7 +156,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 	}
 
 	privateMessageList := PrivateMessageList{
-		privateMessageList: make(map[string][]string),
+		privateMessageList: make(map[string][]PrivateMessage),
 		Mux:                &sync.Mutex{},
 	}
 
@@ -199,9 +199,9 @@ func (g *Gossiper) Run() {
 	peerListener := g.ReceiveFromPeers()
 	clientListener := g.ReceiveFromClients()
 
-	if g.antiEntropy > 0 && !g.simple {
-		go g.AntiEntropy()
-	}
+	// if g.antiEntropy > 0 && !g.simple {
+	// 	go g.AntiEntropy()
+	// }
 
 	// Here to run the server
 	if g.gui {

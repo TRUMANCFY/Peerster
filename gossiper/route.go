@@ -151,12 +151,12 @@ func (g *Gossiper) addPrivateMessage(privateMsg *PrivateMessage) {
 	_, present := g.privateMessageList.privateMessageList[origin]
 
 	if !present {
-		g.privateMessageList.privateMessageList[origin] = make([]string, 0)
+		g.privateMessageList.privateMessageList[origin] = make([]PrivateMessage, 0)
 	}
 
 	msgs := g.privateMessageList.privateMessageList[origin]
 
-	msgs = append(msgs, content)
+	msgs = append(msgs, *privateMsg)
 
 	g.privateMessageList.privateMessageList[origin] = msgs
 

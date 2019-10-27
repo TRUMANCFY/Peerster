@@ -9,6 +9,11 @@
           <textarea class="form-control" id="ChatBox" rows="5" v-model="peerMsgStr" readonly></textarea>
         </div>
 
+         <div class="form-group">
+          <label>Private Message</label>
+          <textarea class="form-control" id="PrivateBox" rows="5" v-model="privateMsgStr" readonly></textarea>
+        </div>
+
         <div class="form-group">
           <label>Node Box</label>
           <textarea class="form-control" id="NodeBox" rows="5" v-model="knownNodesStr" readonly></textarea>
@@ -50,7 +55,7 @@
         </div>
         <div style="width:20%;float:left">
           <select v-model="peerSelected" style="width:100%" multiple>
-              <option v-for="(peer,index) in originReceived" :key="`peer-${index}`">
+              <option v-for="(peer,index) in originTarget" :key="`peer-${index}`">
                 {{ peer }}
               </option>
           </select>
@@ -65,7 +70,7 @@
         ></b-form-input>
           </div>
           <div style="height:50%">
-            <b-button class='float-center' style="margin-top: 5%">Send Private</b-button>
+            <b-button class='float-center' style="margin-top: 5%" @click="submitPrivateMsg">Send Private</b-button>
           </div>
         </div>
         
@@ -107,8 +112,10 @@ export default {
       newPeer: "",
       msgToSend: "",
       peerSelected: [],
-      originReceived: ['A', 'B'],
+      originTarget: [],
       privateMsgToSend: "",
+      privateMsg: [],
+      privateMsgStr: "",
       regExp: /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$/
     }
   },
@@ -132,11 +139,46 @@ export default {
         }
       })
 
-      console.log(a)
-
       if (a) {
         self.msgToSend = ""
       }
+    },
+
+    submitPrivateMsg: async function() {
+      var self = this;
+      console.log('Send the private message')
+      if (self.peerSelected.length == 0) {
+        alert('Please select the valid target')
+        return
+      }
+
+      if (self.privateMsgToSend == '') {
+        alert("Please input the valid private message!")
+        return
+      }
+
+      var dest = self.peerSelected[0]
+
+      var payload = {
+        "Text": self.privateMsgToSend,
+        "Dest": dest
+      }
+
+      var a = await fetch("/private", {method: "POST", body: JSON.stringify(payload), mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          var temp = res.json()
+          return temp
+        }
+      })
+
+      console.log(a)
+
+      if (a) {
+        self.privateMsgToSend = ""
+        self.peerSelected = []
+      }
+
     },
     
     addPeer: async function() {
@@ -202,14 +244,12 @@ export default {
         }
       })
       var tmpMsg = []
-      self.originReceived = []
       tmpMsgSorted.map(a => {
         tmpMsg.push(a.Origin + " " + a.ID + " " + a.Text + '\n')
-        if (!self.originReceived.includes(a.Origin)) {
-          self.originReceived.push(a.Origin)
-        }
       })
       self.peerMsgStr = tmpMsg.join('\n')
+
+      
     },
 
     pullMessage: async function() {
@@ -224,8 +264,6 @@ export default {
       .catch(err => {
         console.log(err)
       })
-
-      console.log(self.peerMsg)
     },
 
     pullNodes: async function() {
@@ -261,18 +299,53 @@ export default {
       console.log(self.peerID)
       
     },
+    pullPrivateMsg: async function() {
+      // Get the private message
+      var self = this;
 
+      self.privateMsg = await fetch('/private', {method: 'GET', mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          var tmp = res.json();
+          return tmp;
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+      console.log(self.privateMsg)
+    },
+    pullRouteTarget: async function() {
+      // Get available target
+      var self = this;
+
+      self.originTarget = await fetch('/routes', {method: 'GET', mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          var tmp = res.json();
+          return tmp;
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+      console.log(self.originTarget)
+
+    },
     refresh: function() {
       console.log('refresh')
-      this.pullMessage()
-      this.pullPeerID()
-      this.pullNodes()
-      this.updateOtherComp()
+      // this.pullMessage()
+      // this.pullPeerID()
+      // this.pullNodes()
+      this.pullPrivateMsg()
+      this.pullRouteTarget()
+      // this.updateOtherComp()
     }
   },
   mounted() {
-    // setInterval(this.refresh, 1000)
-    // setInterval(this.refresh, 1000)
+    setInterval(this.refresh, 1000)
   }
 }
 </script>

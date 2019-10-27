@@ -17,8 +17,31 @@ func (g *Gossiper) GetMessages() []RumorMessage {
 
 	for _, l1 := range g.rumorList {
 		for _, l2 := range l1 {
-			buffer = append(buffer, l2)
+			// Check whether text is emtpy
+			if l2.Text != "" {
+				buffer = append(buffer, l2)
+			}
 		}
+	}
+
+	return buffer
+}
+
+func (g *Gossiper) GetPrivateMsgs() []PrivateMessage {
+	buffer := make([]PrivateMessage, 0)
+
+	for _, privateMsgs := range g.privateMessageList.privateMessageList {
+		buffer = append(buffer, privateMsgs...)
+	}
+
+	return buffer
+}
+
+func (g *Gossiper) GetRoutes() []string {
+	buffer := make([]string, 0)
+
+	for route, _ := range g.routeTable.routeTable {
+		buffer = append(buffer, route)
 	}
 
 	return buffer
@@ -120,9 +143,8 @@ func (g *Gossiper) randomRumorMongering(peerStr string) {
 }
 
 func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
-	// TODO ID Handler
 	if r.Method != "GET" {
-		panic("Wrong Method, GET required")
+		panic("Wrong Method for peerID, GET required")
 	}
 
 	// fmt.Println("PeerID GET")
@@ -134,6 +156,60 @@ func (g *Gossiper) IDHandler(w http.ResponseWriter, r *http.Request) {
 	id.ID = g.name
 
 	json.NewEncoder(w).Encode(id)
+}
+
+func (g *Gossiper) PrivateHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		fmt.Println("Private GET")
+
+		var privateMsgs struct {
+			Msgs []PrivateMessage `json:"msgs"`
+		}
+
+		privateMsgs.Msgs = g.GetPrivateMsgs()
+
+		fmt.Println(privateMsgs.Msgs)
+
+		json.NewEncoder(w).Encode(privateMsgs)
+
+	case "POST":
+		fmt.Println("Private POST")
+		var privateMsgDest struct {
+			Text string `json:"text"`
+			Dest string `json:"dest"`
+		}
+
+		json.NewDecoder(r.Body).Decode(&privateMsgDest)
+
+		privateMsg := PrivateMessage{
+			Origin:      g.name,
+			ID:          0,
+			Text:        privateMsgDest.Text,
+			Destination: privateMsgDest.Dest,
+			HopLimit:    HOPLIMIT,
+		}
+
+		go g.SendPrivateMessage(&privateMsg)
+
+		g.AckPost(true, w)
+	}
+}
+
+func (g *Gossiper) RouteHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		panic("Wrong Method for Route, GET required")
+	}
+
+	var routes struct {
+		Targets []string `json:"targets"`
+	}
+
+	routes.Targets = g.GetRoutes()
+
+	fmt.Println(routes.Targets)
+
+	json.NewEncoder(w).Encode(routes)
 }
 
 func (g *Gossiper) AckPost(success bool, w http.ResponseWriter) {
@@ -153,7 +229,35 @@ func (g *Gossiper) ListenToGUI() {
 	// 	Text:   "I am good",
 	// }
 
-	// receiveResp := make(chan *Response, MAX_RESP)
+	// fake data
+
+	g.routeTable.routeTable["A"] = "127.0.0.1:5002"
+	g.routeTable.routeTable["B"] = "127.0.0.1:5003"
+
+	tmp1 := make([]PrivateMessage, 0)
+	tmp1 = append(tmp1, PrivateMessage{
+		Origin: "A",
+		Text:   "A1",
+	})
+
+	tmp1 = append(tmp1, PrivateMessage{
+		Origin: "A",
+		Text:   "A2",
+	})
+
+	tmp2 := make([]PrivateMessage, 0)
+	tmp2 = append(tmp2, PrivateMessage{
+		Origin: "B",
+		Text:   "B1",
+	})
+
+	tmp2 = append(tmp2, PrivateMessage{
+		Origin: "B",
+		Text:   "B2",
+	})
+
+	g.privateMessageList.privateMessageList["A"] = tmp1
+	g.privateMessageList.privateMessageList["B"] = tmp2
 
 	r := mux.NewRouter()
 
@@ -161,6 +265,10 @@ func (g *Gossiper) ListenToGUI() {
 	r.HandleFunc("/message", g.MessageHandler).Methods("GET", "POST")
 	r.HandleFunc("/node", g.NodeHandler).Methods("GET", "POST")
 	r.HandleFunc("/id", g.IDHandler).Methods("GET")
+
+	// add new private features
+	r.HandleFunc("/private", g.PrivateHandler).Methods("GET", "POST")
+	r.HandleFunc("/routes", g.RouteHandler).Methods("GET")
 
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./webserver/gui/dist/"))))
 
