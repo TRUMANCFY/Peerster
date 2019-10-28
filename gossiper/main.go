@@ -123,8 +123,10 @@ func (g *Gossiper) Run() {
 		go g.RunRoutingMessage()
 	}
 
+	g.fileHandler = NewFileHandler(g.name)
+
 	g.dispatcher = StartPeerStatusDispatcher()
-	g.Listen(peerListener, clientListener)
+	go g.Listen(peerListener, clientListener)
 }
 
 func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListener <-chan *ClientMessageWrapper) {
@@ -216,7 +218,14 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 
 	case packet.Private != nil:
 		g.HandlePrivatePacket(packet.Private, sender)
+
+	case packet.DataReply != nil:
+		g.HandleDataReply(packet.DataReply, sender)
+
+	case packet.DataRequest != nil:
+		g.HandleDataRequest(packet.DataRequest, sender)
 	}
+
 }
 
 func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {

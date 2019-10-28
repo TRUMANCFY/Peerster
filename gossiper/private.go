@@ -15,10 +15,10 @@ func (g *Gossiper) HandlePrivatePacket(privateMsg *PrivateMessage, sender *net.U
 		return
 	}
 
-	hopList := privateMsg.HopLimit
+	hopLimit := privateMsg.HopLimit
 
-	if hopList == 0 {
-		fmt.Println("Hop List has been ended")
+	if hopLimit == 0 {
+		fmt.Println("Hop Limit has been ended")
 		return
 	}
 
