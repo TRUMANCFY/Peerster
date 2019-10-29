@@ -156,6 +156,7 @@ func (g *Gossiper) FindMostUrgent(peerWant []PeerStatus) *RumorMessage {
 }
 
 func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, rumorToAsk []PeerStatus) {
+	// TODO Check the concurrent map iteration and map write
 	rumorToSend = make([]PeerStatus, 0)
 	rumorToSend = make([]PeerStatus, 0)
 	// record the ww

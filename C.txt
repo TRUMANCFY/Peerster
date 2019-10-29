@@ -7,223 +7,62 @@ Simple mode is false
 AntiEntropy Value is 10 
 Route timer value is 1 
 GUI Port is 127.0.0.1:8083 
-Accept Rumor Origin: C ID: 1 
 Start antiEntropy
+Accept Rumor Origin: C ID: 1 
 The value of antientropy is  10
 Server runs at 127.0.0.1:8083 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
-DIFF is -3
+RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
+DIFF is -2
 The new coming rumor ID is smaller than our local
 Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 5
-TO SEND
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 1 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 1 
 Send Status to 127.0.0.1:5002 
-[{C 1}]
-TO ASK
-[{B 1} {A 1}]
-MONGERING with 127.0.0.1:5002 
-Register sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 5 peer B nextID 3
-TO SEND
-[{C 1}]
-TO ASK
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 5
-[{A 2} {B 1}]
-TO SEND
-[{C 1}]
-TO ASK
-[{B 1} {A 2}]
+STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4
 MONGERING with 127.0.0.1:5002 
-MONGERING with 127.0.0.1:5002 
-Register sender: 127.0.0.1:5002, identifier: C 
-Register sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 2 
 Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 5
-TO SEND
-[{C 1}]
-TO ASK
-[{B 1} {A 3}]
-PEERS 127.0.0.1:5002
-MONGERING with 127.0.0.1:5002 
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 5
-TO SEND
-[{C 1}]
-TO ASK
-[{B 1} {A 3}]
 Register sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 5 peer C nextID 2
-TO SEND
-[]
-TO ASK
-[{B 1} {A 3}]
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-Receive Peer Status Origin: C, NextID: 2 
-Unregister sender: 127.0.0.1:5002, identifier: C 
-Receive Peer Status Origin: C, NextID: 2 
-Unregister sender: 127.0.0.1:5002, identifier: C 
-Receive Peer Status Origin: C, NextID: 2 
-Unregister sender: 127.0.0.1:5002, identifier: C 
-PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4
 MONGERING with 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
 Register sender: 127.0.0.1:5002, identifier: C 
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 5 peer C nextID 2
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 5 peer C nextID 2
-TO SEND
-[]
-TO ASK
-[{B 1} {A 3}]
-Receive Peer Status Origin: C, NextID: 2 
-TO SEND
-[]
-TO ASK
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 3 
 Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4 peer C nextID 2
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+Receive Peer Status Origin: C, NextID: 2 
 Unregister sender: 127.0.0.1:5002, identifier: C 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-Receive Peer Status Origin: C, NextID: 2 
-Receive Peer Status Origin: C, NextID: 2 
-PEERS 127.0.0.1:5002
-[{B 1} {A 3}]
 Receive Peer Status Origin: C, NextID: 2 
 Unregister sender: 127.0.0.1:5002, identifier: C 
-Origin: ; Sender:  NOT REGISTERED 
-Origin: ; Sender:  NOT REGISTERED 
-RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 5 peer C nextID 2
-TO SEND
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[]
-TO ASK
-[{B 1} {A 4}]
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 5 peer C nextID 2
-TO SEND
-[]
-TO ASK
-[{B 1} {A 4}]
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 4 
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
-DIFF is 2
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
 DIFF is 2
 The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4 peer C nextID 2
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 1 
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
@@ -256,133 +95,70 @@ DIFF is 1
 The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 2 contents  
 DIFF is 1
 The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
-DIFF is 2
+RUMOR origin B from 127.0.0.1:5002 ID 2 contents  
+DIFF is 1
 The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 2 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 3 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 3 
 Send Status to 127.0.0.1:5002 
-DIFF is 2
-The new coming rumor ID is larger than our local
-PEERS 127.0.0.1:5002
-Send Status to 127.0.0.1:5002 
-RUMOR origin B from 127.0.0.1:5002 ID 2 contents  
-DIFF is 2
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
-DIFF is 3
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 2 contents  
-DIFF is 2
 Send routing rumor
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 3 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
 Accept Rumor Origin: C ID: 2 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 2 contents  
-DIFF is 2
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 2 contents  
-DIFF is 2
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 3 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 2 contents  
-DIFF is 2
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 3 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 4 peer A nextID 5 peer C nextID 3
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 4 peer A nextID 4 peer C nextID 3
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 4 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 5 
+Accept Rumor Origin: A ID: 4 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 3 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 5 peer A nextID 5 peer C nextID 4
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 4 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 4 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 3 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 5 peer A nextID 6 peer C nextID 4
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 5 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 6 
+Accept Rumor Origin: A ID: 5 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 4 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 6 peer A nextID 6 peer C nextID 5
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 5 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 5 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 4 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 6 peer A nextID 7 peer C nextID 5
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 7 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 6 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 7 
+Accept Rumor Origin: A ID: 6 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 5 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 7 peer A nextID 8 peer C nextID 6
-TO SEND
-[]
-TO ASK
-[{B 6}]
+STATUS from 127.0.0.1:5002 peer C nextID 6 peer B nextID 7 peer A nextID 7
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 6 contents  
@@ -390,18 +166,14 @@ DIFF is 0
 Accept Rumor Origin: B ID: 6 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 8 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 7 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 8 
+Accept Rumor Origin: A ID: 7 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 6 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 8 peer A nextID 9 peer C nextID 7
-TO SEND
-[]
-TO ASK
-[{B 7}]
+STATUS from 127.0.0.1:5002 peer B nextID 8 peer A nextID 8 peer C nextID 7
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 7 contents  
@@ -409,29 +181,24 @@ DIFF is 0
 Accept Rumor Origin: B ID: 7 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 9 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 8 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 9 
+Accept Rumor Origin: A ID: 8 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 7 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 9 peer A nextID 9 peer C nextID 8
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 8 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 8 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 7 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 9 peer A nextID 10 peer C nextID 8
-TO SEND
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 10 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 9 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 10 
+Accept Rumor Origin: A ID: 9 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 9 contents  
@@ -441,37 +208,28 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 8 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 10 peer A nextID 11 peer C nextID 9
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 10 peer A nextID 10 peer C nextID 9
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 11 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 10 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 11 
+Accept Rumor Origin: A ID: 10 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 9 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer A nextID 11 peer C nextID 10 peer B nextID 11
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 10 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 10 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 9 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 11 peer A nextID 12 peer C nextID 10
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 12 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 11 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 12 
+Accept Rumor Origin: A ID: 11 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 11 contents  
@@ -481,11 +239,24 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 10 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 12 peer A nextID 13 peer C nextID 11
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 12 peer A nextID 12 peer C nextID 11
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 12 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 12 
+Send Status to 127.0.0.1:5002 
+Send routing rumor
+Anti entropy 127.0.0.1:5002
+Accept Rumor Origin: C ID: 11 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 12 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 12 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 13 peer A nextID 13 peer C nextID 12
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
@@ -493,135 +264,87 @@ RUMOR origin A from 127.0.0.1:5002 ID 13 contents
 DIFF is 0
 Accept Rumor Origin: A ID: 13 
 Send Status to 127.0.0.1:5002 
-Anti entropy 127.0.0.1:5002
-Send routing rumor
-Accept Rumor Origin: C ID: 11 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 13 peer A nextID 14 peer C nextID 12
-TO SEND
-[]
-TO ASK
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[{B 12}]
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 12 contents  
-DIFF is 0
-Accept Rumor Origin: B ID: 12 
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 12 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 14 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 14 
-Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 12 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 13 peer B nextID 14 peer A nextID 15
-TO SEND
+STATUS from 127.0.0.1:5002 peer B nextID 14 peer A nextID 14 peer C nextID 13
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[]
-TO ASK
-[{B 13}]
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 13 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 13 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 15 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 14 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 15 
+Accept Rumor Origin: A ID: 14 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 13 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 16 peer C nextID 14 peer B nextID 15
-TO SEND
-[]
-TO ASK
-[{B 14}]
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 14 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 14 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 13 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 15 peer A nextID 15 peer C nextID 14
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 15 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 15 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 15 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 15 
+Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 14 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 16 peer A nextID 16 peer C nextID 15
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 16 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 16 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 14 
+Accept Rumor Origin: C ID: 15 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 16 peer A nextID 17 peer C nextID 15
-TO SEND
-[]
-TO ASK
-[{B 15}]
+STATUS from 127.0.0.1:5002 peer B nextID 17 peer A nextID 17 peer C nextID 16
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 15 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 16 contents  
 DIFF is 0
-Accept Rumor Origin: B ID: 15 
+Accept Rumor Origin: B ID: 16 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 17 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 17 
 Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 16 contents  
-DIFF is 0
-Accept Rumor Origin: B ID: 16 
-Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 15 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 17 peer A nextID 18 peer C nextID 16
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 18 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 18 
-Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 16 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 18 peer A nextID 19 peer C nextID 17
-TO SEND
-[]
-TO ASK
+STATUS from 127.0.0.1:5002 peer B nextID 18 peer A nextID 18 peer C nextID 17
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[{B 17}]
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 17 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 17 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 19 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 18 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 19 
+Accept Rumor Origin: A ID: 18 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 17 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 19 peer A nextID 20 peer C nextID 18
-TO SEND
-[]
-TO ASK
-[{B 18}]
+STATUS from 127.0.0.1:5002 peer A nextID 19 peer C nextID 18 peer B nextID 19
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 18 contents  
@@ -629,100 +352,114 @@ DIFF is 0
 Accept Rumor Origin: B ID: 18 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 20 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 19 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 20 
+Accept Rumor Origin: A ID: 19 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 18 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 20 peer A nextID 21 peer C nextID 19
-TO SEND
-[]
-TO ASK
-[{B 19}]
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 19 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 19 
 Send Status to 127.0.0.1:5002 
-DOWNLOADREQ
-{A 469403655c3a182a6b7856052a2428ebd24fede9e39b6cb428c21b8a0c222cc4 qs}
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 21 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 21 
-Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 19 
+Accept Rumor Origin: C ID: 18 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 21 peer A nextID 22 peer C nextID 20
-TO SEND
+STATUS from 127.0.0.1:5002 peer A nextID 20 peer C nextID 19 peer B nextID 20
+IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[]
-TO ASK
-[{B 20}]
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 20 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 20 
+Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 20 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 20 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 19 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer C nextID 20 peer B nextID 21 peer A nextID 21
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 21 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 21 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer C nextID 20 peer B nextID 22 peer A nextID 22
+RUMOR origin B from 127.0.0.1:5002 ID 21 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 21 
+Send Status to 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 21 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 20 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 22 peer A nextID 22 peer C nextID 21
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 22 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 22 
 Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 22 peer A nextID 23 peer C nextID 20
-TO SEND
-[]
-TO ASK
-[{B 21}]
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 21 contents  
-DIFF is 0
-Accept Rumor Origin: B ID: 21 
-Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 20 
+Accept Rumor Origin: C ID: 21 
+Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 22 peer A nextID 23 peer C nextID 21
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 23 peer A nextID 23 peer C nextID 22
+PEERS 127.0.0.1:5002
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 23 peer A nextID 23 peer C nextID 21
+The most urgent is Origin: C ID: 21 
+RUMOR origin B from 127.0.0.1:5002 ID 22 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 22 
+Send Status to 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+MONGERING with 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 22 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 22 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
+Register sender: 127.0.0.1:5002, identifier: C 
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 23 peer A nextID 23 peer C nextID 22
 IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+Receive Peer Status Origin: C, NextID: 22 
+Unregister sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 23 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 23 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 22 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 23 contents  
 DIFF is 0
-Accept Rumor Origin: B ID: 22 
+Accept Rumor Origin: B ID: 23 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 21 
-Anti entropy 127.0.0.1:5002
+Accept Rumor Origin: C ID: 22 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 24 peer C nextID 22 peer B nextID 23
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 24 peer C nextID 22 peer B nextID 23
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 24 peer A nextID 24 peer C nextID 23
 IN SYNC WITH 127.0.0.1:5002 
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 24 contents  
@@ -730,18 +467,14 @@ DIFF is 0
 Accept Rumor Origin: A ID: 24 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 22 
+Accept Rumor Origin: C ID: 23 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 24 peer A nextID 25 peer C nextID 23
-TO SEND
-[]
-TO ASK
-[{B 23}]
+STATUS from 127.0.0.1:5002 peer C nextID 24 peer B nextID 25 peer A nextID 25
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 23 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 24 contents  
 DIFF is 0
-Accept Rumor Origin: B ID: 23 
+Accept Rumor Origin: B ID: 24 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 25 contents  
@@ -749,18 +482,14 @@ DIFF is 0
 Accept Rumor Origin: A ID: 25 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 24 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 25 contents  
 DIFF is 0
-Accept Rumor Origin: B ID: 24 
+Accept Rumor Origin: B ID: 25 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 23 
+Accept Rumor Origin: C ID: 24 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 26 peer C nextID 24 peer B nextID 25
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer C nextID 25 peer B nextID 26 peer A nextID 26
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
@@ -769,70 +498,40 @@ DIFF is 0
 Accept Rumor Origin: A ID: 26 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 24 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 26 peer A nextID 27 peer C nextID 25
-TO SEND
-[]
-TO ASK
-[{B 25}]
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 25 contents  
-DIFF is 0
-Accept Rumor Origin: B ID: 25 
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 27 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 27 
-Send Status to 127.0.0.1:5002 
-Send routing rumor
 Accept Rumor Origin: C ID: 25 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 27 peer A nextID 28 peer C nextID 26
-TO SEND
-[]
-TO ASK
+STATUS from 127.0.0.1:5002 peer B nextID 27 peer A nextID 27 peer C nextID 26
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[{B 26}]
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 26 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 26 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 28 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 27 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 28 
+Accept Rumor Origin: A ID: 27 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 26 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 28 peer A nextID 29 peer C nextID 27
-TO SEND
-[]
-TO ASK
-[{B 27}]
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 27 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 27 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 26 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 29 contents  
+STATUS from 127.0.0.1:5002 peer B nextID 28 peer A nextID 28 peer C nextID 27
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 28 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 29 
+Accept Rumor Origin: A ID: 28 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 27 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 29 peer A nextID 30 peer C nextID 28
-TO SEND
-[]
-TO ASK
-[{B 28}]
+STATUS from 127.0.0.1:5002 peer B nextID 29 peer A nextID 29 peer C nextID 28
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 28 contents  
@@ -840,18 +539,14 @@ DIFF is 0
 Accept Rumor Origin: B ID: 28 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 30 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 29 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 30 
+Accept Rumor Origin: A ID: 29 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 28 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 30 peer A nextID 31 peer C nextID 29
-TO SEND
-[]
-TO ASK
-[{B 29}]
+STATUS from 127.0.0.1:5002 peer C nextID 29 peer B nextID 30 peer A nextID 30
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 29 contents  
@@ -859,23 +554,38 @@ DIFF is 0
 Accept Rumor Origin: B ID: 29 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 31 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 30 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 31 
+Accept Rumor Origin: A ID: 30 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 29 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 31 peer A nextID 31 peer C nextID 30
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 30 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 30 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 29 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 31 peer A nextID 32 peer C nextID 30
-TO SEND
-[]
-TO ASK
-[]
+RUMOR origin A from 127.0.0.1:5002 ID 31 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 31 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 31 contents  
+DIFF is 0
+PEERS 127.0.0.1:5002
+Accept Rumor Origin: B ID: 31 
+Send Status to 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer B nextID 32 peer A nextID 32 peer C nextID 30
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 30 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 32 peer A nextID 32 peer C nextID 31
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
@@ -883,82 +593,46 @@ RUMOR origin A from 127.0.0.1:5002 ID 32 contents
 DIFF is 0
 Accept Rumor Origin: A ID: 32 
 Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 32 peer A nextID 33 peer C nextID 30
-TO SEND
-[]
-TO ASK
-[{B 31}]
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 30 
+Accept Rumor Origin: C ID: 31 
+Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 31 contents  
-DIFF is 0
-Accept Rumor Origin: B ID: 31 
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 32 peer A nextID 33 peer C nextID 31
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer A nextID 33 peer C nextID 32 peer B nextID 33
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 33 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 33 
-Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 32 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 32 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 31 
-Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 33 peer A nextID 34 peer C nextID 32
-TO SEND
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 34 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 34 
+RUMOR origin B from 127.0.0.1:5002 ID 32 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 33 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 33 
+Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 32 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 34 peer A nextID 34 peer C nextID 33
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 33 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 33 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 32 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 34 peer A nextID 35 peer C nextID 33
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 35 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 34 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 35 
+Accept Rumor Origin: A ID: 34 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 33 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 35 peer A nextID 36 peer C nextID 34
-TO SEND
-[]
-TO ASK
-[{B 34}]
+STATUS from 127.0.0.1:5002 peer C nextID 34 peer B nextID 35 peer A nextID 35
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 34 contents  
@@ -966,98 +640,74 @@ DIFF is 0
 Accept Rumor Origin: B ID: 34 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 36 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 35 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 36 
+Accept Rumor Origin: A ID: 35 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 34 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer A nextID 36 peer C nextID 35 peer B nextID 36
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 35 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 35 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 34 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 36 peer A nextID 37 peer C nextID 35
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 37 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 36 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 37 
+Accept Rumor Origin: A ID: 36 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 35 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 37 peer A nextID 37 peer C nextID 36
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 36 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 36 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 35 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 36 peer B nextID 37 peer A nextID 38
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 38 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 37 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 38 
+Accept Rumor Origin: A ID: 37 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 36 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 38 peer A nextID 38 peer C nextID 37
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 37 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 37 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 36 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 38 peer A nextID 39 peer C nextID 37
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 39 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 38 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 39 
+Accept Rumor Origin: A ID: 38 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 37 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer C nextID 38 peer B nextID 39 peer A nextID 39
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 38 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 38 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 37 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 40 peer C nextID 38 peer B nextID 39
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 40 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 39 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 40 
+Accept Rumor Origin: A ID: 39 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 38 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 40 peer A nextID 41 peer C nextID 39
-TO SEND
-[]
-TO ASK
-[{B 39}]
+STATUS from 127.0.0.1:5002 peer B nextID 40 peer A nextID 40 peer C nextID 39
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 39 contents  
@@ -1065,9 +715,9 @@ DIFF is 0
 Accept Rumor Origin: B ID: 39 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 41 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 40 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 41 
+Accept Rumor Origin: A ID: 40 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 40 contents  
@@ -1077,18 +727,17 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 39 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 41 peer A nextID 42 peer C nextID 40
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer A nextID 41 peer C nextID 40 peer B nextID 41
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 42 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 41 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 42 
+Accept Rumor Origin: A ID: 41 
 Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 42 peer A nextID 42 peer C nextID 40
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 41 contents  
 DIFF is 0
@@ -1097,32 +746,32 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 40 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 42 peer A nextID 43 peer C nextID 41
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 42 peer A nextID 42 peer C nextID 41
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 43 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 42 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 43 
+Accept Rumor Origin: A ID: 42 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 41 
 Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 44 peer C nextID 42 peer B nextID 43
-TO SEND
-[]
-TO ASK
-[{B 42}]
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer C nextID 42 peer B nextID 43 peer A nextID 43
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer B nextID 43 peer A nextID 43 peer C nextID 42
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 42 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 42 
+Send Status to 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 42 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 42 contents  
@@ -1130,176 +779,141 @@ DIFF is 1
 The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 44 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 43 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 44 
+Accept Rumor Origin: A ID: 43 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 42 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 44 peer A nextID 44 peer C nextID 43
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 43 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 43 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 42 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 44 peer A nextID 45 peer C nextID 43
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 45 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 44 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 45 
+Accept Rumor Origin: A ID: 44 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 43 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 45 peer A nextID 45 peer C nextID 44
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 44 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 44 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 43 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 45 peer A nextID 46 peer C nextID 44
-TO SEND
-[]
-TO ASK
-[]
+RUMOR origin A from 127.0.0.1:5002 ID 45 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 45 
+Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 44 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 46 peer A nextID 46 peer C nextID 45
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-IN SYNC WITH 127.0.0.1:5002 
-Reach max retries
-We did not get the valid metaFile
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 45 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 45 
+Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 46 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 46 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 45 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 46 contents  
 DIFF is 0
-Accept Rumor Origin: B ID: 45 
+Accept Rumor Origin: B ID: 46 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 44 
+Accept Rumor Origin: C ID: 45 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 46 peer A nextID 47 peer C nextID 45
-TO SEND
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer C nextID 46 peer B nextID 47 peer A nextID 47
 IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 47 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 47 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 45 
+Accept Rumor Origin: C ID: 46 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 46 peer B nextID 47 peer A nextID 48
-TO SEND
+STATUS from 127.0.0.1:5002 peer B nextID 48 peer A nextID 48 peer C nextID 47
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[]
-TO ASK
-[{B 46}]
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 46 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 47 contents  
 DIFF is 0
-Accept Rumor Origin: B ID: 46 
+Accept Rumor Origin: B ID: 47 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 48 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 48 
 Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 47 contents  
-DIFF is 0
-Accept Rumor Origin: B ID: 47 
-Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 46 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 48 peer A nextID 49 peer C nextID 47
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 49 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 49 
-Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 47 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 50 peer C nextID 48 peer B nextID 49
-TO SEND
-[]
-TO ASK
+STATUS from 127.0.0.1:5002 peer B nextID 49 peer A nextID 49 peer C nextID 48
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[{B 48}]
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 48 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 48 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 50 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 49 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 50 
+Accept Rumor Origin: A ID: 49 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 48 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 49 peer B nextID 50 peer A nextID 51
-TO SEND
-[]
-TO ASK
-[{B 49}]
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 49 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 49 
 Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 51 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 51 
-Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 49 
+Accept Rumor Origin: C ID: 48 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 51 peer A nextID 52 peer C nextID 50
-TO SEND
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 50 peer A nextID 50 peer C nextID 49
+IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-TO ASK
-[{B 50}]
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 50 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 50 
+Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 50 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 50 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 49 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 52 contents  
+STATUS from 127.0.0.1:5002 peer B nextID 51 peer A nextID 51 peer C nextID 50
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 51 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 52 
+Accept Rumor Origin: A ID: 51 
 Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 51 peer A nextID 52 peer C nextID 50
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 50 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 51 peer B nextID 52 peer A nextID 53
-TO SEND
-[]
-TO ASK
-[{B 51}]
+STATUS from 127.0.0.1:5002 peer B nextID 52 peer A nextID 52 peer C nextID 51
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 51 contents  
@@ -1307,49 +921,46 @@ DIFF is 0
 Accept Rumor Origin: B ID: 51 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 53 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 52 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 53 
+Accept Rumor Origin: A ID: 52 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 52 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 52 
 Send Status to 127.0.0.1:5002 
+Anti entropy 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 51 
-Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 54 peer C nextID 52 peer B nextID 53
-TO SEND
-[]
-TO ASK
-[]
+PEERS 127.0.0.1:5002
+RUMOR origin C from 127.0.0.1:5002 ID 51 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer B nextID 53 peer A nextID 53 peer C nextID 52
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 54 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 53 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 54 
+Accept Rumor Origin: A ID: 53 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 52 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 54 peer A nextID 55 peer C nextID 53
-TO SEND
+STATUS from 127.0.0.1:5002 peer B nextID 54 peer A nextID 54 peer C nextID 53
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[]
-TO ASK
-[{B 53}]
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 53 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 53 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 55 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 54 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 55 
+Accept Rumor Origin: A ID: 54 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 54 contents  
@@ -1359,17 +970,13 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 53 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 55 peer A nextID 56 peer C nextID 54
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 55 peer A nextID 55 peer C nextID 54
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 56 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 55 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 56 
+Accept Rumor Origin: A ID: 55 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 55 contents  
@@ -1379,17 +986,13 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 54 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 56 peer A nextID 57 peer C nextID 55
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 56 peer A nextID 56 peer C nextID 55
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 57 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 56 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 57 
+Accept Rumor Origin: A ID: 56 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 56 contents  
@@ -1399,37 +1002,28 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 55 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 57 peer A nextID 58 peer C nextID 56
-TO SEND
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 57 peer A nextID 57 peer C nextID 56
 IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 58 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 57 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 58 
+Accept Rumor Origin: A ID: 57 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 56 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 58 peer A nextID 58 peer C nextID 57
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 57 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 57 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 56 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 58 peer A nextID 59 peer C nextID 57
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 59 contents  
+RUMOR origin A from 127.0.0.1:5002 ID 58 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 59 
+Accept Rumor Origin: A ID: 58 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 58 contents  
@@ -1439,29 +1033,93 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 57 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 59 peer A nextID 60 peer C nextID 58
-TO SEND
-[]
-TO ASK
-[]
+STATUS from 127.0.0.1:5002 peer B nextID 59 peer A nextID 59 peer C nextID 58
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 59 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 59 
+Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 58 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 60 peer A nextID 60 peer C nextID 59
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 59 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 59 
+Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 60 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 60 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 58 
+Accept Rumor Origin: C ID: 59 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 60 peer A nextID 61 peer C nextID 59
-TO SEND
-[]
-TO ASK
-[{B 59}]
+STATUS from 127.0.0.1:5002 peer B nextID 61 peer A nextID 61 peer C nextID 60
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 59 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 60 contents  
 DIFF is 0
-Accept Rumor Origin: B ID: 59 
+Accept Rumor Origin: B ID: 60 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 61 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 61 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer C nextID 60 peer B nextID 62 peer A nextID 62
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 61 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 61 
+Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 60 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 62 peer A nextID 62 peer C nextID 61
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 62 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 62 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 62 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 62 
+Send Status to 127.0.0.1:5002 
+Anti entropy 127.0.0.1:5002
+Send routing rumor
+Accept Rumor Origin: C ID: 61 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 63 peer A nextID 63 peer C nextID 62
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 63 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 63 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 63 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 63 
+Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 62 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer C nextID 63 peer B nextID 64 peer A nextID 64
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+IN SYNC WITH 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 64 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 64 
 Send Status to 127.0.0.1:5002 
