@@ -6,23 +6,51 @@
       <b-form>
         <div class="form-group">
           <label>Chat Box</label>
-          <textarea class="form-control" id="ChatBox" rows="5" v-model="peerMsgStr" readonly></textarea>
+          <textarea class="form-control" id="ChatBox" rows="3" v-model="peerMsgStr" readonly></textarea>
         </div>
 
          <div class="form-group">
           <label>Private Message</label>
-          <textarea class="form-control" id="PrivateBox" rows="5" v-model="privateMsgStr" readonly></textarea>
+          <textarea class="form-control" id="PrivateBox" rows="3" v-model="privateMsgStr" readonly></textarea>
         </div>
 
         <div class="form-group">
           <label>Node Box</label>
-          <textarea class="form-control" id="NodeBox" rows="5" v-model="knownNodesStr" readonly></textarea>
+          <textarea class="form-control" id="NodeBox" rows="3" v-model="knownNodesStr" readonly></textarea>
         </div>
 
         <div class="form-group" >
           <label>Peer ID</label>
           <textarea class="form-control" id="PeerID" rows="1" v-model="peerID" readonly></textarea>
         </div>
+      <div>
+        <label>File Download</label>
+      <b-form-input
+          id="Hex"
+          placeholder="Hex of Metafile"
+          v-model="hex"
+        ></b-form-input>
+
+        <b-form-input
+          id="Destination"
+          placeholder="Destination"
+          v-model="destination"
+          style="width:45%;margin-left:0px;margin-top:10px; display: inline-block;float:left"
+        ></b-form-input>
+
+        <b-form-input
+          id="Filename"
+          placeholder="FileName"
+          v-model="filename"
+          style="width:45%;margin-top:10px;display:inline-block;float:right"
+        ></b-form-input>
+        </div>
+        <br>
+        <br>
+        <br>
+
+        <b-button class='float-right' @click="downloadFile" >Download</b-button>
+      
       </b-form>
     </b-col>
     <b-col>
@@ -125,6 +153,9 @@ export default {
       privateMsg: [],
       privateMsgStr: "",
       file: null,
+      hex: "",
+      destination: "",
+      filename: "",
       regExp: /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$/
     }
   },
@@ -380,19 +411,66 @@ export default {
 
     },
 
-    sendFile: function() {
+    sendFile: async function() {
       var self = this;
-      console.log(self.file)
 
-      var payload = {"Text": self.file}
+      if (self.file == null) {
+        alert("Please select the file")
+        return
+      }
+      console.log(self.file.name)
 
-      // var a = await fetch("/file", {method: "POST", body: JSON.stringify(payload), mode: 'cors'})
-      // .then(res => {
-      //   if (res.ok) {
-      //     var temp = res.json()
-      //     return temp
-      //   }
-      // })
+      var payload = {"FileName": self.file.name}
+
+      var a = await fetch("/file", {method: "POST", body: JSON.stringify(payload), mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          var temp = res.json()
+          return temp
+        }
+      })
+
+      self.file = null
+    },
+
+    downloadFile: async function() {
+      var self = this;
+      
+      // check the valid
+      if (self.hex == "") {
+        alert("Please input valid metafile hex")
+        return
+      }
+
+      if (self.destination == "") {
+        alert("Please input valid destination")
+        return
+      }
+
+      if (self.filename == "") {
+        alert("Please input valid filename")
+        return
+      }
+
+      var payload = {
+        "Dest": self.destination,
+        "Hex": self.hex,
+        "FileName": self.filename
+      }
+
+
+      var a = await fetch("/download", {method: "POST", body: JSON.stringify(payload), mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          var temp = res.json()
+          return temp
+        }
+      })
+
+      // clean the input
+      self.destination = ""
+      self.hex = ""
+      self.filename = ""
     },
 
     refresh: function() {

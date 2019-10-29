@@ -1,6 +1,7 @@
 package gossiper
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -208,6 +209,67 @@ func (g *Gossiper) RouteHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(routes)
 }
 
+func (g *Gossiper) FileIndexHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		panic("Wrong Method for File, POST Required")
+	}
+
+	var file struct {
+		FileName string `json:"filename"`
+	}
+	json.NewDecoder(r.Body).Decode(&file)
+
+	fmt.Println(file.FileName)
+
+	go g.fileHandler.FileIndexingRequest(file.FileName)
+
+	g.AckPost(true, w)
+}
+
+func (g *Gossiper) DownloadHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		panic("Wrong Method for Download, POST Required")
+	}
+
+	var download struct {
+		Dest     string `json:"dest"`
+		Hex      string `json:"hex"`
+		FileName string `json:"filename"`
+	}
+
+	json.NewDecoder(r.Body).Decode(&download)
+
+	fmt.Println("DOWNLOADREQ")
+	fmt.Println(download)
+
+	dest := download.Dest
+	metaHash, err := hex.DecodeString(download.Hex)
+
+	if err != nil {
+		g.AckPost(false, w)
+		return
+	}
+
+	filename := download.FileName
+
+	metaSha, err := HashToSha256(metaHash)
+
+	if err != nil {
+		g.AckPost(false, w)
+		return
+	}
+
+	result := g.RequestFile(dest, metaSha, filename)
+
+	if result {
+		g.AckPost(true, w)
+		return
+	}
+
+	g.AckPost(false, w)
+
+}
+
 func (g *Gossiper) AckPost(success bool, w http.ResponseWriter) {
 	var response struct {
 		Success bool `json:"success"`
@@ -265,15 +327,12 @@ func (g *Gossiper) ListenToGUI() {
 	// add new private features
 	r.HandleFunc("/private", g.PrivateHandler).Methods("GET", "POST")
 	r.HandleFunc("/routes", g.RouteHandler).Methods("GET")
+	r.HandleFunc("/file", g.FileIndexHandler).Methods("POST")
+	r.HandleFunc("/download", g.DownloadHandler).Methods("POST")
 
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./webserver/gui/dist/"))))
 
 	fmt.Printf("Server runs at %s \n", g.guiAddr)
-
-	// if g.fixed {
-	// 	fmt.Println("GUI Port is 127.0.0.1:8080")
-	// 	g.guiAddr = "127.0.0.1:8080"
-	// }
 
 	srv := &http.Server{
 		Handler:           r,

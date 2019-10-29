@@ -5,169 +5,52 @@ Gossip name is C
 Gossip peers are 127.0.0.1:5002 
 Simple mode is false 
 AntiEntropy Value is 10 
-Route timer value is 0 
+Route timer value is 1 
 GUI Port is 127.0.0.1:8083 
 Start antiEntropy
 The value of antientropy is  10
 Server runs at 127.0.0.1:8083 
-map[]
-map[]
-map[]
-map[]
-map[]
-map[]
-map[]
-map[]
-map[]
-map[]
-map[]
-map[]
+Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 1 contents A1 
 DIFF is 0
 Accept Rumor Origin: A ID: 1 
 DSDV A 127.0.0.1:5002 
 Send Status to 127.0.0.1:5002 
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
-map[A:map[1:{A 1 A1}]]
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer A nextID 2 peer B nextID 2
+TO SEND
+[]
+TO ASK
+[{B 1}]
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 1 contents B1 
 DIFF is 0
 Accept Rumor Origin: B ID: 1 
 DSDV B 127.0.0.1:5002 
 Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 1 contents B1 
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 2 peer B nextID 2
-IN SYNC WITH 127.0.0.1:5002 
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}]]
+Anti entropy 127.0.0.1:5002
 Receive {C1} 
-<nil>
 DIFF is 0
 Accept Rumor Origin: C ID: 1 
 MONGERING with 127.0.0.1:5002 
 Register sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 2 peer B nextID 2 peer C nextID 2
+STATUS from 127.0.0.1:5002 peer B nextID 2 peer C nextID 2 peer A nextID 2
+TO SEND
+[]
+TO ASK
+[]
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 Receive Peer Status Origin: C, NextID: 2 
-Prepare to flip the coin
-Choose not to flip the coin
 Unregister sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
-RUMOR origin C from 127.0.0.1:5002 ID 1 contents C1 
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 2 peer C nextID 2 peer A nextID 2
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-PEERS 127.0.0.1:5002
 STATUS from 127.0.0.1:5002 peer A nextID 2 peer B nextID 2 peer C nextID 2
-IN SYNC WITH 127.0.0.1:5002 
+TO SEND
+[]
+TO ASK
+[]
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-PEERS 127.0.0.1:5002
-PRIVATE origin A hop-limit 9 contents PrivateAToC 
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-{C 0 PrivateCToA A 10}
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 2 peer B nextID 2 peer C nextID 2
 IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 2 peer C nextID 2 peer A nextID 2
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 2 peer B nextID 2 peer C nextID 2
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
-map[A:map[1:{A 1 A1}] B:map[1:{B 1 B1}] C:map[1:{C 1 C1}]]
+Anti entropy 127.0.0.1:5002

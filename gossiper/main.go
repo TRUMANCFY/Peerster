@@ -119,9 +119,9 @@ func (g *Gossiper) Run() {
 	}
 
 	// send route message
-	if g.rtimer > 0 {
-		go g.RunRoutingMessage()
-	}
+	// if g.rtimer > 0 {
+	// 	go g.RunRoutingMessage()
+	// }
 
 	g.fileHandler = NewFileHandler(g.name)
 	go g.RunFileSystem()
@@ -173,7 +173,7 @@ func (g *Gossiper) AntiEntropy() {
 
 			neighbor, present := g.SelectRandomNeighbor(nil)
 			if present {
-				// fmt.Println("Anti entropy " + neighbor)
+				fmt.Println("Anti entropy " + neighbor)
 				g.SendGossipPacketStrAddr(g.CreateStatusPacket(), neighbor)
 			}
 		}

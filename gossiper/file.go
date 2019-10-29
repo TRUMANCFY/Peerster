@@ -2,6 +2,7 @@ package gossiper
 
 import (
 	"crypto/sha256"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"io"
@@ -138,24 +139,28 @@ func (g *Gossiper) RunFileSystem() {
 // 	return reqChan
 // }
 
-func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileName string) {
+func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileName string) bool {
 	// whether the file has already in local or not
+
+	// Here, we will not consider whether it is in local
 	lookup, present := g.fileHandler.files[metafileHash]
 
 	if present {
 		if lookup.State == Shared {
 			fmt.Println("File is local shared file")
-			return
+			return true
 		} else if lookup.State == Downloaded {
 			fmt.Println("File has been already downloaded")
-			return
+			return true
 		} else if lookup.State == Downloading {
 			fmt.Println("File is downloading")
-			return
+			return true
 		} else if lookup.State == Failed {
 			fmt.Println("Last time failed, but we will try this again")
 		}
 	}
+
+	var result bool
 
 	go func() {
 
@@ -177,6 +182,7 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 
 		if !valid {
 			fmt.Println("We did not get the valid metaFile")
+			result = false
 			return
 		}
 
@@ -185,6 +191,7 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 		if !valid {
 			fmt.Println("Cannot add Meta")
 			g.fileHandler.files[metafileHash].State = Failed
+			result = false
 			return
 		}
 
@@ -211,6 +218,7 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 			if !valid {
 				fmt.Println("Some Failed")
 				g.fileHandler.files[metafileHash].State = Failed
+				result = false
 				return
 			}
 
@@ -219,8 +227,11 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 
 		// Successful
 		g.fileHandler.combineChunks(metafileHash, originData, localFileName)
+		result = true
+		return
 
 	}()
+	return result
 }
 
 func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
@@ -287,10 +298,14 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 }
 
 func (g *Gossiper) HandleDataRequest(dataReq *DataRequest, sender *net.UDPAddr) {
+	fmt.Printf("Recerve DataRequest from %s to %s \n", dataReq.Origin, dataReq.Destination)
+
 	// check whether we have already have the result
 	reply, present := g.fileHandler.checkFile(dataReq)
 
 	if present {
+		fmt.Println("Find DataReply")
+		fmt.Println(reply)
 		g.RouteDataReply(reply)
 		return
 	}
@@ -315,13 +330,17 @@ func (g *Gossiper) HandleDataRequest(dataReq *DataRequest, sender *net.UDPAddr) 
 }
 
 func (g *Gossiper) HandleDataReply(dataReply *DataReply, sender *net.UDPAddr) {
+	fmt.Println(dataReply)
+	fmt.Printf("Receive DataReply from %s to %s \n", dataReply.Origin, dataReply.Destination)
+
 	// check whether we have the file
 	if g.name == dataReply.Destination {
-
+		fmt.Println("DataReply arrive dest")
+		g.fileHandler.fileDispatcher.replyChan <- dataReply
+		return
 	}
 
 	// check hoplimit
-
 	reply, valid := g.fileHandler.prepareNewReply(dataReply)
 
 	if !valid {
@@ -417,12 +436,15 @@ func (f *FileHandler) checkFile(dataReq *DataRequest) (*DataReply, bool) {
 	}
 
 	if metafile, present := f.files[sha]; present {
-		newReply.Data = metafile.Metafile
+		fmt.Printf("MetaFile exist for Request from %s to %s \n", dataReq.Origin, dataReq.Destination)
+		fmt.Println(len(metafile.Metafile))
+		newReply.Data = make([]byte, 800)
 		return newReply, true
 	}
 
-	if file, present := f.fileChunks[sha]; present {
-		newReply.Data = file.Data
+	if _, present := f.fileChunks[sha]; present {
+		fmt.Printf("Chunk exist for Request from %s to %s \n", dataReq.Origin, dataReq.Destination)
+		// newReply.Data = file.Data
 		return newReply, true
 	}
 	return nil, false
@@ -460,6 +482,11 @@ func (f *FileHandler) FileIndexingRequest(filename string) {
 
 	f.files[fileIndexed.MetafileHash] = fileIndexed
 
+	fmt.Println(fileIndexed)
+	metafileHash := fileIndexed.MetafileHash
+	fmt.Println(hex.EncodeToString(metafileHash[:]))
+	// QishanWang metafileHash
+	// 469403655c3a182a6b7856052a2428ebd24fede9e39b6cb428c21b8a0c222cc4
 }
 
 func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
@@ -585,6 +612,8 @@ func (g *Gossiper) RouteDataReply(dataReply *DataReply) bool {
 		fmt.Println("Destination %s does not exist in the table \n", dest)
 		return false
 	}
+
+	fmt.Printf("Send the datareply Dest: %s to Nextnode %s \n", dest, nextNode)
 
 	g.SendGossipPacketStrAddr(&GossipPacket{DataReply: dataReply}, nextNode)
 

@@ -21,6 +21,10 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 	// rumorToSend, and rumorToAsk is []PeerStatus
 	rumorToSend, rumorToAsk := g.ComputePeerStatusDiff(s.Want)
 
+	fmt.Println("TO SEND")
+	fmt.Println(rumorToSend)
+	fmt.Println("TO ASK")
+	fmt.Println(rumorToAsk)
 	if len(rumorToSend) > 0 {
 		// Just get first is not good
 		// firstPeerStatus := rumorToSend[0]
@@ -178,7 +182,7 @@ func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, ru
 
 	for localPeer, _ := range g.peerStatuses {
 		if !peerOriginsSet.Has(localPeer) {
-			// rumorToSend = append(rumorToSend, PeerStatus{Identifier: localPeer, NextID: 1})
+			rumorToSend = append(rumorToSend, PeerStatus{Identifier: localPeer, NextID: 1})
 		}
 	}
 	return
