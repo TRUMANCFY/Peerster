@@ -18,7 +18,7 @@ const DOWNLOAD_DIR = "_Downloads"
 const CHUNK_SIZE = 8 * 1024
 
 const DOWNLOAD_TIMEOUT = 5 * time.Second
-const DOWNLOAD_RETRIEs = 5
+const DOWNLOAD_RETRIES = 5
 
 const NUM_DOWNLOAD_ROUTINE = 5
 
@@ -41,7 +41,7 @@ type File struct {
 	State        FileType
 }
 
-type FileChuck struct {
+type FileChunk struct {
 	Data []byte
 }
 
@@ -53,7 +53,7 @@ type DownloadRequest struct {
 type FileHandler struct {
 	Name            string
 	files           map[SHA256_HASH]*File
-	fileChucks      map[SHA256_HASH]*FileChuck
+	fileChunks      map[SHA256_HASH]*FileChunk
 	sharedDir       string
 	downloadDir     string
 	requestTaskChan chan<- *DownloadRequest
@@ -62,13 +62,10 @@ type FileHandler struct {
 
 func tryCreateDir(abspath string) error {
 	// refer to https://stackoverflow.com/questions/37932551/mkdir-if-not-exists-using-golang
-	if _, err := os.Stat(abspath); os.IsNotExist(err) {
+	_, err := os.Stat(abspath)
+	if os.IsNotExist(err) {
 		// Dir is not exist then create Dir
 		os.Mkdir(abspath, 0775)
-
-		if err != nil {
-			return err
-		}
 	} else if err != nil {
 		// This is other type of err
 		return err
@@ -97,7 +94,7 @@ func NewFileHandler(name string) *FileHandler {
 	return &FileHandler{
 		Name:        name,
 		files:       make(map[SHA256_HASH]*File),
-		fileChucks:  make(map[SHA256_HASH]*FileChuck),
+		fileChunks:  make(map[SHA256_HASH]*FileChunk),
 		sharedDir:   sharedDir,
 		downloadDir: downloadDir,
 	}
@@ -107,31 +104,123 @@ func (g *Gossiper) RunFileSystem() {
 	// Launch the file dispatcher
 	g.fileHandler.fileDispatcher = LaunchFileDispatcher()
 
-	// Initiallize the new
-	g.fileHandler.requestTaskChan = g.RunRequestChan()
+	// Initiallize the new requestchan not need till now
+	// g.fileHandler.requestTaskChan = g.RunRequestChan()
 }
 
-func (g *Gossiper) RunRequestChan() chan *DownloadRequest {
-	reqChan := make(chan *DownloadRequest, CHANNEL_BUFFER_SIZE)
+// func (g *Gossiper) RunRequestChan() chan *DownloadRequest {
+// 	reqChan := make(chan *DownloadRequest, CHANNEL_BUFFER_SIZE)
 
-	for i := 0; i < NUM_DOWNLOAD_ROUTINE; i++ {
-		go func() {
-			for {
-				select {
-				case req, ok := <-reqChan:
-					if !ok {
-						// TODO: Stop here?
-						return
-					}
+// 	for i := 0; i < NUM_DOWNLOAD_ROUTINE; i++ {
+// 		go func() {
+// 			for {
+// 				select {
+// 				case req, ok := <-reqChan:
+// 					if !ok {
+// 						// The channel has been closed here
+// 						return
+// 					}
 
-					reply, success := g.RequestFileChunk(req)
-					// TODO check with reply
-				}
-			}
-		}()
+// 					reply, success := g.RequestFileChunk(req)
+// 					// donot need to further check the reply as it has already been checked in the RequestFileChunk
+
+// 					if success {
+// 						// download successful and accept the chunk
+// 						g.fileHandler.acceptFileChunk(reply)
+// 					} else {
+// 						// TODO: Abort the download here
+// 					}
+// 				}
+// 			}
+// 		}()
+// 	}
+
+// 	return reqChan
+// }
+
+func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileName string) {
+	// whether the file has already in local or not
+	lookup, present := g.fileHandler.files[metafileHash]
+
+	if present {
+		if lookup.State == Shared {
+			fmt.Println("File is local shared file")
+			return
+		} else if lookup.State == Downloaded {
+			fmt.Println("File has been already downloaded")
+			return
+		} else if lookup.State == Downloading {
+			fmt.Println("File is downloading")
+			return
+		} else if lookup.State == Failed {
+			fmt.Println("Last time failed, but we will try this again")
+		}
 	}
 
-	return reqChan
+	go func() {
+
+		// Generate file
+		file := &File{
+			MetafileHash: metafileHash,
+			State:        Downloading,
+		}
+
+		// put file into our file system
+		g.fileHandler.files[metafileHash] = file
+
+		downloadReq := &DownloadRequest{
+			Hash: metafileHash,
+			Dest: dest,
+		}
+
+		metaFileReply, valid := g.RequestFileChunk(downloadReq)
+
+		if !valid {
+			fmt.Println("We did not get the valid metaFile")
+			return
+		}
+
+		metachunks, valid := g.fileHandler.addMeta(metaFileReply)
+
+		if !valid {
+			fmt.Println("Cannot add Meta")
+			g.fileHandler.files[metafileHash].State = Failed
+			return
+		}
+
+		originData := make([]byte, 0)
+
+		// send the dataRequest
+		for _, meta := range metachunks {
+
+			downloadReq = &DownloadRequest{
+				Hash: meta,
+				Dest: dest,
+			}
+
+			localData, present := g.fileHandler.checkLocalChunk(meta)
+
+			if present {
+				fmt.Println("Find the chunk in local")
+				originData = append(originData, localData...)
+				continue
+			}
+
+			dataReply, valid := g.RequestFileChunk(downloadReq)
+
+			if !valid {
+				fmt.Println("Some Failed")
+				g.fileHandler.files[metafileHash].State = Failed
+				return
+			}
+
+			originData = append(originData, dataReply.Data...)
+		}
+
+		// Successful
+		g.fileHandler.combineChunks(metafileHash, originData, localFileName)
+
+	}()
 }
 
 func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
@@ -185,7 +274,7 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 		case <-ticker.C:
 			numRetries++
 
-			if numRetries == DOWNLOAD_RETRIEs {
+			if numRetries == DOWNLOAD_RETRIES {
 				fmt.Println("Reach max retries")
 				return nil, false
 			}
@@ -246,6 +335,71 @@ func (g *Gossiper) HandleDataReply(dataReply *DataReply, sender *net.UDPAddr) {
 
 }
 
+func (f *FileHandler) acceptFileChunk(reply *DataReply) {
+	// add the reply to the filechunks in the filehandler
+	shaHash, err := HashToSha256(reply.HashValue)
+	if err != nil {
+		return
+	}
+
+	_, present := f.fileChunks[shaHash]
+
+	if present {
+		return
+	}
+
+	f.fileChunks[shaHash] = &FileChunk{
+		Data: reply.Data,
+	}
+}
+
+func (f *FileHandler) addMeta(reply *DataReply) ([]SHA256_HASH, bool) {
+	// check the size of the metadata
+	if len(reply.Data)%sha256.Size != 0 {
+		fmt.Println("The size of metafile is not multiple of 32 bytes")
+		return nil, false
+	}
+
+	shaHash, err := HashToSha256(reply.HashValue)
+	metafile := reply.Data
+
+	if err != nil {
+		return nil, false
+	}
+
+	file, present := f.files[shaHash]
+
+	if !present {
+		fmt.Println("File Not Exist")
+		return nil, false
+	} else if file.State != Downloading {
+		fmt.Println("File Has Been Already In Local")
+		return nil, false
+	} else {
+		file.Metafile = metafile
+	}
+
+	numChunks := len(metafile) / sha256.Size
+
+	splitedMeta := make([]SHA256_HASH, 0)
+
+	for i := 0; i < numChunks; i++ {
+		metaChunk, _ := HashToSha256(metafile[i*sha256.Size : (i+1)*sha256.Size])
+		splitedMeta = append(splitedMeta, metaChunk)
+	}
+
+	return splitedMeta, true
+}
+
+func (f *FileHandler) checkLocalChunk(shaHash SHA256_HASH) ([]byte, bool) {
+	localfile, present := f.fileChunks[shaHash]
+
+	if !present {
+		return nil, false
+	}
+	return localfile.Data, true
+}
+
 func (f *FileHandler) checkFile(dataReq *DataRequest) (*DataReply, bool) {
 	sha, err := HashToSha256(dataReq.HashValue)
 
@@ -267,11 +421,29 @@ func (f *FileHandler) checkFile(dataReq *DataRequest) (*DataReply, bool) {
 		return newReply, true
 	}
 
-	if file, present := f.fileChucks[sha]; present {
+	if file, present := f.fileChunks[sha]; present {
 		newReply.Data = file.Data
 		return newReply, true
 	}
 	return nil, false
+}
+
+func (f *FileHandler) combineChunks(meshfileHash SHA256_HASH, data []byte, fileName string) {
+	f.files[meshfileHash].State = Downloaded
+	f.files[meshfileHash].Name = fileName
+	f.files[meshfileHash].Size = int64(len(data))
+	localFile, err := os.OpenFile(filepath.Join(f.downloadDir, fileName), os.O_CREATE|os.O_WRONLY, 0755)
+
+	if err != nil {
+		panic(err)
+	}
+
+	localFile.Write(data)
+
+	localFile.Close()
+
+	fmt.Printf("%s Downloaded\n", fileName)
+
 }
 
 func (f *FileHandler) FileIndexingRequest(filename string) {
@@ -323,17 +495,17 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 
 		// the chuck into the filehandler
 		// check the hash exist or not
-		_, present := f.fileChucks[hash]
+		_, present := f.fileChunks[hash]
 
 		if present {
 			fmt.Println("Wierd! The chunk has already existed!")
 		}
 
-		newChunk := &FileChuck{
+		newChunk := &FileChunk{
 			Data: chunk[:bytesread],
 		}
 
-		f.fileChucks[hash] = newChunk
+		f.fileChunks[hash] = newChunk
 
 	}
 

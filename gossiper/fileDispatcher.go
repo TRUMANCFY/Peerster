@@ -1,6 +1,8 @@
 package gossiper
 
 import (
+	"fmt"
+
 	. "github.com/TRUMANCFY/Peerster/message"
 )
 
@@ -32,7 +34,50 @@ func LaunchFileDispatcher() *FileDispatcher {
 }
 
 func (d *FileDispatcher) Run() {
-	// TODO
+	recordBook := make(map[SHA256_HASH]ReplyObserver)
+
+	go func() {
+		for {
+			select {
+			case regTag := <-d.registerChan:
+				switch regTag.tagType {
+				case TakeIn:
+					_, present := recordBook[regTag.hash]
+
+					if present {
+						fmt.Println("There is already observer for this data")
+						close(regTag.observer)
+
+						// TODO: think break or continue
+						continue
+					}
+
+					recordBook[regTag.hash] = regTag.observer
+
+				case TakeOut:
+					observer, present := recordBook[regTag.hash]
+					if !present {
+						panic("There is no observer for this channel")
+					}
+
+					close(observer)
+					delete(recordBook, regTag.hash)
+				}
+			case dataReply := <-d.replyChan:
+				shaHash, err := HashToSha256(dataReply.HashValue)
+				if err != nil {
+					panic(err)
+				}
+
+				obsRecord, present := recordBook[shaHash]
+
+				if present {
+					obsRecord <- dataReply
+				}
+
+			}
+		}
+	}()
 }
 
 func (d *FileDispatcher) Register(shaHash SHA256_HASH, observer ReplyObserver) {

@@ -106,8 +106,11 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 }
 
 func (g *Gossiper) Run() {
+	fmt.Println("Start to run")
 	peerListener := g.ReceiveFromPeers()
 	clientListener := g.ReceiveFromClients()
+
+	fmt.Println(peerListener)
 
 	if g.antiEntropy > 0 && !g.simple {
 		go g.AntiEntropy()
@@ -123,14 +126,15 @@ func (g *Gossiper) Run() {
 		go g.RunRoutingMessage()
 	}
 
-	g.fileHandler = NewFileHandler(g.name)
+	// g.fileHandler = NewFileHandler(g.name)
+	// go g.RunFileSystem()
 
 	g.dispatcher = StartPeerStatusDispatcher()
 	go g.Listen(peerListener, clientListener)
 }
 
 func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListener <-chan *ClientMessageWrapper) {
-
+	fmt.Println("Start Listen")
 	for {
 		select {
 		case gpw := <-peerListener:
