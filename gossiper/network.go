@@ -58,9 +58,9 @@ func ReceiveFromConn(conn *net.UDPConn) <-chan *MessageReceived {
 }
 
 func (g *Gossiper) SendGossipPacket(gp *GossipPacket, target *net.UDPAddr) {
-	if gp.Rumor != nil {
-		fmt.Printf("Send %s Origin %s ID %d to %s \n", gp.Rumor.Text, gp.Rumor.Origin, gp.Rumor.ID, target.String())
-	}
+	// if gp.Rumor != nil {
+	// 	fmt.Printf("Send %s Origin %s ID %d to %s \n", gp.Rumor.Text, gp.Rumor.Origin, gp.Rumor.ID, target.String())
+	// }
 
 	g.toSendChan <- &GossipPacketWrapper{sender: target, gossipPacket: gp}
 }

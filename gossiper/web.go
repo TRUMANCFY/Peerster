@@ -16,7 +16,6 @@ func (g *Gossiper) GetMessages() []RumorMessage {
 
 	for _, l1 := range g.rumorList {
 		for _, l2 := range l1 {
-			// Check whether text is emtpy
 			if l2.Text != "" {
 				buffer = append(buffer, l2)
 			}
@@ -40,7 +39,9 @@ func (g *Gossiper) GetRoutes() []string {
 	buffer := make([]string, 0)
 
 	for route, _ := range g.routeTable.routeTable {
-		buffer = append(buffer, route)
+		if route != g.name {
+			buffer = append(buffer, route)
+		}
 	}
 
 	return buffer
@@ -226,33 +227,33 @@ func (g *Gossiper) ListenToGUI() {
 
 	// fake data for private message
 
-	g.routeTable.routeTable["A"] = "127.0.0.1:5002"
-	g.routeTable.routeTable["B"] = "127.0.0.1:5003"
+	// g.routeTable.routeTable["A"] = "127.0.0.1:5002"
+	// g.routeTable.routeTable["B"] = "127.0.0.1:5003"
 
-	tmp1 := make([]PrivateMessage, 0)
-	tmp1 = append(tmp1, PrivateMessage{
-		Origin: "A",
-		Text:   "A1",
-	})
+	// tmp1 := make([]PrivateMessage, 0)
+	// tmp1 = append(tmp1, PrivateMessage{
+	// 	Origin: "A",
+	// 	Text:   "A1",
+	// })
 
-	tmp1 = append(tmp1, PrivateMessage{
-		Origin: "A",
-		Text:   "A2",
-	})
+	// tmp1 = append(tmp1, PrivateMessage{
+	// 	Origin: "A",
+	// 	Text:   "A2",
+	// })
 
-	tmp2 := make([]PrivateMessage, 0)
-	tmp2 = append(tmp2, PrivateMessage{
-		Origin: "B",
-		Text:   "B1",
-	})
+	// tmp2 := make([]PrivateMessage, 0)
+	// tmp2 = append(tmp2, PrivateMessage{
+	// 	Origin: "B",
+	// 	Text:   "B1",
+	// })
 
-	tmp2 = append(tmp2, PrivateMessage{
-		Origin: "B",
-		Text:   "B2",
-	})
+	// tmp2 = append(tmp2, PrivateMessage{
+	// 	Origin: "B",
+	// 	Text:   "B2",
+	// })
 
-	g.privateMessageList.privateMessageList["A"] = tmp1
-	g.privateMessageList.privateMessageList["B"] = tmp2
+	// g.privateMessageList.privateMessageList["A"] = tmp1
+	// g.privateMessageList.privateMessageList["B"] = tmp2
 
 	r := mux.NewRouter()
 

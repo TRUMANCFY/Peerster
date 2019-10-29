@@ -85,11 +85,7 @@
       ></b-form-file>
       <b-button class='float-center' style="margin-top:1em" @click="sendFile">Send File</b-button>
       </div>
-
-       
     </b-form>
-
-    
     </b-col>
   </b-row>
 </b-container>
@@ -387,20 +383,30 @@ export default {
     sendFile: function() {
       var self = this;
       console.log(self.file)
+
+      var payload = {"Text": self.file}
+
+      // var a = await fetch("/file", {method: "POST", body: JSON.stringify(payload), mode: 'cors'})
+      // .then(res => {
+      //   if (res.ok) {
+      //     var temp = res.json()
+      //     return temp
+      //   }
+      // })
     },
 
     refresh: function() {
       console.log('refresh')
-      // this.pullMessage()
-      // this.pullPeerID()
-      // this.pullNodes()
-      // this.pullPrivateMsg()
-      // this.pullRouteTarget()
-      // this.updateOtherComp()
+      this.pullMessage()
+      this.pullPeerID()
+      this.pullNodes()
+      this.pullPrivateMsg()
+      this.pullRouteTarget()
+      this.updateOtherComp()
     }
   },
   mounted() {
-    // setInterval(this.refresh, 1000)
+    setInterval(this.refresh, 1000)
   }
 }
 </script>

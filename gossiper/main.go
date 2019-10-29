@@ -106,11 +106,8 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 }
 
 func (g *Gossiper) Run() {
-	fmt.Println("Start to run")
 	peerListener := g.ReceiveFromPeers()
 	clientListener := g.ReceiveFromClients()
-
-	fmt.Println(peerListener)
 
 	if g.antiEntropy > 0 && !g.simple {
 		go g.AntiEntropy()
@@ -126,21 +123,20 @@ func (g *Gossiper) Run() {
 		go g.RunRoutingMessage()
 	}
 
-	// g.fileHandler = NewFileHandler(g.name)
-	// go g.RunFileSystem()
+	g.fileHandler = NewFileHandler(g.name)
+	go g.RunFileSystem()
 
 	g.dispatcher = StartPeerStatusDispatcher()
-	go g.Listen(peerListener, clientListener)
+	g.Listen(peerListener, clientListener)
 }
 
 func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListener <-chan *ClientMessageWrapper) {
-	fmt.Println("Start Listen")
 	for {
 		select {
 		case gpw := <-peerListener:
 			go g.HandlePeerMessage(gpw)
 		case cmw := <-clientListener:
-			fmt.Println("Handle Client Msg")
+			// fmt.Println("Handle Client Msg")
 			go g.HandleClientMessage(cmw)
 		case gpw := <-g.toSendChan:
 			gp := gpw.gossipPacket
@@ -177,7 +173,7 @@ func (g *Gossiper) AntiEntropy() {
 
 			neighbor, present := g.SelectRandomNeighbor(nil)
 			if present {
-				fmt.Println("Anti entropy " + neighbor)
+				// fmt.Println("Anti entropy " + neighbor)
 				g.SendGossipPacketStrAddr(g.CreateStatusPacket(), neighbor)
 			}
 		}
@@ -211,7 +207,7 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 		if packet.Rumor.ID != 0 {
 			g.HandleRumorPacket(packet.Rumor, sender)
 		} else {
-			fmt.Println("EMPTY Packet")
+			// fmt.Println("EMPTY Packet")
 			g.SendGossipPacket(g.CreateStatusPacket(), sender)
 		}
 
@@ -229,7 +225,6 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 	case packet.DataRequest != nil:
 		g.HandleDataRequest(packet.DataRequest, sender)
 	}
-
 }
 
 func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
@@ -237,7 +232,7 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 
 	// Check whether it is a private message first
 	// this is a private message
-	if *cmw.msg.Destination != "" {
+	if msg.Destination != nil && *cmw.msg.Destination != "" {
 		// OUTPUT
 		fmt.Printf("CLIENT MESSAGE %s dest %s \n", cmw.msg.Text, *cmw.msg.Destination)
 		g.HandleClientPrivate(cmw)
@@ -251,7 +246,7 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	} else {
 		newRumorMsg := g.CreateRumorPacket(msg)
 
-		fmt.Println("CURRENTID is ", g.currentID)
+		// fmt.Println("CURRENTID is ", g.currentID)
 		// the second arguement is the last-step source of the message
 		// here include the case that we receive it from the client
 		g.HandleRumorPacket(newRumorMsg, g.address)

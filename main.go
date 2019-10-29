@@ -36,5 +36,5 @@ func main() {
 
 	gossiper := NewGossiper(*gossipAddr, *uiPort, *name, peersList, *rtimer, *simple, *antiEntropy, *gui, *guiPort)
 
-	go gossiper.Run()
+	gossiper.Run()
 }

@@ -33,7 +33,10 @@ func (g *Gossiper) RunRoutingMessage() {
 }
 
 func (g *Gossiper) updateRouteTable(newRumor *RumorMessage, senderAddrStr string) {
-	// because we have checked the diff
+	// if the roumour is from my self should end
+	if newRumor.Origin == g.name {
+		return
+	}
 
 	// lock
 	g.routeTable.Mux.Lock()

@@ -39,7 +39,6 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 			go g.RumorMongeringPrepare(r, GenerateStringSetSingleton(senderAddr.String()))
 		}
 
-		fmt.Println("Accept Rumor")
 		g.AcceptRumor(r)
 
 		g.updateRouteTable(r, senderAddr.String())
@@ -116,8 +115,8 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 			case peerStatus, ok := <-observerChan:
 				// the channel has been closed by dispatcher
 				if !ok {
-					fmt.Println("Read peer status wrong")
-					fmt.Println(peerStatus)
+					// fmt.Println("Read peer status wrong")
+					// fmt.Println(peerStatus)
 					return
 				}
 
