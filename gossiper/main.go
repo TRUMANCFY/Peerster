@@ -119,9 +119,9 @@ func (g *Gossiper) Run() {
 	}
 
 	// send route message
-	// if g.rtimer > 0 {
-	// 	go g.RunRoutingMessage()
-	// }
+	if g.rtimer > 0 {
+		go g.RunRoutingMessage()
+	}
 
 	g.fileHandler = NewFileHandler(g.name)
 	go g.RunFileSystem()

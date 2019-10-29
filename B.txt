@@ -9,77 +9,1778 @@ Route timer value is 1
 GUI Port is 127.0.0.1:8082 
 Start antiEntropy
 The value of antientropy is  10
+Accept Rumor Origin: B ID: 1 
 Server runs at 127.0.0.1:8082 
 PEERS 127.0.0.1:5003,127.0.0.1:5001
-STATUS from 127.0.0.1:5001 
+RUMOR origin A from 127.0.0.1:5001 ID 3 contents  
+DIFF is -2
+The new coming rumor ID is smaller than our local
+Send Status to 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 4
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+TO SEND
+RUMOR origin A from 127.0.0.1:5001 ID 1 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 1 
+Send Status to 127.0.0.1:5001 
+[{B 1}]
+TO ASK
+[{A 1}]
+MONGERING with 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: A 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 4
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 2 contents  
+TO SEND
+[{B 1}]
+TO ASK
+[{A 2}]
+DIFF is 0
+Accept Rumor Origin: A ID: 2 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Register sender: 127.0.0.1:5001, identifier: B 
+STATUS from 127.0.0.1:5001 peer A nextID 4
+TO SEND
+[{B 1}]
+TO ASK
+[{A 3}]
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 2 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+MONGERING with 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5001, identifier: B 
+STATUS from 127.0.0.1:5001 peer A nextID 4 peer B nextID 2
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 2 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 4 peer B nextID 2
+TO SEND
+[]
+TO ASK
+TO SEND
+[]
+TO ASK
+[{A 3}]
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer A nextID 4 peer B nextID 2
+Send Status to 127.0.0.1:5001 
+TO SEND
+[]
+TO ASK
+[{A 3}]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: A 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+[{A 3}]
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 3 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 3 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+RUMOR origin A from 127.0.0.1:5001 ID 3 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 3 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 3 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 3 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 3 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5001 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+RUMOR origin A from 127.0.0.1:5001 ID 3 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5001 
+Send routing rumor
+Accept Rumor Origin: B ID: 2 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 4 peer B nextID 3
 TO SEND
 []
 TO ASK
 []
 IN SYNC WITH 127.0.0.1:5001 
-Anti entropy 127.0.0.1:5001
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
 PEERS 127.0.0.1:5003,127.0.0.1:5001
-STATUS from 127.0.0.1:5003 
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5003 
-PEERS 127.0.0.1:5003,127.0.0.1:5001
-RUMOR origin A from 127.0.0.1:5001 ID 1 contents A1 
+RUMOR origin A from 127.0.0.1:5001 ID 4 contents  
 DIFF is 0
-Accept Rumor Origin: A ID: 1 
-DSDV A 127.0.0.1:5001 
+Accept Rumor Origin: A ID: 4 
 Send Status to 127.0.0.1:5001 
 MONGERING with 127.0.0.1:5003 
 Register sender: 127.0.0.1:5003, identifier: A 
-PEERS 127.0.0.1:5001,127.0.0.1:5003
-STATUS from 127.0.0.1:5003 peer A nextID 2
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 1
 TO SEND
+[{A 1} {B 1}]
+TO ASK
+[{C 1}]
+The most urgent is Origin: A ID: 1 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 1 
+Receive Peer Status Origin: A, NextID: 1 
+Receive Peer Status Origin: A, NextID: 1 
+Receive Peer Status Origin: A, NextID: 1 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 2
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 2
+TO SEND
+[{A 2} {B 1}]
+TO ASK
+[{C 1}]
+The most urgent is Origin: A ID: 2 
+TO SEND
+[{A 2} {B 1}]
+TO ASK
+[{C 1}]
+The most urgent is Origin: A ID: 2 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
 Tagger: Identifier: A, Sender: 127.0.0.1:5003 
 Receive Peer Status Origin: A, NextID: 2 
-[]
-TO ASK
-[]
-Prepare to flip the coin
-Choose not to flip the coin
-IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 2
+PEERS 127.0.0.1:5003,127.0.0.1:5001
 Unregister sender: 127.0.0.1:5003, identifier: A 
-Receive {B1} 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 2 
+MONGERING with 127.0.0.1:5003 
+TO SEND
+Register sender: 127.0.0.1:5003, identifier: A 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+MONGERING with 127.0.0.1:5003 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 2
+TO SEND
+[{A 2} {B 1}]
+TO ASK
+[{C 1}]
+The most urgent is Origin: A ID: 2 
+[{A 2} {B 1}]
+TO ASK
+[{C 1}]
+The most urgent is Origin: A ID: 2 
+Register sender: 127.0.0.1:5003, identifier: A 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 2 
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
 DIFF is 0
-Accept Rumor Origin: B ID: 1 
-MONGERING with 127.0.0.1:5001 
-Register sender: 127.0.0.1:5001, identifier: B 
+Accept Rumor Origin: C ID: 1 
+Send Status to 127.0.0.1:5003 
 PEERS 127.0.0.1:5003,127.0.0.1:5001
-STATUS from 127.0.0.1:5001 peer A nextID 2 peer B nextID 2
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5001 
-Tagger: Identifier: B, Sender: 127.0.0.1:5001 
-Receive Peer Status Origin: B, NextID: 2 
-Unregister sender: 127.0.0.1:5001, identifier: B 
-PEERS 127.0.0.1:5001,127.0.0.1:5003
-STATUS from 127.0.0.1:5001 peer A nextID 2 peer B nextID 2
-TO SEND
-[]
-TO ASK
-[]
-IN SYNC WITH 127.0.0.1:5001 
-Tagger: Identifier: B, Sender: 127.0.0.1:5001 
-Anti entropy 127.0.0.1:5003
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
+Receive Peer Status Origin: A, NextID: 2 
 PEERS 127.0.0.1:5003,127.0.0.1:5001
-STATUS from 127.0.0.1:5003 peer A nextID 2
+MONGERING with 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5003 
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+Register sender: 127.0.0.1:5003, identifier: A 
+Register sender: 127.0.0.1:5003, identifier: A 
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5003 
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+DIFF is 1
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+The new coming rumor ID is larger than our local
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 3
 TO SEND
 Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Send Status to 127.0.0.1:5003 
+[{A 3} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 3 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 3
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Register sender: 127.0.0.1:5003, identifier: A 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Receive Peer Status Origin: A, NextID: 3 
+TO SEND
+[{A 3} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 3 
+MONGERING with 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5003, identifier: A 
+Receive Peer Status Origin: A, NextID: 3 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 3
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 3
+TO SEND
+[{A 3} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 3
+TO SEND
+[{A 3} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 3 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+TO SEND
+[{A 3} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 3 
+MONGERING with 127.0.0.1:5003 
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5003 
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+MONGERING with 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: A 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 3
+TO SEND
+[{A 3} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+Register sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 3
+TO SEND
+[{A 3} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 3 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+Receive Peer Status Origin: A, NextID: 3 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 3
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 4
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 4
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 4
+TO SEND
+[{A 4} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 4 
+MONGERING with 127.0.0.1:5003 
+TO SEND
+[{A 4} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 4 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 4 
+Send routing rumor
+Receive Peer Status Origin: A, NextID: 4 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 4
+TO SEND
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: A 
+Register sender: 127.0.0.1:5003, identifier: A 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Receive Peer Status Origin: A, NextID: 4 
+TO SEND
+[{A 4} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 4 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+[{A 4} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 4 
+MONGERING with 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 4 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 4
+TO SEND
+[{A 4} {B 1}]
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: A 
+Receive Peer Status Origin: A, NextID: 3 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 4
+TO SEND
+[{A 4} {B 1}]
+TO ASK
+[]
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+STATUS from 127.0.0.1:5001 peer B nextID 3 peer C nextID 2 peer A nextID 5
+Receive Peer Status Origin: A, NextID: 4 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 4
+TO SEND
+[{A 4} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 4 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+TO SEND
+[{A 3} {B 1}]
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 4
+Accept Rumor Origin: B ID: 3 
+TO ASK
+[]
+The most urgent is Origin: A ID: 3 
+MONGERING with 127.0.0.1:5003 
+TO SEND
+[{A 4} {B 1}]
+TO ASK
+[]
+The most urgent is Origin: A ID: 4 
+MONGERING with 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+The most urgent is Origin: A ID: 4 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Register sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+TO ASK
+[]
+The most urgent is Origin: A ID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 5 peer C nextID 2
+Receive Peer Status Origin: C, NextID: 2 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5
+TO SEND
 [{B 1}]
 TO ASK
 []
 MONGERING with 127.0.0.1:5003 
-Register sender: 127.0.0.1:5003, identifier: B 
+MONGERING with 127.0.0.1:5003 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5
+TO SEND
+[{B 1}]
+TO ASK
+[]
+MONGERING with 127.0.0.1:5003 
 PEERS 127.0.0.1:5003,127.0.0.1:5001
-STATUS from 127.0.0.1:5003 peer A nextID 2 peer B nextID 2
+TO SEND
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+[{B 1}]
+TO ASK
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+[]
+MONGERING with 127.0.0.1:5003 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 4
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5
+TO SEND
+[{B 1}]
+TO ASK
+[]
+MONGERING with 127.0.0.1:5003 
+TO SEND
+[{B 1}]
+TO ASK
+[]
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+TO SEND
+[{A 4} {B 1}]
+TO ASK
+[]
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5
+TO SEND
+[{B 1}]
+TO ASK
+[]
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+TO SEND
+[{B 1}]
+TO ASK
+[]
+MONGERING with 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 2
+TO SEND
+[{B 2}]
+TO ASK
+[]
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+The most urgent is Origin: B ID: 2 
+MONGERING with 127.0.0.1:5003 
+The most urgent is Origin: A ID: 4 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 2
+TO SEND
+[{B 2}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 2 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+MONGERING with 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 5 peer C nextID 2
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: A, NextID: 5 
+TO SEND
+[{B 1}]
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 5 peer B nextID 4 peer C nextID 2
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 3
+TO SEND
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5
+TO SEND
+[{B 1}]
+TO ASK
+TO ASK
+[]
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 3
+[]
+MONGERING with 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5003 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+[{B 3}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 3 
+MONGERING with 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 2
+TO SEND
+[{B 2}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 2 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 4
+TO SEND
+[]
+TO ASK
+STATUS from 127.0.0.1:5003 peer B nextID 2 peer C nextID 2 peer A nextID 5
+TO SEND
+[{B 2}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 2 
+TO SEND
+[{B 3}]
+TO ASK
+[]
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: A 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+Receive Peer Status Origin: A, NextID: 5 
+MONGERING with 127.0.0.1:5003 
+TO SEND
+[{B 1}]
+TO ASK
+[]
+MONGERING with 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+The most urgent is Origin: B ID: 3 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 2
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 3
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+STATUS from 127.0.0.1:5003 peer A nextID 5 peer B nextID 2 peer C nextID 2
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Register sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: C, NextID: 2 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer B nextID 2 peer C nextID 2 peer A nextID 5
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+TO SEND
+[{B 2}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 2 
+MONGERING with 127.0.0.1:5003 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 4
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+TO SEND
+[{B 2}]
+TO ASK
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+TO SEND
+[{B 2}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 2 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+TO SEND
+[{B 3}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 3 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+TO SEND
+[]
+TO ASK
+[]
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 2 
+Receive Peer Status Origin: B, NextID: 2 
+The most urgent is Origin: B ID: 2 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Register sender: 127.0.0.1:5003, identifier: B 
+Register sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Register sender: 127.0.0.1:5003, identifier: B 
+Register sender: 127.0.0.1:5003, identifier: B 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 4
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 4
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 3
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+TO SEND
+[{B 3}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 3 
+MONGERING with 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+STATUS from 127.0.0.1:5003 peer B nextID 4 peer C nextID 2 peer A nextID 5
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 5 peer B nextID 4
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 3 
+RUMOR origin C from 127.0.0.1:5003 ID 2 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 2 
+Send Status to 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Register sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 3 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+STATUS from 127.0.0.1:5003 peer C nextID 3 peer A nextID 5 peer B nextID 4
+STATUS from 127.0.0.1:5003 peer C nextID 3 peer A nextID 5 peer B nextID 4
+TO SEND
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 4 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+STATUS from 127.0.0.1:5003 peer C nextID 3 peer A nextID 5 peer B nextID 4
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 3 peer A nextID 5 peer B nextID 4
+TO SEND
+[]
+TO ASK
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+STATUS from 127.0.0.1:5003 peer C nextID 3 peer A nextID 5 peer B nextID 4
+TO SEND
+[]
+TO ASK
+[]
+Receive Peer Status Origin: B, NextID: 4 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 5 
+Receive Peer Status Origin: A, NextID: 5 
+STATUS from 127.0.0.1:5001 peer A nextID 5 peer B nextID 4 peer C nextID 3
+TO SEND
+[]
+TO ASK
+[]
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Origin: ; Sender:  NOT REGISTERED 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 4 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Register sender: 127.0.0.1:5001, identifier: C 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+Origin: ; Sender:  NOT REGISTERED 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 5 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 5 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 3 peer A nextID 6 peer B nextID 4
 TO SEND
 []
 TO ASK
@@ -87,52 +1788,107 @@ TO ASK
 IN SYNC WITH 127.0.0.1:5003 
 Tagger: Identifier: A, Sender: 127.0.0.1:5003 
 Tagger: Identifier: B, Sender: 127.0.0.1:5003 
-Receive Peer Status Origin: B, NextID: 2 
-Prepare to flip the coin
-FLIPPED COIN sending rumor to 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: B, NextID: 4 
+Receive Peer Status Origin: A, NextID: 6 
 Unregister sender: 127.0.0.1:5003, identifier: B 
-MONGERING with 127.0.0.1:5001 
-Register sender: 127.0.0.1:5001, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 4 
 PEERS 127.0.0.1:5001,127.0.0.1:5003
-STATUS from 127.0.0.1:5001 peer A nextID 2 peer B nextID 2
+STATUS from 127.0.0.1:5003 peer B nextID 5 peer C nextID 3 peer A nextID 6
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 3 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer C nextID 4 peer A nextID 6 peer B nextID 4
+TO SEND
+[{B 4}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 4 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 4 
+Receive Peer Status Origin: C, NextID: 4 
+MONGERING with 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 6 peer B nextID 5 peer C nextID 4
 TO SEND
 []
 TO ASK
 []
 IN SYNC WITH 127.0.0.1:5001 
 Tagger: Identifier: B, Sender: 127.0.0.1:5001 
-Receive Peer Status Origin: B, NextID: 2 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 5 
 Unregister sender: 127.0.0.1:5001, identifier: B 
 PEERS 127.0.0.1:5003,127.0.0.1:5001
-STATUS from 127.0.0.1:5003 peer B nextID 2 peer A nextID 2
+RUMOR origin A from 127.0.0.1:5001 ID 6 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 6 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 4 peer A nextID 7 peer B nextID 5
 TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 7 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 5 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 4 peer A nextID 7 peer B nextID 6
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
 Tagger: Identifier: B, Sender: 127.0.0.1:5003 
 []
 TO ASK
 []
-Tagger: Identifier: A, Sender: 127.0.0.1:5003 
 IN SYNC WITH 127.0.0.1:5003 
 PEERS 127.0.0.1:5003,127.0.0.1:5001
-RUMOR origin C from 127.0.0.1:5003 ID 1 contents C1 
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
 DIFF is 0
-Accept Rumor Origin: C ID: 1 
-DSDV C 127.0.0.1:5003 
+Accept Rumor Origin: C ID: 4 
 Send Status to 127.0.0.1:5003 
 MONGERING with 127.0.0.1:5001 
 Register sender: 127.0.0.1:5001, identifier: C 
 PEERS 127.0.0.1:5003,127.0.0.1:5001
-STATUS from 127.0.0.1:5001 peer A nextID 2 peer B nextID 2 peer C nextID 2
+STATUS from 127.0.0.1:5001 peer A nextID 7 peer B nextID 5 peer C nextID 5
 TO SEND
-[]
+[{B 5}]
 TO ASK
 []
-IN SYNC WITH 127.0.0.1:5001 
+The most urgent is Origin: B ID: 5 
+MONGERING with 127.0.0.1:5001 
 Tagger: Identifier: B, Sender: 127.0.0.1:5001 
 Tagger: Identifier: C, Sender: 127.0.0.1:5001 
-Receive Peer Status Origin: C, NextID: 2 
+Receive Peer Status Origin: C, NextID: 5 
+Register sender: 127.0.0.1:5001, identifier: B 
 Unregister sender: 127.0.0.1:5001, identifier: C 
-PEERS 127.0.0.1:5001,127.0.0.1:5003
-STATUS from 127.0.0.1:5001 peer A nextID 2 peer B nextID 2 peer C nextID 2
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 7 peer B nextID 6 peer C nextID 5
 TO SEND
 []
 TO ASK
@@ -140,9 +1896,86 @@ TO ASK
 IN SYNC WITH 127.0.0.1:5001 
 Tagger: Identifier: B, Sender: 127.0.0.1:5001 
 Tagger: Identifier: C, Sender: 127.0.0.1:5001 
-Anti entropy 127.0.0.1:5003
-PEERS 127.0.0.1:5001,127.0.0.1:5003
-STATUS from 127.0.0.1:5003 peer C nextID 2 peer A nextID 2 peer B nextID 2
+Receive Peer Status Origin: B, NextID: 6 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 7 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 7 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 6 peer C nextID 5 peer A nextID 8
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 8 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 6 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 8 peer B nextID 7 peer C nextID 5
+TO SEND
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 5 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 5 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 8 peer B nextID 7 peer C nextID 6
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+STATUS from 127.0.0.1:5003 peer C nextID 6 peer A nextID 8 peer B nextID 6
+TO SEND
+[{B 6}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 6 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 6 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 6 peer A nextID 8 peer B nextID 7
+TO SEND
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 7 
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 8 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 8 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 9 peer B nextID 7 peer C nextID 6
 TO SEND
 []
 TO ASK
@@ -150,3 +1983,3576 @@ TO ASK
 IN SYNC WITH 127.0.0.1:5003 
 Tagger: Identifier: A, Sender: 127.0.0.1:5003 
 Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 9 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 7 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 9 peer B nextID 8 peer C nextID 6
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 6 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 6 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 7 peer C nextID 7 peer A nextID 9
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+TO SEND
+[{B 7}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 7 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+STATUS from 127.0.0.1:5001 peer C nextID 7 peer A nextID 9 peer B nextID 8
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 7 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 7 peer A nextID 9 peer B nextID 8
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 8 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 9 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 9 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 7 peer A nextID 10 peer B nextID 8
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[]
+TO ASK
+Receive Peer Status Origin: A, NextID: 10 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Send routing rumor
+Accept Rumor Origin: B ID: 8 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 7 peer A nextID 10 peer B nextID 9
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 7 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 7 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 10 peer B nextID 8 peer C nextID 8
+TO SEND
+[{B 8}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 8 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 8 
+Register sender: 127.0.0.1:5001, identifier: B 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 10 peer B nextID 9 peer C nextID 8
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 9 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 10 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 10 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 8 peer A nextID 11 peer B nextID 9
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 11 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 9 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 10 peer C nextID 8 peer A nextID 11
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 8 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 8 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 11 peer B nextID 9 peer C nextID 9
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 9 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+[{B 9}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 9 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer C nextID 9 peer A nextID 11 peer B nextID 10
+TO SEND
+[]
+TO ASK
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 10 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 11 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 11 
+Send Status to 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 12 peer B nextID 10 peer C nextID 9
+MONGERING with 127.0.0.1:5003 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 10 peer C nextID 9 peer A nextID 12
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 12 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 10 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 9 peer A nextID 12 peer B nextID 11
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 9 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 9 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 10 peer C nextID 10 peer A nextID 12
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 10 
+[{B 10}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 10 
+MONGERING with 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 12 peer B nextID 11 peer C nextID 10
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 11 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 12 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 12 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 10 peer A nextID 13 peer B nextID 11
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 13 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 11 
+Anti entropy 127.0.0.1:5001
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 12 peer C nextID 10 peer A nextID 13
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer A nextID 13 peer B nextID 11 peer C nextID 10
+TO SEND
+[{B 11}]
+TO ASK
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+The most urgent is Origin: B ID: 11 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 13 peer B nextID 12 peer C nextID 10
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 12 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+RUMOR origin C from 127.0.0.1:5003 ID 10 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 10 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer C nextID 11 peer A nextID 13 peer B nextID 12
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 11 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 13 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 13 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 11 peer A nextID 14 peer B nextID 12
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 14 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 12 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 14 peer B nextID 13 peer C nextID 11
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 11 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 11 
+Send Status to 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 14 peer B nextID 12 peer C nextID 11
+TO SEND
+[{B 12} {C 11}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 12 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 12 peer A nextID 14 peer B nextID 12
+TO SEND
+[{B 12}]
+TO ASK
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+The most urgent is Origin: B ID: 12 
+MONGERING with 127.0.0.1:5003 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer B nextID 13 peer C nextID 12 peer A nextID 14
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: B, NextID: 12 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+STATUS from 127.0.0.1:5001 peer B nextID 13 peer C nextID 12 peer A nextID 14
+TO SEND
+[]
+TO ASK
+[]
+Register sender: 127.0.0.1:5003, identifier: B 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 12 
+Receive Peer Status Origin: B, NextID: 13 
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 12 peer A nextID 14 peer B nextID 13
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 13 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: B, NextID: 13 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Origin: ; Sender:  NOT REGISTERED 
+Receive Peer Status Origin: B, NextID: 13 
+Origin: ; Sender:  NOT REGISTERED 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 14 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 14 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 12 peer A nextID 15 peer B nextID 13
+TO SEND
+[]
+TO ASK
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 15 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 13 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 15 peer B nextID 14 peer C nextID 12
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 12 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 12 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 13 peer A nextID 15 peer B nextID 13
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+TO SEND
+STATUS from 127.0.0.1:5001 peer A nextID 15 peer B nextID 14 peer C nextID 13
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 13 
+IN SYNC WITH 127.0.0.1:5001 
+[{B 13}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 13 
+MONGERING with 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 13 peer A nextID 15 peer B nextID 14
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 14 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 15 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 15 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 14 peer C nextID 13 peer A nextID 16
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 16 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 14 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 15 peer C nextID 13 peer A nextID 16
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 13 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 13 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 14 peer C nextID 14 peer A nextID 16
+TO SEND
+[{B 14}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 14 
+MONGERING with 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer C nextID 14 peer A nextID 16 peer B nextID 15
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 14 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 14 peer A nextID 16 peer B nextID 15
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 15 
+IN SYNC WITH 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 16 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 16 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 14 peer A nextID 17 peer B nextID 15
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 17 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+IN SYNC WITH 127.0.0.1:5003 
+Send routing rumor
+Accept Rumor Origin: B ID: 15 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 16 peer C nextID 14 peer A nextID 17
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 14 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 14 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 17 peer B nextID 16 peer C nextID 15
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+STATUS from 127.0.0.1:5003 peer C nextID 15 peer A nextID 17 peer B nextID 15
+TO SEND
+[{B 15}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 15 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 15 
+Receive Peer Status Origin: C, NextID: 15 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer B nextID 16 peer C nextID 15 peer A nextID 17
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 16 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 17 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 17 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 15 peer A nextID 18 peer B nextID 16
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 18 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 16 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 15 peer A nextID 18 peer B nextID 17
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 15 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 15 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 18 peer B nextID 16 peer C nextID 16
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 16 
+[{B 16}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 16 
+MONGERING with 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 18 peer B nextID 17 peer C nextID 16
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 17 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 18 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 18 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 16 peer A nextID 19 peer B nextID 17
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 19 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 17 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 19 peer B nextID 18 peer C nextID 16
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 16 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 16 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 19 peer B nextID 18 peer C nextID 17
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 17 
+[]
+TO ASK
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 17 peer C nextID 17 peer A nextID 19
+TO SEND
+[{B 17}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 17 
+[]
+IN SYNC WITH 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5003, identifier: B 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 17 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 18 peer C nextID 17 peer A nextID 19
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 18 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 19 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 19 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 17 peer A nextID 20 peer B nextID 18
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 20 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 18 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 20 peer B nextID 19 peer C nextID 17
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 17 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 17 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer C nextID 18 peer A nextID 20 peer B nextID 19
+TO SEND
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 18 peer A nextID 20 peer B nextID 18
+TO SEND
+[{B 18}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 18 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: C, NextID: 18 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 19 peer C nextID 18 peer A nextID 20
+TO SEND
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 19 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 20 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 20 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 21 peer B nextID 19 peer C nextID 18
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 21 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 19 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 21 peer B nextID 20 peer C nextID 18
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 18 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 18 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 19 peer A nextID 21 peer B nextID 19
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 21 peer B nextID 20 peer C nextID 19
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+TO SEND
+[{B 19}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 19 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 19 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 19 peer A nextID 21 peer B nextID 20
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 20 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+Recerve DataRequest from C to A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+&{  0 [] []}
+Receive DataReply from  to  
+HopLimit has been ended
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 21 contents  
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 21 peer B nextID 20 peer C nextID 19
+DIFF is 0
+Accept Rumor Origin: A ID: 21 
+Send Status to 127.0.0.1:5001 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 19 peer A nextID 22 peer B nextID 20
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Accept Rumor Origin: B ID: 20 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 22 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 22 peer B nextID 21 peer C nextID 19
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 19 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 19 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 20 peer C nextID 20 peer A nextID 22
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+[{B 20}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 20 
+STATUS from 127.0.0.1:5001 peer A nextID 22 peer B nextID 21 peer C nextID 20
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 20 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 20 peer A nextID 22 peer B nextID 21
+TO SEND
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 21 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 22 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 22 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 20 peer A nextID 23 peer B nextID 21
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 23 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 21 
+Anti entropy 127.0.0.1:5003
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer C nextID 20 peer A nextID 23 peer B nextID 22
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 23 peer B nextID 21 peer C nextID 20
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+TO SEND
+[{B 21}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 21 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 23 peer B nextID 22 peer C nextID 20
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 22 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 20 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 20 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 23 peer B nextID 22 peer C nextID 21
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 21 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 23 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 23 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 21 peer A nextID 24 peer B nextID 22
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 24 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 22 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 23 peer C nextID 21 peer A nextID 24
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 22 peer A nextID 24 peer B nextID 23
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 21 contents  
+DIFF is 0
+TO SEND
+[]
+TO ASK
+Accept Rumor Origin: C ID: 21 
+Send Status to 127.0.0.1:5003 
+[{C 21}]
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 22 peer C nextID 22 peer A nextID 24
+TO SEND
+[{B 22}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 22 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 22 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 24 peer B nextID 23 peer C nextID 22
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 23 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 24 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 24 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 22 peer A nextID 25 peer B nextID 23
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 25 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 23 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 25 peer B nextID 24 peer C nextID 22
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 22 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 22 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 23 peer A nextID 25 peer B nextID 23
+TO SEND
+[{B 23}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 23 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 25 peer B nextID 24 peer C nextID 23
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 23 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 23 peer A nextID 25 peer B nextID 24
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 24 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+RUMOR origin A from 127.0.0.1:5001 ID 25 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 25 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 23 peer A nextID 26 peer B nextID 24
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 26 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 24 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 26 peer B nextID 25 peer C nextID 23
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 23 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 23 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 24 peer C nextID 24 peer A nextID 26
+TO SEND
+[{B 24}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 24 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 24 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 26 peer B nextID 25 peer C nextID 24
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 25 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Recerve DataRequest from C to A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+&{  0 [] []}
+Receive DataReply from  to  
+HopLimit has been ended
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 26 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 26 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 24 peer A nextID 27 peer B nextID 25
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 27 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 25 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 27 peer B nextID 26 peer C nextID 24
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 24 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 24 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 27 peer B nextID 26 peer C nextID 25
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 25 peer A nextID 27 peer B nextID 25
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+TO SEND
+[{B 25}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 25 
+MONGERING with 127.0.0.1:5003 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 25 
+Register sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 25 peer A nextID 27 peer B nextID 26
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 26 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 27 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 27 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 28 peer B nextID 26 peer C nextID 25
+TO SEND
+[]
+TO ASK
+Send routing rumor
+Accept Rumor Origin: B ID: 26 
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 28 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 27 peer C nextID 25 peer A nextID 28
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 25 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 25 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 26 peer A nextID 28 peer B nextID 26
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer C nextID 26 peer A nextID 28 peer B nextID 27
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+TO SEND
+[{B 26}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 26 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 26 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 27 peer C nextID 26 peer A nextID 28
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 27 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 28 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 28 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 26 peer A nextID 29 peer B nextID 27
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 29 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 27 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer A nextID 29 peer B nextID 28 peer C nextID 26
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 26 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 26 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 29 peer B nextID 28 peer C nextID 27
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 27 peer A nextID 29 peer B nextID 27
+TO SEND
+[{B 27}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 27 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 27 
+Receive Peer Status Origin: C, NextID: 27 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 27 peer A nextID 29 peer B nextID 28
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 28 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 29 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 29 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 27 peer A nextID 30 peer B nextID 28
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 30 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 28 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 30 peer B nextID 29 peer C nextID 27
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 27 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 27 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer A nextID 30 peer B nextID 29 peer C nextID 28
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 30 peer B nextID 28 peer C nextID 28
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: C, NextID: 28 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+TO SEND
+[{B 28}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 28 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 30 peer B nextID 29 peer C nextID 28
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 29 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 30 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 30 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 28 peer A nextID 31 peer B nextID 29
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 31 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 29 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 31 peer B nextID 30 peer C nextID 28
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 28 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 28 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 31 peer B nextID 30 peer C nextID 29
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 29 
+STATUS from 127.0.0.1:5003 peer C nextID 29 peer A nextID 31 peer B nextID 29
+TO SEND
+[{B 29}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 29 
+MONGERING with 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 31 peer B nextID 30 peer C nextID 29
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 30 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Recerve DataRequest from C to A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+&{  0 [] []}
+Receive DataReply from  to  
+HopLimit has been ended
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+RUMOR origin A from 127.0.0.1:5001 ID 31 contents  
+DIFF is 0
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 32 peer B nextID 30 peer C nextID 29
+TO SEND
+[]
+TO ASK
+Accept Rumor Origin: A ID: 31 
+Send Status to 127.0.0.1:5001 
+[{A 31}]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 29 peer A nextID 32 peer B nextID 30
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 32 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 30 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 31 peer C nextID 29 peer A nextID 32
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 29 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 29 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 32 peer B nextID 30 peer C nextID 30
+TO SEND
+[{B 30}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 30 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 30 
+Register sender: 127.0.0.1:5001, identifier: B 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 32 peer B nextID 31 peer C nextID 30
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 31 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 32 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 32 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 30 peer A nextID 33 peer B nextID 31
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 33 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 31 
+Anti entropy 127.0.0.1:5003
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 33 peer B nextID 32 peer C nextID 30
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 33 peer B nextID 31 peer C nextID 30
+TO SEND
+[{B 31}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 31 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 30 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 30 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Register sender: 127.0.0.1:5001, identifier: C 
+STATUS from 127.0.0.1:5003 peer A nextID 33 peer B nextID 32 peer C nextID 31
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 32 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 32 peer C nextID 31 peer A nextID 33
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 31 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 33 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 33 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 31 peer A nextID 34 peer B nextID 32
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 34 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 32 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 31 peer A nextID 34 peer B nextID 33
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+RUMOR origin C from 127.0.0.1:5003 ID 31 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 31 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 33 peer C nextID 32 peer A nextID 34
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Send Status to 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 34 peer B nextID 32 peer C nextID 32
+TO SEND
+[{B 32}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 32 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 32 
+Register sender: 127.0.0.1:5001, identifier: B 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 34 peer B nextID 33 peer C nextID 32
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 33 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 34 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 34 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 32 peer A nextID 35 peer B nextID 33
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 35 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Send routing rumor
+Accept Rumor Origin: B ID: 33 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 32 peer A nextID 35 peer B nextID 34
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 32 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 32 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 35 peer B nextID 33 peer C nextID 33
+TO SEND
+[{B 33}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 33 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 33 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 35 peer B nextID 34 peer C nextID 33
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 34 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 35 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 35 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 33 peer A nextID 36 peer B nextID 34
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 36 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 34 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 36 peer B nextID 35 peer C nextID 33
+TO SEND
+[]
+TO ASK
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 33 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 33 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 34 peer A nextID 36 peer B nextID 34
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer C nextID 34 peer A nextID 36 peer B nextID 35
+TO SEND
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+[{B 34}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 34 
+MONGERING with 127.0.0.1:5003 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 34 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 34 peer A nextID 36 peer B nextID 35
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 35 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Recerve DataRequest from C to A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+&{  0 [] []}
+Receive DataReply from  to  
+HopLimit has been ended
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+RUMOR origin A from 127.0.0.1:5001 ID 36 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 36 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 34 peer A nextID 37 peer B nextID 35
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 37 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 35 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 34 peer A nextID 37 peer B nextID 36
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 34 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 34 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 37 peer B nextID 35 peer C nextID 35
+TO SEND
+[{B 35}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 35 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 35 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 37 peer B nextID 36 peer C nextID 35
+TO SEND
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 36 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 37 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 37 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 35 peer A nextID 38 peer B nextID 36
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 38 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 36 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 35 peer A nextID 38 peer B nextID 37
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 35 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 35 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 36 peer C nextID 36 peer A nextID 38
+TO SEND
+[{B 36}]
+TO ASK
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+The most urgent is Origin: B ID: 36 
+MONGERING with 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 36 
+Register sender: 127.0.0.1:5001, identifier: B 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 38 peer B nextID 37 peer C nextID 36
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 37 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 38 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 38 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 39 peer B nextID 37 peer C nextID 36
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[]
+TO ASK
+[]
+Receive Peer Status Origin: A, NextID: 39 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+IN SYNC WITH 127.0.0.1:5003 
+Send routing rumor
+Accept Rumor Origin: B ID: 37 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 36 peer A nextID 39 peer B nextID 38
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 36 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 36 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 39 peer B nextID 37 peer C nextID 37
+TO SEND
+[{B 37}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 37 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 37 
+MONGERING with 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 39 peer B nextID 38 peer C nextID 37
+TO SEND
+[]
+TO ASK
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 38 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 39 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 39 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 37 peer A nextID 40 peer B nextID 38
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 40 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 38 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 37 peer A nextID 40 peer B nextID 39
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 37 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 37 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 38 peer C nextID 38 peer A nextID 40
+TO SEND
+[{B 38}]
+TO ASK
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 38 
+The most urgent is Origin: B ID: 38 
+MONGERING with 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 39 peer C nextID 38 peer A nextID 40
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 39 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 40 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 40 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 41 peer B nextID 39 peer C nextID 38
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 41 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 39 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 41 peer B nextID 40 peer C nextID 38
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 38 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 38 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer A nextID 41 peer B nextID 40 peer C nextID 39
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 39 peer A nextID 41 peer B nextID 39
+TO SEND
+[{B 39}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 39 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 39 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 39 peer A nextID 41 peer B nextID 40
+TO SEND
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 40 
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Recerve DataRequest from C to A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+&{  0 [] []}
+Receive DataReply from  to  
+HopLimit has been ended
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 40 peer C nextID 39 peer A nextID 42
+RUMOR origin A from 127.0.0.1:5001 ID 41 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 41 
+TO SEND
+MONGERING with 127.0.0.1:5003 
+Send Status to 127.0.0.1:5001 
+[]
+TO ASK
+[{A 41}]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 39 peer A nextID 42 peer B nextID 40
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 42 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 40 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 39 peer A nextID 42 peer B nextID 41
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 39 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 39 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 42 peer B nextID 40 peer C nextID 40
+TO SEND
+[{B 40}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 40 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 40 
+Register sender: 127.0.0.1:5001, identifier: B 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 42 peer B nextID 41 peer C nextID 40
+TO SEND
+[]
+TO ASK
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 41 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 42 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 42 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 40 peer A nextID 43 peer B nextID 41
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 43 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Anti entropy 127.0.0.1:5001
+Send routing rumor
+Accept Rumor Origin: B ID: 41 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 40 peer A nextID 43 peer B nextID 42
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 40 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 40 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 43 peer B nextID 41 peer C nextID 41
+TO SEND
+[{B 41}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 41 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 41 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 43 peer B nextID 42 peer C nextID 41
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 42 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 43 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 43 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 41 peer A nextID 44 peer B nextID 42
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 44 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 42 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 44 peer B nextID 43 peer C nextID 41
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 41 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 41 
+Send Status to 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 42 peer A nextID 44 peer B nextID 42
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[{B 42}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 42 
+MONGERING with 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 44 peer B nextID 42 peer C nextID 42
+TO SEND
+[{B 42}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 42 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 42 peer A nextID 44 peer B nextID 43
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+Receive Peer Status Origin: B, NextID: 42 
+Receive Peer Status Origin: B, NextID: 43 
+STATUS from 127.0.0.1:5001 peer A nextID 44 peer B nextID 43 peer C nextID 42
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 42 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 42 peer A nextID 44 peer B nextID 43
+Unregister sender: 127.0.0.1:5001, identifier: C 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 43 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 44 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 44 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 43 peer C nextID 42 peer A nextID 45
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 45 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 43 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 42 peer A nextID 45 peer B nextID 44
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 42 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 42 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer C nextID 43 peer A nextID 45 peer B nextID 43
+TO SEND
+[{B 43}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 43 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 43 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 44 peer C nextID 43 peer A nextID 45
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 44 
+IN SYNC WITH 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 45 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 45 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 44 peer C nextID 43 peer A nextID 46
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 46 
+IN SYNC WITH 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 44 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 45 peer C nextID 43 peer A nextID 46
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 43 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 43 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer C nextID 44 peer A nextID 46 peer B nextID 44
+TO SEND
+[{B 44}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 44 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 44 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 46 peer B nextID 45 peer C nextID 44
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 45 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 46 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 46 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 44 peer A nextID 47 peer B nextID 45
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 47 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 45 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 44 peer A nextID 47 peer B nextID 46
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 44 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 44 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 47 peer B nextID 45 peer C nextID 45
+TO SEND
+[{B 45}]
+TO ASK
+[]
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 45 
+The most urgent is Origin: B ID: 45 
+MONGERING with 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 47 peer B nextID 46 peer C nextID 45
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 46 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 47 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 47 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 45 peer A nextID 48 peer B nextID 46
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 48 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 46 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 48 peer B nextID 47 peer C nextID 45
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 45 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 45 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer A nextID 48 peer B nextID 47 peer C nextID 46
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 48 peer B nextID 46 peer C nextID 46
+TO SEND
+[{B 46}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 46 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 46 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 46 peer A nextID 48 peer B nextID 47
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 47 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 48 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 48 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 46 peer A nextID 49 peer B nextID 47
+TO SEND
+[]
+TO ASK
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 49 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Send routing rumor
+Accept Rumor Origin: B ID: 47 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 46 peer A nextID 49 peer B nextID 48
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 46 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 46 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer A nextID 49 peer B nextID 47 peer C nextID 47
+TO SEND
+[{B 47}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 47 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 47 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 49 peer B nextID 48 peer C nextID 47
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 48 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 49 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 49 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 47 peer A nextID 50 peer B nextID 48
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 50 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 48 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 49 peer C nextID 47 peer A nextID 50
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 47 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 47 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 50 peer B nextID 48 peer C nextID 48
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 50 peer B nextID 49 peer C nextID 48
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+TO SEND
+[{B 48}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 48 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 48 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 48 peer A nextID 50 peer B nextID 49
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 49 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 50 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 50 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer B nextID 49 peer C nextID 48 peer A nextID 51
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 51 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 49 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 51 peer B nextID 50 peer C nextID 48
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 48 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 48 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 49 peer A nextID 51 peer B nextID 49
+TO SEND
+[{B 49}]
+TO ASK
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 51 peer B nextID 50 peer C nextID 49
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+[]
+The most urgent is Origin: B ID: 49 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 49 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 49 peer A nextID 51 peer B nextID 50
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 50 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 51 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 51 
+Send Status to 127.0.0.1:5001 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer A nextID 52 peer B nextID 50 peer C nextID 49
+MONGERING with 127.0.0.1:5003 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 50 peer C nextID 49 peer A nextID 52
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 52 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 50 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 52 peer B nextID 51 peer C nextID 49
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+RUMOR origin C from 127.0.0.1:5003 ID 49 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 49 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 50 peer A nextID 52 peer B nextID 50
+TO SEND
+[{B 50}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 50 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+MONGERING with 127.0.0.1:5003 
+STATUS from 127.0.0.1:5001 peer A nextID 52 peer B nextID 51 peer C nextID 50
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: B 
+Receive Peer Status Origin: C, NextID: 50 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 50 peer A nextID 52 peer B nextID 51
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 51 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 52 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 52 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer A nextID 53 peer B nextID 51 peer C nextID 50
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 53 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 51 
+Anti entropy 127.0.0.1:5001
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer A nextID 53 peer B nextID 52 peer C nextID 50
+TO SEND
+[]
+TO ASK
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 50 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 50 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer C nextID 51 peer A nextID 53 peer B nextID 52
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 51 peer A nextID 53 peer B nextID 51
+TO SEND
+[{B 51}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 51 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: C, NextID: 51 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 51 peer A nextID 53 peer B nextID 52
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 52 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 53 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 53 
+MONGERING with 127.0.0.1:5003 
+Send Status to 127.0.0.1:5001 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 51 peer A nextID 54 peer B nextID 52
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 54 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 52 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 51 peer A nextID 54 peer B nextID 53
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 51 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 51 
+Send Status to 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 52 peer A nextID 54 peer B nextID 53
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 52 peer C nextID 52 peer A nextID 54
+TO SEND
+[{B 52}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 52 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 52 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 54 peer B nextID 53 peer C nextID 52
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 53 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 54 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 54 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 55 peer B nextID 53 peer C nextID 52
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[]
+TO ASK
+Receive Peer Status Origin: A, NextID: 55 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Send routing rumor
+Accept Rumor Origin: B ID: 53 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5001 peer B nextID 54 peer C nextID 52 peer A nextID 55
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 52 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 52 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 55 peer B nextID 54 peer C nextID 53
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 53 peer A nextID 55 peer B nextID 53
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+TO SEND
+[{B 53}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 53 
+MONGERING with 127.0.0.1:5003 
+Receive Peer Status Origin: C, NextID: 53 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 53 peer A nextID 55 peer B nextID 54
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 54 
+Unregister sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 55 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 55 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 53 peer A nextID 56 peer B nextID 54
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 56 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 54 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 53 peer A nextID 56 peer B nextID 55
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 53 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 53 
+MONGERING with 127.0.0.1:5001 
+Send Status to 127.0.0.1:5003 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 56 peer B nextID 54 peer C nextID 54
+TO SEND
+[{B 54}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 54 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 54 
+MONGERING with 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+Register sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 56 peer B nextID 55 peer C nextID 54
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 55 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 56 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 56 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 57 peer B nextID 55 peer C nextID 54
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 57 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 55 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 54 peer A nextID 57 peer B nextID 56
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 54 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 54 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 57 peer B nextID 55 peer C nextID 55
+TO SEND
+[{B 55}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 55 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 55 
+Register sender: 127.0.0.1:5001, identifier: B 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 57 peer B nextID 56 peer C nextID 55
+TO SEND
+[]
+TO ASK
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 56 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 57 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 57 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 58 peer B nextID 56 peer C nextID 55
+TO SEND
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 58 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 56 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer B nextID 57 peer C nextID 55 peer A nextID 58
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 55 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 55 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 58 peer B nextID 56 peer C nextID 56
+TO SEND
+[{B 56}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 56 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 56 
+Register sender: 127.0.0.1:5001, identifier: B 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 58 peer B nextID 57 peer C nextID 56
+TO SEND
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 57 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 58 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 58 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 56 peer A nextID 59 peer B nextID 57
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 59 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 57 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 56 peer A nextID 59 peer B nextID 58
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 56 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 56 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 59 peer B nextID 57 peer C nextID 57
+TO SEND
+[{B 57}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 57 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 57 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer C nextID 57 peer A nextID 59 peer B nextID 58
+TO SEND
+[]
+TO ASK
+[]
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 58 
+IN SYNC WITH 127.0.0.1:5001 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 59 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 59 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 57 peer A nextID 60 peer B nextID 58
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 60 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 58 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 57 peer A nextID 60 peer B nextID 59
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+RUMOR origin C from 127.0.0.1:5003 ID 57 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 57 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 60 peer B nextID 58 peer C nextID 58
+TO SEND
+[{B 58}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 58 
+MONGERING with 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: B 
+Receive Peer Status Origin: C, NextID: 58 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 60 peer B nextID 59 peer C nextID 58
+TO SEND
+[]
+TO ASK
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Receive Peer Status Origin: B, NextID: 59 
+Unregister sender: 127.0.0.1:5001, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin A from 127.0.0.1:5001 ID 60 contents  
+DIFF is 0
+Accept Rumor Origin: A ID: 60 
+Send Status to 127.0.0.1:5001 
+MONGERING with 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: A 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer C nextID 58 peer A nextID 61 peer B nextID 59
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: A, NextID: 61 
+Unregister sender: 127.0.0.1:5003, identifier: A 
+Send routing rumor
+Accept Rumor Origin: B ID: 59 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer B nextID 60 peer C nextID 58 peer A nextID 61
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+RUMOR origin C from 127.0.0.1:5003 ID 58 contents  
+DIFF is 0
+Accept Rumor Origin: C ID: 58 
+Send Status to 127.0.0.1:5003 
+MONGERING with 127.0.0.1:5001 
+Register sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5001,127.0.0.1:5003
+STATUS from 127.0.0.1:5003 peer C nextID 59 peer A nextID 61 peer B nextID 59
+TO SEND
+[{B 59}]
+TO ASK
+[]
+The most urgent is Origin: B ID: 59 
+MONGERING with 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Register sender: 127.0.0.1:5003, identifier: B 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5001 peer A nextID 61 peer B nextID 60 peer C nextID 59
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5001 
+Tagger: Identifier: B, Sender: 127.0.0.1:5001 
+Tagger: Identifier: C, Sender: 127.0.0.1:5001 
+Receive Peer Status Origin: C, NextID: 59 
+Unregister sender: 127.0.0.1:5001, identifier: C 
+PEERS 127.0.0.1:5003,127.0.0.1:5001
+STATUS from 127.0.0.1:5003 peer A nextID 61 peer B nextID 60 peer C nextID 59
+TO SEND
+[]
+TO ASK
+[]
+IN SYNC WITH 127.0.0.1:5003 
+Tagger: Identifier: A, Sender: 127.0.0.1:5003 
+Tagger: Identifier: B, Sender: 127.0.0.1:5003 
+Receive Peer Status Origin: B, NextID: 60 
+Unregister sender: 127.0.0.1:5003, identifier: B 

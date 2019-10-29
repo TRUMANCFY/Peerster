@@ -438,7 +438,7 @@ func (f *FileHandler) checkFile(dataReq *DataRequest) (*DataReply, bool) {
 	if metafile, present := f.files[sha]; present {
 		fmt.Printf("MetaFile exist for Request from %s to %s \n", dataReq.Origin, dataReq.Destination)
 		fmt.Println(len(metafile.Metafile))
-		newReply.Data = make([]byte, 800)
+		newReply.Data = metafile.Metafile
 		return newReply, true
 	}
 
