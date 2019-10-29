@@ -15,7 +15,7 @@ import (
 // ./Peerster -gossipAddr=127.0.0.1:5002 -gui -GUIPort=8082 -peers=127.0.0.1:5003 -name=A -UIPort=8002
 // ./Peerster -gossipAddr=127.0.0.1:5003 -gui -GUIPort=8083 -peers=127.0.0.1:5001 -name=A -UIPort=8003
 
-const UDP_DATAGRAM_MAX_SIZE = 1024
+const UDP_DATAGRAM_MAX_SIZE = 16384
 const CHANNEL_BUFFER_SIZE = 1024
 const STATUS_MESSAGE_TIMEOUT = 10 * time.Second
 const GUI_ADDR = "127.0.0.1:8080"
