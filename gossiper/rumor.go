@@ -115,8 +115,6 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 			case peerStatus, ok := <-observerChan:
 				// the channel has been closed by dispatcher
 				if !ok {
-					// fmt.Println("Read peer status wrong")
-					// fmt.Println(peerStatus)
 					return
 				}
 
@@ -125,10 +123,10 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 				// this means that the peer has received the rumor (in this case, ps.nextID=rumor.ID+1)
 				// or it already contains more advanced
 
-				if peerStatus.NextID > rumor.ID {
+				if peerStatus.NextID >= rumor.ID {
 					g.updatePeerStatusList(peerStr, peerStatus)
 					// check whether the peer has been synced
-					if g.syncWithPeer(peerStr) {
+					if g.isRumorSync(rumor, peerStr) {
 						// flip a coin to choose the next one
 						g.flipCoinRumorMongering(rumor, GenerateStringSetSingleton(peerStr))
 					}
@@ -153,7 +151,7 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *StringSet) {
 	// 50 - 50
 	fmt.Println("Prepare to flip the coin")
-	rand.Seed(time.Now().UTC().UnixNano())
+	// rand.Seed(time.Now().UTC().UnixNano())
 	randInt := rand.Intn(2)
 	if randInt == 0 {
 		neighborPeer, present := g.RumorMongeringPrepare(rumor, excludedPeers)
@@ -195,4 +193,21 @@ func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 			NextID:     messageID + 1,
 		}
 	}
+}
+
+func (g *Gossiper) isRumorSync(rumor *RumorMessage, peerStr string) bool {
+	g.peerWantListLock.Lock()
+	defer g.peerWantListLock.Unlock()
+	originList, present := g.peerWantList[peerStr]
+	if !present {
+		return false
+	}
+
+	peerStatus, present := originList[rumor.Origin]
+
+	if !present {
+		return false
+	}
+
+	return peerStatus.NextID > rumor.ID
 }
