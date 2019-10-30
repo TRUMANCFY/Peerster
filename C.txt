@@ -8,14 +8,18 @@ AntiEntropy Value is 10
 Route timer value is 1 
 GUI Port is 127.0.0.1:8083 
 Start antiEntropy
-Accept Rumor Origin: C ID: 1 
 The value of antientropy is  10
+Accept Rumor Origin: C ID: 1 
 Server runs at 127.0.0.1:8083 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
 DIFF is -2
 The new coming rumor ID is smaller than our local
 Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4
+MONGERING with 127.0.0.1:5002 
+Register sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 1 contents  
 DIFF is 0
@@ -24,41 +28,67 @@ Send Status to 127.0.0.1:5002
 PEERS 127.0.0.1:5002
 STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4
 MONGERING with 127.0.0.1:5002 
+Register sender: 127.0.0.1:5002, identifier: C 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 1 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4 peer C nextID 2
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+Receive Peer Status Origin: C, NextID: 2 
+Unregister sender: 127.0.0.1:5002, identifier: C 
+Receive Peer Status Origin: C, NextID: 2 
+Unregister sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 2 
 Send Status to 127.0.0.1:5002 
-Register sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4
-MONGERING with 127.0.0.1:5002 
-Register sender: 127.0.0.1:5002, identifier: C 
+RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4 peer C nextID 2
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 3 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4 peer C nextID 2
+RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
 DIFF is 1
 The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-Receive Peer Status Origin: C, NextID: 2 
-Unregister sender: 127.0.0.1:5002, identifier: C 
-Receive Peer Status Origin: C, NextID: 2 
-Unregister sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 2 contents  
-DIFF is 2
+RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
+DIFF is 1
 The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 3 peer A nextID 4 peer C nextID 2
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+RUMOR origin A from 127.0.0.1:5002 ID 3 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
 DIFF is 0
@@ -125,16 +155,17 @@ RUMOR origin A from 127.0.0.1:5002 ID 4 contents
 DIFF is 0
 Accept Rumor Origin: A ID: 4 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 3 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 5 peer A nextID 5 peer C nextID 4
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 4 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 4 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 3 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 5 peer A nextID 5 peer C nextID 4
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 5 contents  
 DIFF is 0
@@ -158,7 +189,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 5 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 6 peer B nextID 7 peer A nextID 7
+STATUS from 127.0.0.1:5002 peer B nextID 7 peer A nextID 7 peer C nextID 6
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 6 contents  
@@ -188,7 +219,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 7 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 9 peer A nextID 9 peer C nextID 8
+STATUS from 127.0.0.1:5002 peer C nextID 8 peer B nextID 9 peer A nextID 9
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 8 contents  
@@ -219,7 +250,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 9 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 11 peer C nextID 10 peer B nextID 11
+STATUS from 127.0.0.1:5002 peer B nextID 11 peer A nextID 11 peer C nextID 10
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 10 contents  
@@ -231,30 +262,29 @@ RUMOR origin A from 127.0.0.1:5002 ID 11 contents
 DIFF is 0
 Accept Rumor Origin: A ID: 11 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 10 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 12 peer A nextID 12 peer C nextID 11
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 11 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 11 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 10 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 12 peer A nextID 12 peer C nextID 11
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 12 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 12 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Anti entropy 127.0.0.1:5002
 Accept Rumor Origin: C ID: 11 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 12 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 12 
 Send Status to 127.0.0.1:5002 
+Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
 STATUS from 127.0.0.1:5002 peer B nextID 13 peer A nextID 13 peer C nextID 12
 IN SYNC WITH 127.0.0.1:5002 
@@ -263,6 +293,16 @@ PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 13 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 13 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 13 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin A from 127.0.0.1:5002 ID 13 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 12 
@@ -287,9 +327,9 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 13 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 15 peer A nextID 15 peer C nextID 14
-IN SYNC WITH 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer C nextID 14 peer B nextID 15 peer A nextID 15
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+IN SYNC WITH 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 15 contents  
 DIFF is 0
@@ -329,7 +369,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 16 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 18 peer A nextID 18 peer C nextID 17
+STATUS from 127.0.0.1:5002 peer C nextID 17 peer B nextID 18 peer A nextID 18
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 17 contents  
@@ -364,7 +404,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 18 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 20 peer C nextID 19 peer B nextID 20
+STATUS from 127.0.0.1:5002 peer C nextID 19 peer B nextID 20 peer A nextID 20
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
@@ -373,78 +413,49 @@ DIFF is 0
 Accept Rumor Origin: A ID: 20 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
+Send routing rumor
 RUMOR origin B from 127.0.0.1:5002 ID 20 contents  
 DIFF is 0
+Accept Rumor Origin: C ID: 19 
 Accept Rumor Origin: B ID: 20 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 19 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 20 peer B nextID 21 peer A nextID 21
-IN SYNC WITH 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer B nextID 21 peer A nextID 21 peer C nextID 20
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+IN SYNC WITH 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 21 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 21 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 20 peer B nextID 22 peer A nextID 22
 RUMOR origin B from 127.0.0.1:5002 ID 21 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 21 
-Send Status to 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 21 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 20 
 PEERS 127.0.0.1:5002
 STATUS from 127.0.0.1:5002 peer B nextID 22 peer A nextID 22 peer C nextID 21
-IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+IN SYNC WITH 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 22 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 22 
+Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+RUMOR origin B from 127.0.0.1:5002 ID 22 contents  
+DIFF is 0
+Accept Rumor Origin: B ID: 22 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 21 
 Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
 STATUS from 127.0.0.1:5002 peer B nextID 23 peer A nextID 23 peer C nextID 22
-PEERS 127.0.0.1:5002
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 23 peer A nextID 23 peer C nextID 21
-The most urgent is Origin: C ID: 21 
-RUMOR origin B from 127.0.0.1:5002 ID 22 contents  
-DIFF is 0
-Accept Rumor Origin: B ID: 22 
-Send Status to 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-MONGERING with 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 22 contents  
-RUMOR origin B from 127.0.0.1:5002 ID 22 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-Register sender: 127.0.0.1:5002, identifier: C 
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 23 peer A nextID 23 peer C nextID 22
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-Receive Peer Status Origin: C, NextID: 22 
-Unregister sender: 127.0.0.1:5002, identifier: C 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 23 contents  
 DIFF is 0
@@ -458,9 +469,9 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 22 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 24 peer A nextID 24 peer C nextID 23
-IN SYNC WITH 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer C nextID 23 peer B nextID 24 peer A nextID 24
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+IN SYNC WITH 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 24 contents  
 DIFF is 0
@@ -469,7 +480,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 23 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 24 peer B nextID 25 peer A nextID 25
+STATUS from 127.0.0.1:5002 peer B nextID 25 peer A nextID 25 peer C nextID 24
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 24 contents  
@@ -489,9 +500,9 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 24 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 25 peer B nextID 26 peer A nextID 26
-IN SYNC WITH 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer B nextID 26 peer A nextID 26 peer C nextID 25
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+IN SYNC WITH 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 26 contents  
 DIFF is 0
@@ -546,7 +557,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 28 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 29 peer B nextID 30 peer A nextID 30
+STATUS from 127.0.0.1:5002 peer B nextID 30 peer A nextID 30 peer C nextID 29
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 29 contents  
@@ -561,7 +572,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 29 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 31 peer A nextID 31 peer C nextID 30
+STATUS from 127.0.0.1:5002 peer C nextID 30 peer B nextID 31 peer A nextID 31
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 30 contents  
@@ -576,9 +587,9 @@ Send Status to 127.0.0.1:5002
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 31 contents  
 DIFF is 0
-PEERS 127.0.0.1:5002
 Accept Rumor Origin: B ID: 31 
 Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
 STATUS from 127.0.0.1:5002 peer B nextID 32 peer A nextID 32 peer C nextID 30
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
@@ -594,21 +605,17 @@ DIFF is 0
 Accept Rumor Origin: A ID: 32 
 Send Status to 127.0.0.1:5002 
 Send routing rumor
-Accept Rumor Origin: C ID: 31 
 Anti entropy 127.0.0.1:5002
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 33 peer C nextID 32 peer B nextID 33
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+Accept Rumor Origin: C ID: 31 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 32 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 32 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 32 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer C nextID 32 peer B nextID 33 peer A nextID 33
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 33 contents  
 DIFF is 0
@@ -632,7 +639,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 33 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 34 peer B nextID 35 peer A nextID 35
+STATUS from 127.0.0.1:5002 peer B nextID 35 peer A nextID 35 peer C nextID 34
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 34 contents  
@@ -647,7 +654,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 34 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 36 peer C nextID 35 peer B nextID 36
+STATUS from 127.0.0.1:5002 peer B nextID 36 peer A nextID 36 peer C nextID 35
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 35 contents  
@@ -662,7 +669,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 35 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 37 peer A nextID 37 peer C nextID 36
+STATUS from 127.0.0.1:5002 peer A nextID 37 peer C nextID 36 peer B nextID 37
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 36 contents  
@@ -674,31 +681,753 @@ RUMOR origin A from 127.0.0.1:5002 ID 37 contents
 DIFF is 0
 Accept Rumor Origin: A ID: 37 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 36 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 38 peer A nextID 38 peer C nextID 37
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 37 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 37 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 36 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 38 peer A nextID 38 peer C nextID 37
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 38 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 38 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 37 
+DOWNLOADREQ
+{A 469403655c3a182a6b7856052a2428ebd24fede9e39b6cb428c21b8a0c222cc4 q.png}
+DOWNLOADING metafile of q.png from A 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 38 peer B nextID 39 peer A nextID 39
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+Receive DataReply from A to C 
+DataReply arrive dest
+The number of chunk is 178 
+DOWNLOADING q.png chunk 0 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 1 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 2 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 3 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 4 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 5 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 6 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 7 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 8 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 9 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 10 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 11 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 12 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 13 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 14 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 15 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 16 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 17 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 18 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 19 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 20 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 21 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 22 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 23 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 24 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 25 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 26 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 27 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 28 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 29 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 30 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 31 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 32 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 33 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 34 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 35 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 36 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 37 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 38 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 39 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 40 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 41 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 42 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 43 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 44 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 45 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 46 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 47 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 48 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 49 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 50 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 51 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 52 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 53 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 54 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 55 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 56 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 57 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 58 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 59 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 60 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 61 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 62 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 63 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 64 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 65 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 66 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 67 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 68 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 69 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 70 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 71 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 72 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 73 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 74 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 75 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 76 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 77 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 78 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 79 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 80 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 81 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 82 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 83 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 84 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 85 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 86 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 87 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 88 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 89 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 90 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 91 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 92 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 93 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 94 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 95 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 96 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 97 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 98 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 99 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 100 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 101 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 102 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 103 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 104 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 105 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 106 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 107 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 108 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 109 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 110 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 111 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 112 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 113 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 114 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 115 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 116 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 117 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 118 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 119 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 120 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 121 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 122 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 123 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 124 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 125 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 126 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 127 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 128 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 129 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 130 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 131 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 132 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 133 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 134 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 135 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 136 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 137 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 138 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 139 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 140 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 141 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 142 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 143 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 144 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 145 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 146 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 147 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 148 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 149 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 150 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 151 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 152 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 153 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 154 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 155 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 156 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 157 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 158 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 159 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 160 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 161 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 162 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 163 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 164 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 165 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 166 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 167 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 168 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 169 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 170 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 171 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 172 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 173 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 174 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 175 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 176 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+DOWNLOADING q.png chunk 177 from A 
+PEERS 127.0.0.1:5002
+Receive DataReply from A to C 
+DataReply arrive dest
+RECONSTRUCTED file q.png 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 38 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 38 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 37 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 39 peer A nextID 39 peer C nextID 38
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 39 contents  
 DIFF is 0
@@ -707,7 +1436,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 38 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 40 peer A nextID 40 peer C nextID 39
+STATUS from 127.0.0.1:5002 peer C nextID 39 peer B nextID 40 peer A nextID 40
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 39 contents  
@@ -727,7 +1456,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 39 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer A nextID 41 peer C nextID 40 peer B nextID 41
+STATUS from 127.0.0.1:5002 peer C nextID 40 peer B nextID 41 peer A nextID 41
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
@@ -735,20 +1464,16 @@ RUMOR origin A from 127.0.0.1:5002 ID 41 contents
 DIFF is 0
 Accept Rumor Origin: A ID: 41 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 40 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 42 peer A nextID 42 peer C nextID 40
+STATUS from 127.0.0.1:5002 peer B nextID 42 peer A nextID 42 peer C nextID 41
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 41 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 41 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 40 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 42 peer A nextID 42 peer C nextID 41
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 42 contents  
 DIFF is 0
@@ -758,20 +1483,12 @@ Send routing rumor
 Accept Rumor Origin: C ID: 41 
 Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 42 peer B nextID 43 peer A nextID 43
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 STATUS from 127.0.0.1:5002 peer B nextID 43 peer A nextID 43 peer C nextID 42
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 42 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 42 
-Send Status to 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin B from 127.0.0.1:5002 ID 42 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 42 contents  
@@ -783,16 +1500,17 @@ RUMOR origin A from 127.0.0.1:5002 ID 43 contents
 DIFF is 0
 Accept Rumor Origin: A ID: 43 
 Send Status to 127.0.0.1:5002 
-Send routing rumor
-Accept Rumor Origin: C ID: 42 
-PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 44 peer A nextID 44 peer C nextID 43
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 43 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 43 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 42 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 44 peer A nextID 44 peer C nextID 43
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 44 contents  
 DIFF is 0
@@ -801,7 +1519,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 43 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 45 peer A nextID 45 peer C nextID 44
+STATUS from 127.0.0.1:5002 peer A nextID 45 peer C nextID 44 peer B nextID 45
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 44 contents  
@@ -816,7 +1534,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 44 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 46 peer A nextID 46 peer C nextID 45
+STATUS from 127.0.0.1:5002 peer C nextID 45 peer B nextID 46 peer A nextID 46
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 45 contents  
@@ -836,7 +1554,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 45 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 46 peer B nextID 47 peer A nextID 47
+STATUS from 127.0.0.1:5002 peer B nextID 47 peer A nextID 47 peer C nextID 46
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
@@ -882,7 +1600,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 48 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 50 peer A nextID 50 peer C nextID 49
+STATUS from 127.0.0.1:5002 peer C nextID 49 peer B nextID 50 peer A nextID 50
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
@@ -930,15 +1648,10 @@ RUMOR origin B from 127.0.0.1:5002 ID 52 contents
 DIFF is 0
 Accept Rumor Origin: B ID: 52 
 Send Status to 127.0.0.1:5002 
-Anti entropy 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 51 
+Anti entropy 127.0.0.1:5002
 PEERS 127.0.0.1:5002
-PEERS 127.0.0.1:5002
-RUMOR origin C from 127.0.0.1:5002 ID 51 contents  
-DIFF is 1
-The new coming rumor ID is larger than our local
-Send Status to 127.0.0.1:5002 
 STATUS from 127.0.0.1:5002 peer B nextID 53 peer A nextID 53 peer C nextID 52
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
@@ -950,7 +1663,7 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 52 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 54 peer A nextID 54 peer C nextID 53
+STATUS from 127.0.0.1:5002 peer C nextID 53 peer B nextID 54 peer A nextID 54
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 53 contents  
@@ -1033,14 +1746,14 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 57 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 59 peer A nextID 59 peer C nextID 58
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 59 contents  
 DIFF is 0
 Accept Rumor Origin: A ID: 59 
 Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 59 peer A nextID 60 peer C nextID 58
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 58 
 PEERS 127.0.0.1:5002
@@ -1072,17 +1785,18 @@ DIFF is 0
 Accept Rumor Origin: A ID: 61 
 Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 60 peer B nextID 62 peer A nextID 62
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 61 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 61 
 Send Status to 127.0.0.1:5002 
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer A nextID 62 peer C nextID 60 peer B nextID 62
+IN SYNC WITH 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 Send routing rumor
 Accept Rumor Origin: C ID: 60 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 62 peer A nextID 62 peer C nextID 61
+STATUS from 127.0.0.1:5002 peer C nextID 61 peer B nextID 62 peer A nextID 62
 IN SYNC WITH 127.0.0.1:5002 
 Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
@@ -1090,18 +1804,22 @@ RUMOR origin A from 127.0.0.1:5002 ID 62 contents
 DIFF is 0
 Accept Rumor Origin: A ID: 62 
 Send Status to 127.0.0.1:5002 
+Send routing rumor
+Accept Rumor Origin: C ID: 61 
+Anti entropy 127.0.0.1:5002
+PEERS 127.0.0.1:5002
+STATUS from 127.0.0.1:5002 peer B nextID 63 peer A nextID 63 peer C nextID 62
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin B from 127.0.0.1:5002 ID 62 contents  
 DIFF is 0
 Accept Rumor Origin: B ID: 62 
 Send Status to 127.0.0.1:5002 
-Anti entropy 127.0.0.1:5002
-Send routing rumor
-Accept Rumor Origin: C ID: 61 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer B nextID 63 peer A nextID 63 peer C nextID 62
-IN SYNC WITH 127.0.0.1:5002 
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+RUMOR origin B from 127.0.0.1:5002 ID 62 contents  
+DIFF is 1
+The new coming rumor ID is larger than our local
+Send Status to 127.0.0.1:5002 
 PEERS 127.0.0.1:5002
 RUMOR origin A from 127.0.0.1:5002 ID 63 contents  
 DIFF is 0
@@ -1115,11 +1833,6 @@ Send Status to 127.0.0.1:5002
 Send routing rumor
 Accept Rumor Origin: C ID: 62 
 PEERS 127.0.0.1:5002
-STATUS from 127.0.0.1:5002 peer C nextID 63 peer B nextID 64 peer A nextID 64
-Tagger: Identifier: C, Sender: 127.0.0.1:5002 
+STATUS from 127.0.0.1:5002 peer B nextID 64 peer A nextID 64 peer C nextID 63
 IN SYNC WITH 127.0.0.1:5002 
-PEERS 127.0.0.1:5002
-RUMOR origin A from 127.0.0.1:5002 ID 64 contents  
-DIFF is 0
-Accept Rumor Origin: A ID: 64 
-Send Status to 127.0.0.1:5002 
+Tagger: Identifier: C, Sender: 127.0.0.1:5002 

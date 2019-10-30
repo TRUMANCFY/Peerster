@@ -178,6 +178,8 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 			Dest: dest,
 		}
 
+		fmt.Printf("DOWNLOADING metafile of %s from %s \n", localFileName, dest)
+
 		metaFileReply, valid := g.RequestFileChunk(downloadReq)
 
 		if !valid {
@@ -198,7 +200,12 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 		originData := make([]byte, 0)
 
 		// send the dataRequest
-		for _, meta := range metachunks {
+		for i, meta := range metachunks {
+			// fmt.Printf("MetaChunk %d \n", i+1)
+			// fmt.Println(hex.EncodeToString(meta[:]))
+
+			// OUTPUT
+			fmt.Printf("DOWNLOADING %s chunk %d from %s \n", localFileName, i+1, dest)
 
 			downloadReq = &DownloadRequest{
 				Hash: meta,
@@ -228,6 +235,9 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 		// Successful
 		g.fileHandler.combineChunks(metafileHash, originData, localFileName)
 		result = true
+
+		// OUTPUT
+		fmt.Printf("RECONSTRUCTED file %s \n", localFileName)
 		return
 
 	}()
@@ -277,7 +287,9 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 
 			valid := g.fileHandler.checkReply(shaHash, dataReply)
 			if !valid {
-				return nil, false
+				fmt.Println("This is not valid reply")
+				// TODO rethink here continue or return
+				continue
 			}
 
 			return dataReply, true
@@ -305,7 +317,8 @@ func (g *Gossiper) HandleDataRequest(dataReq *DataRequest, sender *net.UDPAddr) 
 
 	if present {
 		fmt.Println("Find DataReply")
-		fmt.Println(reply)
+		tmp := sha256.Sum256(reply.Data)
+		fmt.Println(hex.EncodeToString(tmp[:]))
 		g.RouteDataReply(reply)
 		return
 	}
@@ -330,7 +343,7 @@ func (g *Gossiper) HandleDataRequest(dataReq *DataRequest, sender *net.UDPAddr) 
 }
 
 func (g *Gossiper) HandleDataReply(dataReply *DataReply, sender *net.UDPAddr) {
-	fmt.Println(dataReply)
+	// fmt.Println(dataReply)
 	fmt.Printf("Receive DataReply from %s to %s \n", dataReply.Origin, dataReply.Destination)
 
 	// check whether we have the file
@@ -400,6 +413,8 @@ func (f *FileHandler) addMeta(reply *DataReply) ([]SHA256_HASH, bool) {
 
 	numChunks := len(metafile) / sha256.Size
 
+	fmt.Printf("The number of chunk is %d \n", numChunks)
+
 	splitedMeta := make([]SHA256_HASH, 0)
 
 	for i := 0; i < numChunks; i++ {
@@ -436,15 +451,17 @@ func (f *FileHandler) checkFile(dataReq *DataRequest) (*DataReply, bool) {
 	}
 
 	if metafile, present := f.files[sha]; present {
-		fmt.Printf("MetaFile exist for Request from %s to %s \n", dataReq.Origin, dataReq.Destination)
-		fmt.Println(len(metafile.Metafile))
+		fmt.Printf("MetaFile [%x] exist for Request from %s to %s \n", sha[:], dataReq.Origin, dataReq.Destination)
 		newReply.Data = metafile.Metafile
 		return newReply, true
 	}
 
-	if _, present := f.fileChunks[sha]; present {
-		fmt.Printf("Chunk exist for Request from %s to %s \n", dataReq.Origin, dataReq.Destination)
-		// newReply.Data = file.Data
+	if file, present := f.fileChunks[sha]; present {
+		fmt.Printf("Chunk [%x] exist for Request from %s to %s \n", sha[:], dataReq.Origin, dataReq.Destination)
+		newReply.Data = file.Data
+		// fmt.Printf("The sha here is %s \n", hex.EncodeToString(sha[:]))
+		// tmp := sha256.Sum256(newReply.Data)
+		// fmt.Printf("The data here is %s \n", hex.EncodeToString(tmp[:]))
 		return newReply, true
 	}
 	return nil, false
@@ -464,8 +481,6 @@ func (f *FileHandler) combineChunks(meshfileHash SHA256_HASH, data []byte, fileN
 
 	localFile.Close()
 
-	fmt.Printf("%s Downloaded\n", fileName)
-
 }
 
 func (f *FileHandler) FileIndexingRequest(filename string) {
@@ -480,11 +495,21 @@ func (f *FileHandler) FileIndexingRequest(filename string) {
 
 	fileIndexed.Name = filename
 
+	fmt.Println("File size is ", fileIndexed.Size)
+
 	f.files[fileIndexed.MetafileHash] = fileIndexed
 
-	fmt.Println(fileIndexed)
-	metafileHash := fileIndexed.MetafileHash
-	fmt.Println(hex.EncodeToString(metafileHash[:]))
+	// metafileHash := fileIndexed.MetafileHash
+	// fmt.Println(hex.EncodeToString(metafileHash[:]))
+	// fmt.Println("FURTHER VERIFIED")
+	// for h, k := range f.fileChunks {
+	// 	fmt.Println("Key")
+	// 	fmt.Println(hex.EncodeToString(h[:]))
+
+	// 	fmt.Println("Value")
+	// 	tmp := sha256.Sum256(k.Data)
+	// 	fmt.Println(hex.EncodeToString(tmp[:]))
+	// }
 	// QishanWang metafileHash
 	// 469403655c3a182a6b7856052a2428ebd24fede9e39b6cb428c21b8a0c222cc4
 }
@@ -516,7 +541,10 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 			}
 			break
 		}
-		hash := sha256.Sum256(chunk[:bytesread])
+		// Here is our one
+		data := make([]byte, bytesread)
+		copy(data, chunk)
+		hash := sha256.Sum256(data)
 		// convert [32]byte to []byte
 		metaFile = append(metaFile, hash[:]...)
 
@@ -529,14 +557,19 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 		}
 
 		newChunk := &FileChunk{
-			Data: chunk[:bytesread],
+			Data: data,
 		}
+		// verify := sha256.Sum256(newChunk.Data)
+		// fmt.Printf("Verified: %s \n", hex.EncodeToString(verify[:]))
 
 		f.fileChunks[hash] = newChunk
 
 	}
 
+	fmt.Printf("Size of metafile %d \n", len(metaFile))
+
 	metaFileHash := sha256.Sum256(metaFile)
+	// fmt.Printf("Metafile Hash %s \n", hex.EncodeToString(metaFileHash[:]))
 
 	fileStats, _ := file.Stat()
 
@@ -555,12 +588,16 @@ func (f *FileHandler) checkReply(originHash SHA256_HASH, dataReply *DataReply) b
 	// check the hash is matched or not
 	receivedHash, _ := HashToSha256(dataReply.HashValue)
 	if receivedHash != originHash {
+		fmt.Println("CHECK REPLY HASH DOES NOT MATCH")
 		return false
 	}
 
 	// what is more, we can also check whether data and hash match or not
 	generatedHash := sha256.Sum256(dataReply.Data)
+	// fmt.Println(hex.EncodeToString(generatedHash[:]))
+	// fmt.Println(hex.EncodeToString(receivedHash[:]))
 	if generatedHash != receivedHash {
+		fmt.Println("GENERATE NEW HASH DOES NOT MATCH")
 		return false
 	}
 

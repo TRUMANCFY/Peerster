@@ -75,6 +75,8 @@ func (g *Gossiper) CreateRumorPacket(m *Message) *RumorMessage {
 }
 
 func (g *Gossiper) CreateStatusPacket() *GossipPacket {
+	// TODO concurrent map iteration and map write
+
 	wantSlice := make([]PeerStatus, 0)
 
 	for _, ps := range g.peerStatuses {
