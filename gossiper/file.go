@@ -223,7 +223,8 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 			dataReply, valid := g.RequestFileChunk(downloadReq)
 
 			if !valid {
-				fmt.Println("Some Failed")
+				fmt.Printf("Download Chunk %d Failed\n", i+1)
+				fmt.Printf("Download %s terminated! \n", localFileName)
 				g.fileHandler.files[metafileHash].State = Failed
 				result = false
 				return
@@ -288,7 +289,8 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 			valid := g.fileHandler.checkReply(shaHash, dataReply)
 			if !valid {
 				fmt.Println("This is not valid reply")
-				// TODO rethink here continue or return
+				// Based on the understanding last paragraph in the page 8 in Homework2 handout
+				ticker = time.NewTicker(DOWNLOAD_TIMEOUT)
 				continue
 			}
 
