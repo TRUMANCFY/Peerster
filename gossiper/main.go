@@ -16,6 +16,11 @@ import (
 // ./Peerster -gossipAddr=127.0.0.1:5002 -gui -GUIPort=8082 -peers=127.0.0.1:5003 -name=A -UIPort=8002
 // ./Peerster -gossipAddr=127.0.0.1:5003 -gui -GUIPort=8083 -peers=127.0.0.1:5001 -name=A -UIPort=8003
 
+// QishanWang metafileHash
+// 469403655c3a182a6b7856052a2428ebd24fede9e39b6cb428c21b8a0c222cc4
+// Shaokang.png
+// 2571718c9d1d4bbe9807df21f0dd84209d36b418ea15ca350c258495cdbe474d
+
 const UDP_DATAGRAM_MAX_SIZE = 16384
 const CHANNEL_BUFFER_SIZE = 1024
 const STATUS_MESSAGE_TIMEOUT = 10 * time.Second

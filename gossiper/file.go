@@ -9,6 +9,7 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"sync"
 	"time"
 
 	. "github.com/TRUMANCFY/Peerster/message"
@@ -54,7 +55,9 @@ type DownloadRequest struct {
 type FileHandler struct {
 	Name            string
 	files           map[SHA256_HASH]*File
+	filesLock       *sync.Mutex
 	fileChunks      map[SHA256_HASH]*FileChunk
+	fileChunksLock  *sync.Mutex
 	sharedDir       string
 	downloadDir     string
 	requestTaskChan chan<- *DownloadRequest
@@ -112,11 +115,13 @@ func NewFileHandler(name string) *FileHandler {
 	}
 
 	return &FileHandler{
-		Name:        name,
-		files:       make(map[SHA256_HASH]*File),
-		fileChunks:  make(map[SHA256_HASH]*FileChunk),
-		sharedDir:   sharedDir,
-		downloadDir: downloadDir,
+		Name:           name,
+		files:          make(map[SHA256_HASH]*File),
+		filesLock:      &sync.Mutex{},
+		fileChunks:     make(map[SHA256_HASH]*FileChunk),
+		fileChunksLock: &sync.Mutex{},
+		sharedDir:      sharedDir,
+		downloadDir:    downloadDir,
 	}
 }
 
@@ -346,6 +351,17 @@ func (g *Gossiper) HandleDataRequest(dataReq *DataRequest, sender *net.UDPAddr) 
 
 	if g.name == dataReq.Destination {
 		fmt.Printf("Destination Arrived! But %s does not exist the file needed \n", g.name)
+
+		emptyReply := &DataReply{
+			Origin:      dataReq.Destination,
+			Destination: dataReq.Origin,
+			HopLimit:    HOPLIMIT,
+			HashValue:   dataReq.HashValue,
+			Data:        make([]byte, 0),
+		}
+
+		g.RouteDataReply(emptyReply)
+
 		return
 	}
 
@@ -369,7 +385,6 @@ func (g *Gossiper) HandleDataReply(dataReply *DataReply, sender *net.UDPAddr) {
 
 	// check whether we have the file
 	if g.name == dataReply.Destination {
-		fmt.Println("DataReply arrive dest")
 		g.fileHandler.fileDispatcher.replyChan <- dataReply
 		return
 	}
@@ -520,8 +535,9 @@ func (f *FileHandler) FileIndexingRequest(filename string) {
 
 	f.files[fileIndexed.MetafileHash] = fileIndexed
 
-	// metafileHash := fileIndexed.MetafileHash
-	// fmt.Println(hex.EncodeToString(metafileHash[:]))
+	metafileHash := fileIndexed.MetafileHash
+	fmt.Println(hex.EncodeToString(metafileHash[:]))
+
 	// fmt.Println("FURTHER VERIFIED")
 	// for h, k := range f.fileChunks {
 	// 	fmt.Println("Key")
@@ -552,6 +568,8 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 
 	chunk := make([]byte, CHUNK_SIZE)
 
+	f.fileChunksLock.Lock()
+
 	for {
 		bytesread, err := file.Read(chunk)
 
@@ -571,6 +589,7 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 
 		// the chuck into the filehandler
 		// check the hash exist or not
+
 		_, present := f.fileChunks[hash]
 
 		if present {
@@ -586,6 +605,8 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 		f.fileChunks[hash] = newChunk
 
 	}
+
+	f.fileChunksLock.Unlock()
 
 	fmt.Printf("Size of metafile %d \n", len(metaFile))
 
