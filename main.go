@@ -12,7 +12,7 @@ import (
 var uiPort = flag.String("UIPort", "8001", "please provide UI Port")
 var gossipAddr = flag.String("gossipAddr", "127.0.0.1:5000", "please provide gossip address")
 var name = flag.String("name", "293324", "please provide the node name")
-var peersStr = flag.String("peers", "127.0.0.1:5001, 127.0.0.1:5002", "please provide the peers")
+var peersStr = flag.String("peers", "", "please provide the peers")
 var simple = flag.Bool("simple", false, "type")
 var antiEntropy = flag.Int("antiEntropy", 10, "please provide the time interval for antiEntropy")
 var gui = flag.Bool("gui", false, "gui??")
@@ -32,7 +32,12 @@ func main() {
 	fmt.Printf("Route timer value is %d \n", *rtimer)
 
 	// Split the peers to list
-	peersList := GenerateStringSet(strings.Split(*peersStr, ","))
+	var peersList *StringSet
+	if *peersStr == "" {
+		peersList = GenerateStringSet(make([]string, 0))
+	} else {
+		peersList = GenerateStringSet(strings.Split(*peersStr, ","))
+	}
 
 	gossiper := NewGossiper(*gossipAddr, *uiPort, *name, peersList, *rtimer, *simple, *antiEntropy, *gui, *guiPort)
 
