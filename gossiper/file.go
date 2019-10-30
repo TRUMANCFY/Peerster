@@ -61,6 +61,25 @@ type FileHandler struct {
 	fileDispatcher  *FileDispatcher
 }
 
+func (g *Gossiper) HandleDownloadRequest(cmw *ClientMessageWrapper) {
+	dest := *cmw.msg.Destination
+	hash := *cmw.msg.Request
+
+	shaHash, err := HashToSha256(hash)
+
+	if err != nil {
+		return
+	}
+
+	localFileName := *cmw.msg.File
+	g.RequestFile(dest, shaHash, localFileName)
+}
+
+func (g *Gossiper) HandleFileIndexing(cmw *ClientMessageWrapper) {
+	filename := *cmw.msg.File
+	g.fileHandler.FileIndexingRequest(filename)
+}
+
 func tryCreateDir(abspath string) error {
 	// refer to https://stackoverflow.com/questions/37932551/mkdir-if-not-exists-using-golang
 	_, err := os.Stat(abspath)

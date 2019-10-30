@@ -1,6 +1,7 @@
 package gossiper
 
 import (
+	"encoding/hex"
 	"fmt" // check the type of variable
 	"net"
 	"sync"
@@ -230,25 +231,30 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	msg := cmw.msg
 
-	// Check whether it is a private message first
-	// this is a private message
-	if msg.Destination != nil && *cmw.msg.Destination != "" {
-		// OUTPUT
+	if msg.Text != "" && msg.Destination == nil {
+		// Handle with rumor message
+		if g.simple {
+			newMsg := g.CreateClientPacket(msg)
+			newGossipPacket := &GossipPacket{Simple: newMsg}
+			g.BroadcastPacket(newGossipPacket, nil)
+		} else {
+			newRumorMsg := g.CreateRumorPacket(msg)
+
+			// fmt.Println("CURRENTID is ", g.currentID)
+			// the second arguement is the last-step source of the message
+			// here include the case that we receive it from the client
+			g.HandleRumorPacket(newRumorMsg, g.address)
+		}
+	} else if msg.Text != "" && msg.Destination != nil {
+		// Handle with private message
 		fmt.Printf("CLIENT MESSAGE %s dest %s \n", cmw.msg.Text, *cmw.msg.Destination)
 		g.HandleClientPrivate(cmw)
-		return
-	}
-
-	if g.simple {
-		newMsg := g.CreateClientPacket(msg)
-		newGossipPacket := &GossipPacket{Simple: newMsg}
-		g.BroadcastPacket(newGossipPacket, nil)
-	} else {
-		newRumorMsg := g.CreateRumorPacket(msg)
-
-		// fmt.Println("CURRENTID is ", g.currentID)
-		// the second arguement is the last-step source of the message
-		// here include the case that we receive it from the client
-		g.HandleRumorPacket(newRumorMsg, g.address)
+	} else if msg.File != nil && msg.Destination != nil && msg.Request != nil {
+		// Handle with file download
+		fmt.Printf("Ask %s from dest %s meta %s \n", *msg.File, *msg.Destination, hex.EncodeToString(*msg.Request))
+		g.HandleDownloadRequest(cmw)
+	} else if msg.File != nil {
+		fmt.Printf("Index File %s \n", *msg.File)
+		g.HandleFileIndexing(cmw)
 	}
 }

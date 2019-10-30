@@ -153,6 +153,7 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *StringSet) {
 	// 50 - 50
 	fmt.Println("Prepare to flip the coin")
+	rand.Seed(time.Now().UTC().UnixNano())
 	randInt := rand.Intn(2)
 	if randInt == 0 {
 		neighborPeer, present := g.RumorMongeringPrepare(rumor, excludedPeers)
