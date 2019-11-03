@@ -53,8 +53,10 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 	}
 
 	if len(rumorToSend) == 0 && len(rumorToAsk) == 0 {
-		// Sync
-		fmt.Printf("IN SYNC WITH %s \n", sender)
+		// OUTPUT-HW1
+		if DEBUG {
+			fmt.Printf("IN SYNC WITH %s \n", sender)
+		}
 	}
 }
 
@@ -63,6 +65,8 @@ func (g *Gossiper) RumorStatusCheck(r *RumorMessage) int {
 	// If diff == 0, rightly updated, therefore
 	// If diff > 0, the rumorMessage is head of the record peerStatus
 	// if diff < 0, the rumorMessage is behind the record peerStatus
+	g.peerStatusesLock.Lock()
+	defer g.peerStatusesLock.Unlock()
 	_, ok := g.peerStatuses[r.Origin]
 
 	if !ok {
@@ -124,9 +128,11 @@ func (g *Gossiper) FindMostUrgent(peerWant []PeerStatus) *RumorMessage {
 		nodepeer = append(nodepeer, psp.Identifier)
 	}
 
+	g.peerStatusesLock.Lock()
 	for _, pss := range g.peerStatuses {
 		nodeself = append(nodeself, pss.Identifier)
 	}
+	g.peerStatusesLock.Unlock()
 
 	nodepeerSet := GenerateStringSet(nodepeer)
 
@@ -151,7 +157,10 @@ func (g *Gossiper) FindMostUrgent(peerWant []PeerStatus) *RumorMessage {
 	}
 
 	newRumor := g.rumorList[target][idWant]
-	fmt.Printf("The most urgent is Origin: %s ID: %d \n", newRumor.Origin, newRumor.ID)
+	if DEBUG {
+		fmt.Printf("The most urgent is Origin: %s ID: %d \n", newRumor.Origin, newRumor.ID)
+	}
+
 	return &newRumor
 }
 
@@ -167,7 +176,9 @@ func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, ru
 	for _, pw := range peerWant {
 		peerOrigins = append(peerOrigins, pw.Identifier)
 
+		g.peerStatusesLock.Lock()
 		localStatus, present := g.peerStatuses[pw.Identifier]
+		g.peerStatusesLock.Unlock()
 
 		if !present {
 			rumorToAsk = append(rumorToAsk, PeerStatus{Identifier: pw.Identifier, NextID: 1})
@@ -181,11 +192,15 @@ func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, ru
 	// our StringSet has provided some useful api
 	peerOriginsSet := GenerateStringSet(peerOrigins)
 
+	g.peerStatusesLock.Lock()
+
 	for localPeer, _ := range g.peerStatuses {
 		if !peerOriginsSet.Has(localPeer) {
 			rumorToSend = append(rumorToSend, PeerStatus{Identifier: localPeer, NextID: 1})
 		}
 	}
+
+	g.peerStatusesLock.Unlock()
 	return
 }
 

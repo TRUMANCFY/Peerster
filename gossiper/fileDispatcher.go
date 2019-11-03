@@ -45,7 +45,9 @@ func (d *FileDispatcher) Run() {
 					_, present := recordBook[regTag.hash]
 
 					if present {
-						fmt.Println("There is already observer for this data")
+						if DEBUG {
+							fmt.Println("There is already observer for this data")
+						}
 						close(regTag.observer)
 
 						// TODO: think break or continue

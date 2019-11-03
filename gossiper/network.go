@@ -1,7 +1,7 @@
 package gossiper
 
 import (
-	"fmt" // check the type of variable
+	// check the type of variable
 	"net"
 
 	. "github.com/TRUMANCFY/Peerster/message"
@@ -38,7 +38,7 @@ func (g *Gossiper) ReceiveFromClients() <-chan *ClientMessageWrapper {
 			protobuf.Decode(msg.packetContent, &packetReceived)
 			res <- &ClientMessageWrapper{sender: msg.sender, msg: &packetReceived}
 			// OUTPUT
-			fmt.Printf("CLIENT MESSAGE %s \n", packetReceived.Text)
+			// fmt.Printf("CLIENT MESSAGE %s \n", packetReceived.Text)
 		}
 	}()
 	return res

@@ -24,7 +24,9 @@ func (d *Dispatcher) Run() {
 			switch taggerMsg.taggerMsgType {
 			case TakeIn:
 
-				fmt.Printf("Register sender: %s, identifier: %s \n", taggerMsg.tagger.sender, taggerMsg.tagger.identifier)
+				if DEBUG {
+					fmt.Printf("Register sender: %s, identifier: %s \n", taggerMsg.tagger.sender, taggerMsg.tagger.identifier)
+				}
 
 				tagger := taggerMsg.tagger
 
@@ -45,7 +47,10 @@ func (d *Dispatcher) Run() {
 
 				if present {
 					// remove tagger from the local mapping
-					fmt.Printf("Unregister sender: %s, identifier: %s \n", tagger.sender, tagger.identifier)
+
+					if DEBUG {
+						fmt.Printf("Unregister sender: %s, identifier: %s \n", tagger.sender, tagger.identifier)
+					}
 					delete(taggers[tagger], toClosedObserver)
 					delete(observers, toClosedObserver)
 
@@ -53,7 +58,9 @@ func (d *Dispatcher) Run() {
 					close(toClosedObserver)
 				} else {
 					// panic(fmt.Sprintf("Origin: %s; Sender: %s NOT REGISTERED", taggerMsg.tagger.identifier, taggerMsg.tagger.sender))
-					fmt.Printf("Origin: %s; Sender: %s NOT REGISTERED \n", taggerMsg.tagger.identifier, taggerMsg.tagger.sender)
+					if DEBUG {
+						fmt.Printf("Origin: %s; Sender: %s NOT REGISTERED \n", taggerMsg.tagger.identifier, taggerMsg.tagger.sender)
+					}
 				}
 
 			}
@@ -77,7 +84,9 @@ func (d *Dispatcher) Run() {
 				// activeChans is map[PeerStatusObserver]bool
 				// add the coming peerStauts into the activeChan
 
-				fmt.Printf("Tagger: Identifier: %s, Sender: %s \n", tagger.identifier, tagger.sender)
+				if DEBUG {
+					fmt.Printf("Tagger: Identifier: %s, Sender: %s \n", tagger.identifier, tagger.sender)
+				}
 
 				for activeChan, _ := range activeChans {
 					// observerChan is renamed as activeChan here

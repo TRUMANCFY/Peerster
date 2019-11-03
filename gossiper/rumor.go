@@ -20,7 +20,9 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 	diff := g.RumorStatusCheck(r)
 
 	// CHECKOUT
-	fmt.Println("DIFF is", diff)
+	if DEBUG {
+		fmt.Println("DIFF is", diff)
+	}
 
 	// fmt.Printf("The difference between the comming rumor and current peerstatus is %d \n", diff)
 
@@ -36,32 +38,38 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 			// The message is from local client
 			go g.RumorMongeringPrepare(r, nil)
 		} else {
+			g.updateRouteTable(r, senderAddr.String())
 			go g.RumorMongeringPrepare(r, GenerateStringSetSingleton(senderAddr.String()))
 		}
 
 		g.AcceptRumor(r)
-
-		g.updateRouteTable(r, senderAddr.String())
 
 	case diff > 0:
 		// TODO: consider the out-of-order problem
 
 		// TODO: Still send the status packet to ask for the rumor
 		// g.SendGossipPacket(g.CreateStatusPacket(), senderAddr)
-		fmt.Println("The new coming rumor ID is larger than our local")
+		if DEBUG {
+			fmt.Println("The new coming rumor ID is larger than our local")
+		}
+
 		// send the rumor the sender want
 
 		// TODO-2: update the rumorTable
-		g.updateRouteTable(r, senderAddr.String())
+		// g.updateRouteTable(r, senderAddr.String())
 
 	case diff < 0:
-		fmt.Println("The new coming rumor ID is smaller than our local")
+		if DEBUG {
+			fmt.Println("The new coming rumor ID is smaller than our local")
+		}
 	}
 
 	// Send the StatusMessageToSender if the rumor is not from self
 	if senderAddr != g.address {
 		// send the status message to sender
-		fmt.Printf("Send Status to %s \n", senderAddr.String())
+		if DEBUG {
+			fmt.Printf("Send Status to %s \n", senderAddr.String())
+		}
 		gpToSend := g.CreateStatusPacket()
 		g.SendGossipPacket(gpToSend, senderAddr)
 	}
@@ -84,7 +92,10 @@ func (g *Gossiper) RumorMongeringAddrStr(rumor *RumorMessage, peerStr string) {
 
 func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 	// OUTPUT
-	fmt.Printf("MONGERING with %s \n", peerAddr.String())
+	if DEBUG {
+		fmt.Printf("MONGERING with %s \n", peerAddr.String())
+	}
+
 	go func() {
 		// monitor the ack from the receiver
 		observerChan := make(chan PeerStatus, CHANNEL_BUFFER_SIZE)
@@ -118,7 +129,9 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 					return
 				}
 
-				fmt.Printf("Receive Peer Status Origin: %s, NextID: %d \n", peerStatus.Identifier, peerStatus.NextID)
+				if DEBUG {
+					fmt.Printf("Receive Peer Status Origin: %s, NextID: %d \n", peerStatus.Identifier, peerStatus.NextID)
+				}
 
 				// this means that the peer has received the rumor (in this case, ps.nextID=rumor.ID+1)
 				// or it already contains more advanced
@@ -136,7 +149,11 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 				}
 			case <-timer.C: // Timed out
 				// Resend the rumor to another neighbor with prob 1/2
-				fmt.Println("TIMEOUT")
+
+				if DEBUG {
+					fmt.Println("TIMEOUT")
+				}
+
 				g.flipCoinRumorMongering(rumor, GenerateStringSetSingleton(peerStr))
 				unregister()
 			}
@@ -150,31 +167,46 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 
 func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *StringSet) {
 	// 50 - 50
-	fmt.Println("Prepare to flip the coin")
+	if DEBUG {
+		fmt.Println("Prepare to flip the coin")
+	}
+
 	// rand.Seed(time.Now().UTC().UnixNano())
 	randInt := rand.Intn(2)
 	if randInt == 0 {
 		neighborPeer, present := g.RumorMongeringPrepare(rumor, excludedPeers)
 
 		if present {
-			fmt.Printf("FLIPPED COIN sending rumor to %s \n", neighborPeer)
+			if DEBUG {
+				fmt.Printf("FLIPPED COIN sending rumor to %s \n", neighborPeer)
+			}
 		} else {
-			fmt.Println("FLIPPED COIN not exist")
+			if DEBUG {
+				fmt.Println("FLIPPED COIN not exist")
+			}
 		}
 	} else {
-		fmt.Println("Choose not to flip the coin")
+		if DEBUG {
+			fmt.Println("Choose not to flip the coin")
+		}
 	}
 }
 
 func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 	// 1. put the rumor in the list
 	// 2. update the peer status
-	fmt.Printf("Accept Rumor Origin: %s ID: %d \n", r.Origin, r.ID)
+
+	if DEBUG {
+		fmt.Printf("Accept Rumor Origin: %s ID: %d \n", r.Origin, r.ID)
+	}
 	origin := r.Origin
 	messageID := r.ID
 
 	g.rumorListLock.Lock()
 	defer g.rumorListLock.Unlock()
+
+	g.peerStatusesLock.Lock()
+	defer g.peerStatusesLock.Unlock()
 
 	_, ok := g.rumorList[origin]
 

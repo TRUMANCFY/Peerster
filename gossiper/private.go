@@ -18,14 +18,19 @@ func (g *Gossiper) HandlePrivatePacket(privateMsg *PrivateMessage, sender *net.U
 	hopLimit := privateMsg.HopLimit
 
 	if hopLimit == 0 {
-		fmt.Println("Hop Limit has been ended")
+		if DEBUG {
+			fmt.Println("Hop Limit has been ended")
+		}
 		return
 	}
 
 	nextNode, present := g.routeTable.routeTable[dest]
 
 	if !present {
-		fmt.Printf("Destination %s does not exist in the table \n", dest)
+		if DEBUG {
+			fmt.Printf("Destination %s does not exist in the table \n", dest)
+		}
+
 		return
 	}
 
@@ -65,4 +70,38 @@ func (g *Gossiper) addPrivateMessage(privateMsg *PrivateMessage) {
 
 	g.privateMessageList.privateMessageList[origin] = msgs
 
+}
+
+func (g *Gossiper) HandleClientPrivate(cmw *ClientMessageWrapper) {
+	privateMsg := g.CreatePrivateMessage(cmw)
+
+	g.SendPrivateMessage(privateMsg)
+}
+
+func (g *Gossiper) CreatePrivateMessage(cmw *ClientMessageWrapper) *PrivateMessage {
+	return &PrivateMessage{
+		Origin:      g.name,
+		ID:          0,
+		Text:        cmw.msg.Text,
+		Destination: *cmw.msg.Destination,
+		HopLimit:    HOPLIMIT - 1, // Because we will not decrease this during the sending
+	}
+}
+
+func (g *Gossiper) SendPrivateMessage(privateMsg *PrivateMessage) {
+	// check the route table first
+	dest := privateMsg.Destination
+
+	g.routeTable.Mux.Lock()
+
+	nextNode, present := g.routeTable.routeTable[dest]
+
+	g.routeTable.Mux.Unlock()
+
+	if !present {
+		fmt.Printf("Destination %s does not exist in the table \n", dest)
+		return
+	}
+
+	g.SendGossipPacketStrAddr(&GossipPacket{Private: privateMsg}, nextNode)
 }

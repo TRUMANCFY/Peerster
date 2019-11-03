@@ -16,6 +16,9 @@ import (
 )
 
 const SHARED_DIR = "_SharedDir"
+
+// const DOWNLOAD_DIR = "_SharedDir"
+
 const DOWNLOAD_DIR = "_Downloads"
 const CHUNK_SIZE = 8 * 1024
 
@@ -167,20 +170,30 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 	// whether the file has already in local or not
 
 	// Here, we will not consider whether it is in local
+	g.fileHandler.filesLock.Lock()
 	lookup, present := g.fileHandler.files[metafileHash]
+	g.fileHandler.filesLock.Unlock()
 
 	if present {
 		if lookup.State == Shared {
-			fmt.Println("File is local shared file")
+			if DEBUG {
+				fmt.Println("File is local shared file")
+			}
 			return true
 		} else if lookup.State == Downloaded {
-			fmt.Println("File has been already downloaded")
+			if DEBUG {
+				fmt.Println("File has been already downloaded")
+			}
 			return true
 		} else if lookup.State == Downloading {
-			fmt.Println("File is downloading")
+			if DEBUG {
+				fmt.Println("File is downloading")
+			}
 			return true
 		} else if lookup.State == Failed {
-			fmt.Println("Last time failed, but we will try this again")
+			if DEBUG {
+				fmt.Println("Last time failed, but we will try this again")
+			}
 		}
 	}
 
@@ -195,7 +208,9 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 		}
 
 		// put file into our file system
+		g.fileHandler.filesLock.Lock()
 		g.fileHandler.files[metafileHash] = file
+		g.fileHandler.filesLock.Unlock()
 
 		downloadReq := &DownloadRequest{
 			Hash: metafileHash,
@@ -207,7 +222,9 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 		metaFileReply, valid := g.RequestFileChunk(downloadReq)
 
 		if !valid {
-			fmt.Println("We did not get the valid metaFile")
+			if DEBUG {
+				fmt.Println("We did not get the valid metaFile")
+			}
 			result = false
 			return
 		}
@@ -215,8 +232,13 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 		metachunks, valid := g.fileHandler.addMeta(metaFileReply)
 
 		if !valid {
-			fmt.Println("Cannot add Meta")
+			if DEBUG {
+				fmt.Println("Cannot add Meta")
+			}
+
+			g.fileHandler.filesLock.Lock()
 			g.fileHandler.files[metafileHash].State = Failed
+			g.fileHandler.filesLock.Unlock()
 			result = false
 			return
 		}
@@ -239,7 +261,10 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 			localData, present := g.fileHandler.checkLocalChunk(meta)
 
 			if present {
-				fmt.Println("Find the chunk in local")
+				if DEBUG {
+					fmt.Println("Find the chunk in local")
+				}
+
 				originData = append(originData, localData...)
 				continue
 			}
@@ -247,9 +272,13 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 			dataReply, valid := g.RequestFileChunk(downloadReq)
 
 			if !valid {
-				fmt.Printf("Download Chunk %d Failed\n", i+1)
-				fmt.Printf("Download %s terminated! \n", localFileName)
+				if DEBUG {
+					fmt.Printf("Download Chunk %d Failed\n", i+1)
+					fmt.Printf("Download %s terminated! \n", localFileName)
+				}
+				g.fileHandler.filesLock.Lock()
 				g.fileHandler.files[metafileHash].State = Failed
+				g.fileHandler.filesLock.Unlock()
 				result = false
 				return
 			}
@@ -312,7 +341,10 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 
 			valid := g.fileHandler.checkReply(shaHash, dataReply)
 			if !valid {
-				fmt.Println("This is not valid reply")
+				if DEBUG {
+					fmt.Println("This is not valid reply")
+				}
+
 				// Based on the understanding last paragraph in the page 8 in Homework2 handout
 				ticker = time.NewTicker(DOWNLOAD_TIMEOUT)
 				continue
@@ -324,7 +356,10 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 			numRetries++
 
 			if numRetries == DOWNLOAD_RETRIES {
-				fmt.Println("Reach max retries")
+				if DEBUG {
+					fmt.Println("Reach max retries")
+				}
+
 				return nil, false
 			}
 			// resent
@@ -336,21 +371,31 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 }
 
 func (g *Gossiper) HandleDataRequest(dataReq *DataRequest, sender *net.UDPAddr) {
-	fmt.Printf("Recerve DataRequest from %s to %s \n", dataReq.Origin, dataReq.Destination)
+	if DEBUG {
+		fmt.Printf("Recerve DataRequest from %s to %s \n", dataReq.Origin, dataReq.Destination)
+	}
 
 	// check whether we have already have the result
 	reply, present := g.fileHandler.checkFile(dataReq)
 
 	if present {
-		fmt.Println("Find DataReply")
+		if DEBUG {
+			fmt.Println("Find DataReply")
+		}
 		tmp := sha256.Sum256(reply.Data)
-		fmt.Println(hex.EncodeToString(tmp[:]))
+
+		if DEBUG {
+			fmt.Println(hex.EncodeToString(tmp[:]))
+		}
+
 		g.RouteDataReply(reply)
 		return
 	}
 
 	if g.name == dataReq.Destination {
-		fmt.Printf("Destination Arrived! But %s does not exist the file needed \n", g.name)
+		if DEBUG {
+			fmt.Printf("Destination Arrived! But %s does not exist the file needed \n", g.name)
+		}
 
 		emptyReply := &DataReply{
 			Origin:      dataReq.Destination,
@@ -375,13 +420,17 @@ func (g *Gossiper) HandleDataRequest(dataReq *DataRequest, sender *net.UDPAddr) 
 	routeSuccess := g.RouteDataRequest(request)
 
 	if !routeSuccess {
-		fmt.Println("Route Data Reply Fails")
+		if DEBUG {
+			fmt.Println("Route Data Reply Fails")
+		}
 	}
 }
 
 func (g *Gossiper) HandleDataReply(dataReply *DataReply, sender *net.UDPAddr) {
 	// fmt.Println(dataReply)
-	fmt.Printf("Receive DataReply from %s to %s \n", dataReply.Origin, dataReply.Destination)
+	if DEBUG {
+		fmt.Printf("Receive DataReply from %s to %s \n", dataReply.Origin, dataReply.Destination)
+	}
 
 	// check whether we have the file
 	if g.name == dataReply.Destination {
@@ -398,7 +447,9 @@ func (g *Gossiper) HandleDataReply(dataReply *DataReply, sender *net.UDPAddr) {
 
 	success := g.RouteDataReply(reply)
 	if !success {
-		fmt.Println("Route Data Reply Fails")
+		if DEBUG {
+			fmt.Println("Route Data Reply Fails")
+		}
 	}
 
 }
@@ -410,21 +461,27 @@ func (f *FileHandler) acceptFileChunk(reply *DataReply) {
 		return
 	}
 
+	f.fileChunksLock.Lock()
 	_, present := f.fileChunks[shaHash]
+	f.fileChunksLock.Unlock()
 
 	if present {
 		return
 	}
 
+	f.fileChunksLock.Lock()
 	f.fileChunks[shaHash] = &FileChunk{
 		Data: reply.Data,
 	}
+	f.fileChunksLock.Unlock()
 }
 
 func (f *FileHandler) addMeta(reply *DataReply) ([]SHA256_HASH, bool) {
 	// check the size of the metadata
 	if len(reply.Data)%sha256.Size != 0 {
-		fmt.Println("The size of metafile is not multiple of 32 bytes")
+		if DEBUG {
+			fmt.Println("The size of metafile is not multiple of 32 bytes")
+		}
 		return nil, false
 	}
 
@@ -435,13 +492,19 @@ func (f *FileHandler) addMeta(reply *DataReply) ([]SHA256_HASH, bool) {
 		return nil, false
 	}
 
+	f.filesLock.Lock()
 	file, present := f.files[shaHash]
+	f.filesLock.Unlock()
 
 	if !present {
-		fmt.Println("File Not Exist")
+		if DEBUG {
+			fmt.Println("File Not Exist")
+		}
 		return nil, false
 	} else if file.State != Downloading {
-		fmt.Println("File Has Been Already In Local")
+		if DEBUG {
+			fmt.Println("File Has Been Already In Local")
+		}
 		return nil, false
 	} else {
 		file.Metafile = metafile
@@ -449,7 +512,9 @@ func (f *FileHandler) addMeta(reply *DataReply) ([]SHA256_HASH, bool) {
 
 	numChunks := len(metafile) / sha256.Size
 
-	fmt.Printf("The number of chunk is %d \n", numChunks)
+	if DEBUG {
+		fmt.Printf("The number of chunk is %d \n", numChunks)
+	}
 
 	splitedMeta := make([]SHA256_HASH, 0)
 
@@ -462,7 +527,9 @@ func (f *FileHandler) addMeta(reply *DataReply) ([]SHA256_HASH, bool) {
 }
 
 func (f *FileHandler) checkLocalChunk(shaHash SHA256_HASH) ([]byte, bool) {
+	f.filesLock.Lock()
 	localfile, present := f.fileChunks[shaHash]
+	f.filesLock.Unlock()
 
 	if !present {
 		return nil, false
@@ -487,13 +554,17 @@ func (f *FileHandler) checkFile(dataReq *DataRequest) (*DataReply, bool) {
 	}
 
 	if metafile, present := f.files[sha]; present {
-		fmt.Printf("MetaFile [%x] exist for Request from %s to %s \n", sha[:], dataReq.Origin, dataReq.Destination)
+		if DEBUG {
+			fmt.Printf("MetaFile [%x] exist for Request from %s to %s \n", sha[:], dataReq.Origin, dataReq.Destination)
+		}
 		newReply.Data = metafile.Metafile
 		return newReply, true
 	}
 
 	if file, present := f.fileChunks[sha]; present {
-		fmt.Printf("Chunk [%x] exist for Request from %s to %s \n", sha[:], dataReq.Origin, dataReq.Destination)
+		if DEBUG {
+			fmt.Printf("Chunk [%x] exist for Request from %s to %s \n", sha[:], dataReq.Origin, dataReq.Destination)
+		}
 		newReply.Data = file.Data
 		// fmt.Printf("The sha here is %s \n", hex.EncodeToString(sha[:]))
 		// tmp := sha256.Sum256(newReply.Data)
@@ -504,9 +575,11 @@ func (f *FileHandler) checkFile(dataReq *DataRequest) (*DataReply, bool) {
 }
 
 func (f *FileHandler) combineChunks(meshfileHash SHA256_HASH, data []byte, fileName string) {
+	f.filesLock.Lock()
 	f.files[meshfileHash].State = Downloaded
 	f.files[meshfileHash].Name = fileName
 	f.files[meshfileHash].Size = int64(len(data))
+	f.filesLock.Unlock()
 	localFile, err := os.OpenFile(filepath.Join(f.downloadDir, fileName), os.O_CREATE|os.O_WRONLY, 0755)
 
 	if err != nil {
@@ -531,13 +604,21 @@ func (f *FileHandler) FileIndexingRequest(filename string) {
 
 	fileIndexed.Name = filename
 
-	fmt.Println("File size is ", fileIndexed.Size)
+	if DEBUG {
+		fmt.Println("File size is ", fileIndexed.Size)
+	}
+
+	f.filesLock.Lock()
 
 	f.files[fileIndexed.MetafileHash] = fileIndexed
 
-	metafileHash := fileIndexed.MetafileHash
-	fmt.Println(hex.EncodeToString(metafileHash[:]))
+	f.filesLock.Unlock()
 
+	metafileHash := fileIndexed.MetafileHash
+
+	if DEBUG {
+		fmt.Println(hex.EncodeToString(metafileHash[:]))
+	}
 	// fmt.Println("FURTHER VERIFIED")
 	// for h, k := range f.fileChunks {
 	// 	fmt.Println("Key")
@@ -593,7 +674,9 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 		_, present := f.fileChunks[hash]
 
 		if present {
-			fmt.Println("Wierd! The chunk has already existed!")
+			if DEBUG {
+				fmt.Println("Wierd! The chunk has already existed!")
+			}
 		}
 
 		newChunk := &FileChunk{
@@ -607,8 +690,9 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 	}
 
 	f.fileChunksLock.Unlock()
-
-	fmt.Printf("Size of metafile %d \n", len(metaFile))
+	if DEBUG {
+		fmt.Printf("Size of metafile %d \n", len(metaFile))
+	}
 
 	metaFileHash := sha256.Sum256(metaFile)
 	// fmt.Printf("Metafile Hash %s \n", hex.EncodeToString(metaFileHash[:]))
@@ -630,7 +714,9 @@ func (f *FileHandler) checkReply(originHash SHA256_HASH, dataReply *DataReply) b
 	// check the hash is matched or not
 	receivedHash, _ := HashToSha256(dataReply.HashValue)
 	if receivedHash != originHash {
-		fmt.Println("CHECK REPLY HASH DOES NOT MATCH")
+		if DEBUG {
+			fmt.Println("CHECK REPLY HASH DOES NOT MATCH")
+		}
 		return false
 	}
 
@@ -639,7 +725,9 @@ func (f *FileHandler) checkReply(originHash SHA256_HASH, dataReply *DataReply) b
 	// fmt.Println(hex.EncodeToString(generatedHash[:]))
 	// fmt.Println(hex.EncodeToString(receivedHash[:]))
 	if generatedHash != receivedHash {
-		fmt.Println("GENERATE NEW HASH DOES NOT MATCH")
+		if DEBUG {
+			fmt.Println("GENERATE NEW HASH DOES NOT MATCH")
+		}
 		return false
 	}
 
@@ -662,7 +750,9 @@ func HashToSha256(h []byte) (SHA256_HASH, error) {
 	var res SHA256_HASH
 
 	if len(h) != sha256.Size {
-		return res, errors.New("Size of hash is not 32 bytes")
+		if DEBUG {
+			return res, errors.New("Size of hash is not 32 bytes")
+		}
 	}
 	copy(res[:], h)
 
@@ -674,7 +764,9 @@ func (g *Gossiper) RouteDataRequest(dataReq *DataRequest) bool {
 	nextNode, present := g.routeTable.routeTable[dest]
 
 	if !present {
-		fmt.Println("Destination %s does not exist in the table \n", dest)
+		if DEBUG {
+			fmt.Println("Destination %s does not exist in the table \n", dest)
+		}
 		return false
 	}
 
@@ -688,11 +780,15 @@ func (g *Gossiper) RouteDataReply(dataReply *DataReply) bool {
 	nextNode, present := g.routeTable.routeTable[dest]
 
 	if !present {
-		fmt.Println("Destination %s does not exist in the table \n", dest)
+		if DEBUG {
+			fmt.Println("Destination %s does not exist in the table \n", dest)
+		}
 		return false
 	}
 
-	fmt.Printf("Send the datareply Dest: %s to Nextnode %s \n", dest, nextNode)
+	if DEBUG {
+		fmt.Printf("Send the datareply Dest: %s to Nextnode %s \n", dest, nextNode)
+	}
 
 	g.SendGossipPacketStrAddr(&GossipPacket{DataReply: dataReply}, nextNode)
 
@@ -701,7 +797,9 @@ func (g *Gossiper) RouteDataReply(dataReply *DataReply) bool {
 
 func (f *FileHandler) prepareNewRequest(dataReq *DataRequest) (*DataRequest, bool) {
 	if dataReq.HopLimit == 0 {
-		fmt.Println("HopLimit has been ended")
+		if DEBUG {
+			fmt.Println("HopLimit has been ended")
+		}
 		return nil, false
 	}
 
@@ -717,7 +815,9 @@ func (f *FileHandler) prepareNewRequest(dataReq *DataRequest) (*DataRequest, boo
 
 func (f *FileHandler) prepareNewReply(dataReply *DataReply) (*DataReply, bool) {
 	if dataReply.HopLimit == 0 {
-		fmt.Println("HopLimit has been ended")
+		if DEBUG {
+			fmt.Println("HopLimit has been ended")
+		}
 		return nil, false
 	}
 

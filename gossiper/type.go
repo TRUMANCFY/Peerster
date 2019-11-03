@@ -18,6 +18,7 @@ type Gossiper struct {
 	peersList          *PeersList
 	simple             bool
 	peerStatuses       map[string]PeerStatus
+	peerStatusesLock   *sync.Mutex
 	peerWantList       map[string](map[string]PeerStatus)
 	peerWantListLock   *sync.RWMutex
 	rumorList          map[string](map[uint32]RumorMessage)

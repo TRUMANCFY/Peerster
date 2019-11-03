@@ -79,9 +79,13 @@ func (g *Gossiper) CreateStatusPacket() *GossipPacket {
 
 	wantSlice := make([]PeerStatus, 0)
 
+	g.peerStatusesLock.Lock()
+
 	for _, ps := range g.peerStatuses {
 		wantSlice = append(wantSlice, ps)
 	}
+
+	g.peerStatusesLock.Unlock()
 
 	sp := &StatusPacket{Want: wantSlice}
 

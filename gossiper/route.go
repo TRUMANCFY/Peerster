@@ -21,7 +21,9 @@ func (g *Gossiper) RunRoutingMessage() {
 		// wait
 		<-ticker.C
 
-		fmt.Println("Send routing rumor")
+		if DEBUG {
+			fmt.Println("Send routing rumor")
+		}
 
 		peerSelect, present := g.SelectRandomNeighbor(nil)
 
@@ -45,10 +47,10 @@ func (g *Gossiper) updateRouteTable(newRumor *RumorMessage, senderAddrStr string
 	origin := newRumor.Origin
 	prevAddr, present := g.routeTable.routeTable[origin]
 
-	// OUTPUT
 	if !present || prevAddr != senderAddrStr {
 		g.routeTable.routeTable[origin] = senderAddrStr
 		if newRumor.Text != "" {
+			// OUTPUT
 			fmt.Printf("DSDV %s %s \n", origin, senderAddrStr)
 		}
 	}
@@ -71,34 +73,4 @@ func (g *Gossiper) SendRoutingMessage(peers []string) {
 		g.SendGossipPacketStrAddr(&GossipPacket{Rumor: routeMessage}, peer)
 	}
 
-}
-
-func (g *Gossiper) HandleClientPrivate(cmw *ClientMessageWrapper) {
-	privateMsg := g.CreatePrivateMessage(cmw)
-
-	g.SendPrivateMessage(privateMsg)
-}
-
-func (g *Gossiper) CreatePrivateMessage(cmw *ClientMessageWrapper) *PrivateMessage {
-	return &PrivateMessage{
-		Origin:      g.name,
-		ID:          0,
-		Text:        cmw.msg.Text,
-		Destination: *cmw.msg.Destination,
-		HopLimit:    HOPLIMIT,
-	}
-}
-
-func (g *Gossiper) SendPrivateMessage(privateMsg *PrivateMessage) {
-	// check the route table first
-	dest := privateMsg.Destination
-
-	nextNode, present := g.routeTable.routeTable[dest]
-
-	if !present {
-		fmt.Printf("Destination %s does not exist in the table \n", dest)
-		return
-	}
-
-	g.SendGossipPacketStrAddr(&GossipPacket{Private: privateMsg}, nextNode)
 }

@@ -12,6 +12,8 @@ import (
 	"github.com/dedis/protobuf"
 )
 
+// tar --exclude='.git/' --exclude='_SharedDir/' --exclude='_Downloads/' --exclude='src/golang.org/' --exclude='src/github.com/gorilla/' --exclude='src/github.com/dedis/' --exclude='src/github.com/stretchr' -zcvf Fengyu.tar.gz src/
+
 // ./Peerster -gossipAddr=127.0.0.1:5001 -gui -GUIPort=8081 -peers=127.0.0.1:5002 -name=A -UIPort=8001
 // ./Peerster -gossipAddr=127.0.0.1:5002 -gui -GUIPort=8082 -peers=127.0.0.1:5003 -name=A -UIPort=8002
 // ./Peerster -gossipAddr=127.0.0.1:5003 -gui -GUIPort=8083 -peers=127.0.0.1:5001 -name=A -UIPort=8003
@@ -25,6 +27,8 @@ const UDP_DATAGRAM_MAX_SIZE = 16384
 const CHANNEL_BUFFER_SIZE = 1024
 const STATUS_MESSAGE_TIMEOUT = 10 * time.Second
 const GUI_ADDR = "127.0.0.1:8080"
+
+const DEBUG = false
 
 // Memory arrangement
 // Think about the process and what dataframe do we need
@@ -93,6 +97,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		},
 		simple:             simple,
 		peerStatuses:       make(map[string]PeerStatus),
+		peerStatusesLock:   &sync.Mutex{},
 		peerWantList:       make(map[string](map[string]PeerStatus)),
 		peerWantListLock:   &sync.RWMutex{},
 		rumorList:          make(map[string](map[uint32]RumorMessage)),
@@ -165,11 +170,16 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 }
 
 func (g *Gossiper) AntiEntropy() {
-	fmt.Println("Start antiEntropy")
+	if DEBUG {
+		fmt.Println("Start antiEntropy")
+	}
+
 	// time.Duration can convert int to time type
 
 	go func() {
-		fmt.Println("The value of antientropy is ", g.antiEntropy)
+		if DEBUG {
+			fmt.Println("The value of antientropy is ", g.antiEntropy)
+		}
 
 		ticker := time.NewTicker(time.Duration(g.antiEntropy) * time.Second)
 
@@ -179,7 +189,9 @@ func (g *Gossiper) AntiEntropy() {
 
 			neighbor, present := g.SelectRandomNeighbor(nil)
 			if present {
-				fmt.Println("Anti entropy " + neighbor)
+				if DEBUG {
+					fmt.Println("Anti entropy " + neighbor)
+				}
 				g.SendGossipPacketStrAddr(g.CreateStatusPacket(), neighbor)
 			}
 		}
@@ -192,11 +204,15 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 	sender := gpw.sender
 
 	g.AddPeer(sender.String())
-	g.PrintPeers()
+
+	// OUTPUT-HW1
+	if DEBUG {
+		g.PrintPeers()
+	}
 
 	switch {
 	case packet.Simple != nil:
-		// OUTPUT
+		// OUTPUT-HW1
 		fmt.Printf("SIMPLE MESSAGE origin %s from %s contents %s \n",
 			packet.Simple.OriginalName,
 			packet.Simple.RelayPeerAddr,
@@ -204,12 +220,14 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 
 		g.HandleSimplePacket(packet.Simple)
 	case packet.Rumor != nil:
-		// OUTPUT
-		fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
-			packet.Rumor.Origin,
-			sender,
-			packet.Rumor.ID,
-			packet.Rumor.Text)
+		// OUTPUT-HW1
+		if DEBUG {
+			fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
+				packet.Rumor.Origin,
+				sender,
+				packet.Rumor.ID,
+				packet.Rumor.Text)
+		}
 		if packet.Rumor.ID != 0 {
 			g.HandleRumorPacket(packet.Rumor, sender)
 		} else {
@@ -218,8 +236,10 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 		}
 
 	case packet.Status != nil:
-		// OUTPUT
-		fmt.Println(packet.Status.SenderString(sender.String()))
+		// OUTPUT-HW1
+		if DEBUG {
+			fmt.Println(packet.Status.SenderString(sender.String()))
+		}
 		g.HandleStatusPacket(packet.Status, sender)
 
 	case packet.Private != nil:
