@@ -29,6 +29,7 @@ const STATUS_MESSAGE_TIMEOUT = 10 * time.Second
 const GUI_ADDR = "127.0.0.1:8080"
 
 const DEBUG = false
+const DEBUGFILE = false
 
 // Memory arrangement
 // Think about the process and what dataframe do we need

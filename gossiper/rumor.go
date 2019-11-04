@@ -50,18 +50,19 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		// TODO: Still send the status packet to ask for the rumor
 		// g.SendGossipPacket(g.CreateStatusPacket(), senderAddr)
 		if DEBUG {
-			fmt.Println("The new coming rumor ID is larger than our local")
+			fmt.Println("The new coming rumor ID is smaller than our local")
 		}
 
 		// send the rumor the sender want
 
 		// TODO-2: update the rumorTable
-		// g.updateRouteTable(r, senderAddr.String())
 
 	case diff < 0:
 		if DEBUG {
-			fmt.Println("The new coming rumor ID is smaller than our local")
+			fmt.Println("The new coming rumor ID is larger than our local")
 		}
+
+		g.updateRouteTable(r, senderAddr.String())
 	}
 
 	// Send the StatusMessageToSender if the rumor is not from self
