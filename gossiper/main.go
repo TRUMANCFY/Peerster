@@ -29,7 +29,8 @@ const STATUS_MESSAGE_TIMEOUT = 10 * time.Second
 const GUI_ADDR = "127.0.0.1:8080"
 
 const DEBUG = false
-const DEBUGFILE = true
+const DEBUGFILE = false
+const DEBUGROUTE = false
 
 // Memory arrangement
 // Think about the process and what dataframe do we need
@@ -224,13 +225,11 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 		g.HandleSimplePacket(packet.Simple)
 	case packet.Rumor != nil:
 		// OUTPUT-HW1
-		if DEBUG {
-			fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
-				packet.Rumor.Origin,
-				sender,
-				packet.Rumor.ID,
-				packet.Rumor.Text)
-		}
+		fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
+			packet.Rumor.Origin,
+			sender,
+			packet.Rumor.ID,
+			packet.Rumor.Text)
 		if packet.Rumor.ID != 0 {
 			g.HandleRumorPacket(packet.Rumor, sender)
 		} else {

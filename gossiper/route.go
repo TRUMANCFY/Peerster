@@ -21,7 +21,7 @@ func (g *Gossiper) RunRoutingMessage() {
 		// wait
 		<-ticker.C
 
-		if DEBUG {
+		if DEBUGROUTE {
 			fmt.Println("Send routing rumor")
 		}
 
@@ -61,12 +61,19 @@ func (g *Gossiper) updateRouteTable(newRumor *RumorMessage, senderAddrStr string
 	id, _ := g.routeTable.IDTable[origin]
 
 	if id < newRumor.ID {
+		if DEBUGROUTE {
+			fmt.Printf("Origin: %s ID from %d to %d \n", origin, id, newRumor.ID)
+		}
 		g.routeTable.IDTable[origin] = newRumor.ID
 		if prevAddr != senderAddrStr {
 			g.routeTable.routeTable[origin] = senderAddrStr
-			g.PrintPeers()
-			fmt.Printf("Route Rumor Origin: %s, ID: %d from %s \n", newRumor.Origin, newRumor.ID, senderAddrStr)
-			fmt.Println(g.routeTable.routeTable)
+
+			if DEBUGROUTE {
+				g.PrintPeers()
+				fmt.Printf("Route Rumor Origin: %s, ID: %d from %s \n", newRumor.Origin, newRumor.ID, senderAddrStr)
+				fmt.Println(g.routeTable.routeTable)
+			}
+
 			if newRumor.Text != "" {
 				// OUTPUT
 				fmt.Printf("DSDV %s %s \n", origin, senderAddrStr)

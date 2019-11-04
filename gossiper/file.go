@@ -15,7 +15,7 @@ import (
 	. "github.com/TRUMANCFY/Peerster/message"
 )
 
-const SHARED_DIR = "_SharedDir"
+const SHARED_DIR = "_SharedFiles"
 
 // const DOWNLOAD_DIR = "_SharedDir"
 
@@ -690,6 +690,7 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 	}
 
 	f.fileChunksLock.Unlock()
+
 	if DEBUGFILE {
 		fmt.Printf("Size of metafile %d \n", len(metaFile))
 	}

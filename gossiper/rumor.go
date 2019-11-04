@@ -19,7 +19,9 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 	// if sender is self, broadcast (mongering) the rumor
 	diff := g.RumorStatusCheck(r)
 
-	fmt.Printf("Origin: %s, ID: %d, From: %s \n", r.Origin, r.ID, senderAddr.String())
+	if DEBUGROUTE {
+		fmt.Printf("Origin: %s, ID: %d, From: %s \n", r.Origin, r.ID, senderAddr.String())
+	}
 
 	// CHECKOUT
 	if DEBUG {
