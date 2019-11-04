@@ -29,7 +29,7 @@ const STATUS_MESSAGE_TIMEOUT = 10 * time.Second
 const GUI_ADDR = "127.0.0.1:8080"
 
 const DEBUG = false
-const DEBUGFILE = false
+const DEBUGFILE = true
 
 // Memory arrangement
 // Think about the process and what dataframe do we need
@@ -70,9 +70,11 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 	fmt.Printf("GUI Port is %s \n", guiAddr)
 
 	routeTable := make(map[string]string)
+	idTable := make(map[string]uint32)
 
 	routeTableObject := RouteTable{
 		routeTable: routeTable,
+		IDTable:    idTable,
 		Mux:        &sync.Mutex{},
 	}
 

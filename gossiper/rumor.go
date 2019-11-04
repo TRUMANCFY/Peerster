@@ -19,10 +19,14 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 	// if sender is self, broadcast (mongering) the rumor
 	diff := g.RumorStatusCheck(r)
 
+	fmt.Printf("Origin: %s, ID: %d, From: %s \n", r.Origin, r.ID, senderAddr.String())
+
 	// CHECKOUT
 	if DEBUG {
 		fmt.Println("DIFF is", diff)
 	}
+
+	g.updateRouteTable(r, senderAddr.String())
 
 	// fmt.Printf("The difference between the comming rumor and current peerstatus is %d \n", diff)
 
@@ -38,7 +42,6 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 			// The message is from local client
 			go g.RumorMongeringPrepare(r, nil)
 		} else {
-			g.updateRouteTable(r, senderAddr.String())
 			go g.RumorMongeringPrepare(r, GenerateStringSetSingleton(senderAddr.String()))
 		}
 
@@ -61,8 +64,6 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		if DEBUG {
 			fmt.Println("The new coming rumor ID is larger than our local")
 		}
-
-		g.updateRouteTable(r, senderAddr.String())
 	}
 
 	// Send the StatusMessageToSender if the rumor is not from self

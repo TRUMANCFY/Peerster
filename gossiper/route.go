@@ -47,12 +47,32 @@ func (g *Gossiper) updateRouteTable(newRumor *RumorMessage, senderAddrStr string
 	origin := newRumor.Origin
 	prevAddr, present := g.routeTable.routeTable[origin]
 
-	if !present || prevAddr != senderAddrStr {
+	if !present {
 		g.routeTable.routeTable[origin] = senderAddrStr
+		g.routeTable.IDTable[origin] = newRumor.ID
 		if newRumor.Text != "" {
 			// OUTPUT
 			fmt.Printf("DSDV %s %s \n", origin, senderAddrStr)
+			// fmt.Printf("Text is %s \n", newRumor.Text)
 		}
+		return
+	}
+
+	id, _ := g.routeTable.IDTable[origin]
+
+	if id < newRumor.ID {
+		g.routeTable.IDTable[origin] = newRumor.ID
+		if prevAddr != senderAddrStr {
+			g.routeTable.routeTable[origin] = senderAddrStr
+			g.PrintPeers()
+			fmt.Printf("Route Rumor Origin: %s, ID: %d from %s \n", newRumor.Origin, newRumor.ID, senderAddrStr)
+			fmt.Println(g.routeTable.routeTable)
+			if newRumor.Text != "" {
+				// OUTPUT
+				fmt.Printf("DSDV %s %s \n", origin, senderAddrStr)
+			}
+		}
+
 	}
 }
 

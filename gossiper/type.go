@@ -50,6 +50,7 @@ type PrivateMessageList struct {
 
 type RouteTable struct {
 	routeTable map[string]string
+	IDTable    map[string]uint32
 	Mux        *sync.Mutex
 }
 
