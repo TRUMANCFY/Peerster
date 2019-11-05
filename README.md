@@ -22,7 +22,7 @@
 	- ```-GUIPort=8081```: set the port, by default it should be ```8080``` in the localhost
 
 
-- Vue Framework (static codes have been placed, this step can be ignore. If some problem, please follow the following instructions)
+- Vue Framework (You need to compile it by yourself, as the compiled files will be too large for the submission, really sorry about this)
 	- go to ``` web server/gui ```
 	
 	- Dependency Installation
@@ -32,3 +32,5 @@
 		``` npm run build ``` and generate folder ```dist/```
 		
 	- We set the port as ``` 127.0.0.1:8080 ``` by default
+
+- For the homework2, I have prepared a test script, called ```arrow_test.sh```. Enjoy it.	

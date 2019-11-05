@@ -51,20 +51,23 @@ type FileChunk struct {
 }
 
 type DownloadRequest struct {
-	Hash SHA256_HASH
-	Dest string
+	Hash     SHA256_HASH
+	Dest     string
+	isMeta   bool
+	SeqNum   int
+	FileName string
 }
 
 type FileHandler struct {
-	Name            string
-	files           map[SHA256_HASH]*File
-	filesLock       *sync.Mutex
-	fileChunks      map[SHA256_HASH]*FileChunk
-	fileChunksLock  *sync.Mutex
-	sharedDir       string
-	downloadDir     string
-	requestTaskChan chan<- *DownloadRequest
-	fileDispatcher  *FileDispatcher
+	Name           string
+	files          map[SHA256_HASH]*File
+	filesLock      *sync.Mutex
+	fileChunks     map[SHA256_HASH]*FileChunk
+	fileChunksLock *sync.Mutex
+	sharedDir      string
+	downloadDir    string
+	// requestTaskChan chan<- *DownloadRequest
+	fileDispatcher *FileDispatcher
 }
 
 func (g *Gossiper) HandleDownloadRequest(cmw *ClientMessageWrapper) {
@@ -213,11 +216,13 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 		g.fileHandler.filesLock.Unlock()
 
 		downloadReq := &DownloadRequest{
-			Hash: metafileHash,
-			Dest: dest,
+			Hash:     metafileHash,
+			Dest:     dest,
+			isMeta:   true,
+			FileName: localFileName,
 		}
 
-		fmt.Printf("DOWNLOADING metafile of %s from %s \n", localFileName, dest)
+		// fmt.Printf("DOWNLOADING metafile of %s from %s \n", localFileName, dest)
 
 		metaFileReply, valid := g.RequestFileChunk(downloadReq)
 
@@ -251,11 +256,14 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 			// fmt.Println(hex.EncodeToString(meta[:]))
 
 			// OUTPUT
-			fmt.Printf("DOWNLOADING %s chunk %d from %s \n", localFileName, i+1, dest)
+			// fmt.Printf("DOWNLOADING %s chunk %d from %s \n", localFileName, i+1, dest)
 
 			downloadReq = &DownloadRequest{
-				Hash: meta,
-				Dest: dest,
+				Hash:     meta,
+				Dest:     dest,
+				isMeta:   false,
+				SeqNum:   i + 1,
+				FileName: localFileName,
 			}
 
 			localData, present := g.fileHandler.checkLocalChunk(meta)
@@ -316,6 +324,13 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 		HashValue:   hash,
 	}
 
+	// OUTPUT
+	if req.isMeta {
+		fmt.Printf("DOWNLOADING metafile of %s from %s \n", req.FileName, dest)
+	} else {
+		fmt.Printf("DOWNLOADING %s chunk %d from %s \n", req.FileName, req.SeqNum, dest)
+	}
+
 	success := g.RouteDataRequest(request)
 
 	if !success {
@@ -347,6 +362,17 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 
 				// Based on the understanding last paragraph in the page 8 in Homework2 handout
 				ticker = time.NewTicker(DOWNLOAD_TIMEOUT)
+
+				numRetries++
+
+				if numRetries == DOWNLOAD_RETRIES {
+					if DEBUGFILE {
+						fmt.Println("Reach max retries")
+					}
+
+					return nil, false
+				}
+
 				continue
 			}
 
@@ -362,7 +388,12 @@ func (g *Gossiper) RequestFileChunk(req *DownloadRequest) (*DataReply, bool) {
 
 				return nil, false
 			}
-			// resent
+			// OUTPUT: Resend
+			if req.isMeta {
+				fmt.Printf("DOWNLOADING metafile of %s from %s \n", req.FileName, dest)
+			} else {
+				fmt.Printf("DOWNLOADING %s chunk %d from %s \n", req.FileName, req.SeqNum, dest)
+			}
 			g.RouteDataRequest(request)
 		}
 	}

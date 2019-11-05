@@ -12,8 +12,7 @@ import (
 	"github.com/dedis/protobuf"
 )
 
-// tar --exclude='.git/' --exclude='_SharedDir/' --exclude='_Downloads/' --exclude='src/golang.org/' --exclude='src/github.com/gorilla/' --exclude='src/github.com/dedis/' --exclude='src/github.com/stretchr' -zcvf Fengyu.tar.gz src/
-
+// tar --exclude='.git/' --exclude='_SharedFiles/' --exclude='_Downloads/' --exclude='node_modules/' --exclude='dist/' --exclude='src/golang.org/' --exclude='src/github.com/gorilla/' --exclude='src/github.com/dedis/' --exclude='src/github.com/stretchr' --exclude='LiangweiCHEN/' -zcvf Fengyu.tar.gz src/
 // ./Peerster -gossipAddr=127.0.0.1:5001 -gui -GUIPort=8081 -peers=127.0.0.1:5002 -name=A -UIPort=8001
 // ./Peerster -gossipAddr=127.0.0.1:5002 -gui -GUIPort=8082 -peers=127.0.0.1:5003 -name=A -UIPort=8002
 // ./Peerster -gossipAddr=127.0.0.1:5003 -gui -GUIPort=8083 -peers=127.0.0.1:5001 -name=A -UIPort=8003

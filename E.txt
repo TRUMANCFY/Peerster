@@ -1,0 +1,711 @@
+Gossiper
+UI port is 8005 
+Gossip address is 127.0.0.1:5005 
+Gossip name is E 
+Gossip peers are 127.0.0.1:5003 
+Simple mode is false 
+AntiEntropy Value is 10 
+Route timer value is 1 
+GUI Port is 127.0.0.1:8085 
+Server runs at 127.0.0.1:8085 
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 2 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 3 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 7 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 8 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 8 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 8 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 8 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 7 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 7 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 5 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 9 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 8 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 7 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 6 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 9 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 4 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 10 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 7 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 8 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 8 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 9 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 8 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 9 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 8 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 10 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 10 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 12 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 10 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 9 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 9 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 10 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 10 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 12 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 12 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 14 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 14 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 12 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 10 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 15 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 14 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 12 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 12 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 14 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 14 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 11 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 14 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 16 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 15 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 12 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 15 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 14 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 17 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 16 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 18 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 13 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 15 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 16 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 17 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 19 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 18 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 17 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 16 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 16 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 16 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 15 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 20 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 20 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 20 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 19 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 19 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 17 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 18 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 18 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 18 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 20 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 19 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 18 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 22 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 22 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 22 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 20 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 19 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 23 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 18 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 22 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 20 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 22 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 24 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 22 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 22 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 23 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 23 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 20 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 25 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 22 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 24 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 23 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 23 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 22 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 23 contents  
+Index File Shaokang.png 
+RUMOR origin E from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 21 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 26 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 24 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 25 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 25 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 24 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 23 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 24 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 25 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 23 contents  
+Ask EgetfromA.png from dest A meta 469403655c3a182a6b7856052a2428ebd24fede9e39b6cb428c21b8a0c222cc4 
+DOWNLOADING metafile of EgetfromA.png from A 
+DOWNLOADING EgetfromA.png chunk 1 from A 
+CLIENT MESSAGE PrivateFromEToA dest A 
+DOWNLOADING EgetfromA.png chunk 2 from A 
+PRIVATE origin A hop-limit 7 contents PrivateFromAToE 
+DOWNLOADING EgetfromA.png chunk 3 from A 
+DOWNLOADING EgetfromA.png chunk 4 from A 
+DOWNLOADING EgetfromA.png chunk 5 from A 
+DOWNLOADING EgetfromA.png chunk 6 from A 
+DOWNLOADING EgetfromA.png chunk 7 from A 
+DOWNLOADING EgetfromA.png chunk 8 from A 
+DOWNLOADING EgetfromA.png chunk 9 from A 
+DOWNLOADING EgetfromA.png chunk 10 from A 
+DOWNLOADING EgetfromA.png chunk 11 from A 
+DOWNLOADING EgetfromA.png chunk 12 from A 
+DOWNLOADING EgetfromA.png chunk 13 from A 
+DOWNLOADING EgetfromA.png chunk 14 from A 
+DOWNLOADING EgetfromA.png chunk 15 from A 
+DOWNLOADING EgetfromA.png chunk 16 from A 
+DOWNLOADING EgetfromA.png chunk 17 from A 
+DOWNLOADING EgetfromA.png chunk 18 from A 
+DOWNLOADING EgetfromA.png chunk 19 from A 
+DOWNLOADING EgetfromA.png chunk 20 from A 
+DOWNLOADING EgetfromA.png chunk 21 from A 
+DOWNLOADING EgetfromA.png chunk 22 from A 
+DOWNLOADING EgetfromA.png chunk 23 from A 
+DOWNLOADING EgetfromA.png chunk 24 from A 
+DOWNLOADING EgetfromA.png chunk 25 from A 
+DOWNLOADING EgetfromA.png chunk 26 from A 
+DOWNLOADING EgetfromA.png chunk 27 from A 
+DOWNLOADING EgetfromA.png chunk 28 from A 
+DOWNLOADING EgetfromA.png chunk 29 from A 
+DOWNLOADING EgetfromA.png chunk 30 from A 
+DOWNLOADING EgetfromA.png chunk 31 from A 
+DOWNLOADING EgetfromA.png chunk 32 from A 
+DOWNLOADING EgetfromA.png chunk 33 from A 
+DOWNLOADING EgetfromA.png chunk 34 from A 
+DOWNLOADING EgetfromA.png chunk 35 from A 
+DOWNLOADING EgetfromA.png chunk 36 from A 
+DOWNLOADING EgetfromA.png chunk 37 from A 
+DOWNLOADING EgetfromA.png chunk 38 from A 
+DOWNLOADING EgetfromA.png chunk 39 from A 
+DOWNLOADING EgetfromA.png chunk 40 from A 
+DOWNLOADING EgetfromA.png chunk 41 from A 
+DOWNLOADING EgetfromA.png chunk 42 from A 
+DOWNLOADING EgetfromA.png chunk 43 from A 
+DOWNLOADING EgetfromA.png chunk 44 from A 
+DOWNLOADING EgetfromA.png chunk 45 from A 
+DOWNLOADING EgetfromA.png chunk 46 from A 
+DOWNLOADING EgetfromA.png chunk 47 from A 
+DOWNLOADING EgetfromA.png chunk 48 from A 
+DOWNLOADING EgetfromA.png chunk 49 from A 
+DOWNLOADING EgetfromA.png chunk 50 from A 
+DOWNLOADING EgetfromA.png chunk 51 from A 
+DOWNLOADING EgetfromA.png chunk 52 from A 
+DOWNLOADING EgetfromA.png chunk 53 from A 
+DOWNLOADING EgetfromA.png chunk 54 from A 
+DOWNLOADING EgetfromA.png chunk 55 from A 
+DOWNLOADING EgetfromA.png chunk 56 from A 
+DOWNLOADING EgetfromA.png chunk 57 from A 
+DOWNLOADING EgetfromA.png chunk 58 from A 
+DOWNLOADING EgetfromA.png chunk 59 from A 
+DOWNLOADING EgetfromA.png chunk 60 from A 
+DOWNLOADING EgetfromA.png chunk 61 from A 
+DOWNLOADING EgetfromA.png chunk 62 from A 
+DOWNLOADING EgetfromA.png chunk 63 from A 
+DOWNLOADING EgetfromA.png chunk 64 from A 
+DOWNLOADING EgetfromA.png chunk 65 from A 
+DOWNLOADING EgetfromA.png chunk 66 from A 
+DOWNLOADING EgetfromA.png chunk 67 from A 
+DOWNLOADING EgetfromA.png chunk 68 from A 
+DOWNLOADING EgetfromA.png chunk 69 from A 
+DOWNLOADING EgetfromA.png chunk 70 from A 
+DOWNLOADING EgetfromA.png chunk 71 from A 
+DOWNLOADING EgetfromA.png chunk 72 from A 
+DOWNLOADING EgetfromA.png chunk 73 from A 
+DOWNLOADING EgetfromA.png chunk 74 from A 
+DOWNLOADING EgetfromA.png chunk 75 from A 
+DOWNLOADING EgetfromA.png chunk 76 from A 
+DOWNLOADING EgetfromA.png chunk 77 from A 
+DOWNLOADING EgetfromA.png chunk 78 from A 
+DOWNLOADING EgetfromA.png chunk 79 from A 
+DOWNLOADING EgetfromA.png chunk 80 from A 
+DOWNLOADING EgetfromA.png chunk 81 from A 
+DOWNLOADING EgetfromA.png chunk 82 from A 
+DOWNLOADING EgetfromA.png chunk 83 from A 
+DOWNLOADING EgetfromA.png chunk 84 from A 
+DOWNLOADING EgetfromA.png chunk 85 from A 
+DOWNLOADING EgetfromA.png chunk 86 from A 
+DOWNLOADING EgetfromA.png chunk 87 from A 
+DOWNLOADING EgetfromA.png chunk 88 from A 
+DOWNLOADING EgetfromA.png chunk 89 from A 
+DOWNLOADING EgetfromA.png chunk 90 from A 
+DOWNLOADING EgetfromA.png chunk 91 from A 
+DOWNLOADING EgetfromA.png chunk 92 from A 
+DOWNLOADING EgetfromA.png chunk 93 from A 
+DOWNLOADING EgetfromA.png chunk 94 from A 
+DOWNLOADING EgetfromA.png chunk 95 from A 
+DOWNLOADING EgetfromA.png chunk 96 from A 
+DOWNLOADING EgetfromA.png chunk 97 from A 
+DOWNLOADING EgetfromA.png chunk 98 from A 
+DOWNLOADING EgetfromA.png chunk 99 from A 
+DOWNLOADING EgetfromA.png chunk 100 from A 
+DOWNLOADING EgetfromA.png chunk 101 from A 
+DOWNLOADING EgetfromA.png chunk 102 from A 
+DOWNLOADING EgetfromA.png chunk 103 from A 
+DOWNLOADING EgetfromA.png chunk 104 from A 
+DOWNLOADING EgetfromA.png chunk 105 from A 
+DOWNLOADING EgetfromA.png chunk 106 from A 
+DOWNLOADING EgetfromA.png chunk 107 from A 
+DOWNLOADING EgetfromA.png chunk 108 from A 
+DOWNLOADING EgetfromA.png chunk 109 from A 
+DOWNLOADING EgetfromA.png chunk 110 from A 
+DOWNLOADING EgetfromA.png chunk 111 from A 
+DOWNLOADING EgetfromA.png chunk 112 from A 
+DOWNLOADING EgetfromA.png chunk 113 from A 
+DOWNLOADING EgetfromA.png chunk 114 from A 
+DOWNLOADING EgetfromA.png chunk 115 from A 
+DOWNLOADING EgetfromA.png chunk 116 from A 
+DOWNLOADING EgetfromA.png chunk 117 from A 
+DOWNLOADING EgetfromA.png chunk 118 from A 
+DOWNLOADING EgetfromA.png chunk 119 from A 
+DOWNLOADING EgetfromA.png chunk 120 from A 
+DOWNLOADING EgetfromA.png chunk 121 from A 
+DOWNLOADING EgetfromA.png chunk 122 from A 
+DOWNLOADING EgetfromA.png chunk 123 from A 
+DOWNLOADING EgetfromA.png chunk 124 from A 
+DOWNLOADING EgetfromA.png chunk 125 from A 
+DOWNLOADING EgetfromA.png chunk 126 from A 
+DOWNLOADING EgetfromA.png chunk 127 from A 
+DOWNLOADING EgetfromA.png chunk 128 from A 
+DOWNLOADING EgetfromA.png chunk 129 from A 
+DOWNLOADING EgetfromA.png chunk 130 from A 
+DOWNLOADING EgetfromA.png chunk 131 from A 
+DOWNLOADING EgetfromA.png chunk 132 from A 
+DOWNLOADING EgetfromA.png chunk 133 from A 
+DOWNLOADING EgetfromA.png chunk 134 from A 
+DOWNLOADING EgetfromA.png chunk 135 from A 
+DOWNLOADING EgetfromA.png chunk 136 from A 
+DOWNLOADING EgetfromA.png chunk 137 from A 
+DOWNLOADING EgetfromA.png chunk 138 from A 
+DOWNLOADING EgetfromA.png chunk 139 from A 
+DOWNLOADING EgetfromA.png chunk 140 from A 
+DOWNLOADING EgetfromA.png chunk 141 from A 
+DOWNLOADING EgetfromA.png chunk 142 from A 
+DOWNLOADING EgetfromA.png chunk 143 from A 
+DOWNLOADING EgetfromA.png chunk 144 from A 
+DOWNLOADING EgetfromA.png chunk 145 from A 
+DOWNLOADING EgetfromA.png chunk 146 from A 
+DOWNLOADING EgetfromA.png chunk 147 from A 
+DOWNLOADING EgetfromA.png chunk 148 from A 
+DOWNLOADING EgetfromA.png chunk 149 from A 
+DOWNLOADING EgetfromA.png chunk 150 from A 
+DOWNLOADING EgetfromA.png chunk 151 from A 
+DOWNLOADING EgetfromA.png chunk 152 from A 
+DOWNLOADING EgetfromA.png chunk 153 from A 
+DOWNLOADING EgetfromA.png chunk 154 from A 
+DOWNLOADING EgetfromA.png chunk 155 from A 
+DOWNLOADING EgetfromA.png chunk 156 from A 
+DOWNLOADING EgetfromA.png chunk 157 from A 
+DOWNLOADING EgetfromA.png chunk 158 from A 
+DOWNLOADING EgetfromA.png chunk 159 from A 
+DOWNLOADING EgetfromA.png chunk 160 from A 
+DOWNLOADING EgetfromA.png chunk 161 from A 
+DOWNLOADING EgetfromA.png chunk 162 from A 
+DOWNLOADING EgetfromA.png chunk 163 from A 
+DOWNLOADING EgetfromA.png chunk 164 from A 
+DOWNLOADING EgetfromA.png chunk 165 from A 
+DOWNLOADING EgetfromA.png chunk 166 from A 
+DOWNLOADING EgetfromA.png chunk 167 from A 
+DOWNLOADING EgetfromA.png chunk 168 from A 
+DOWNLOADING EgetfromA.png chunk 169 from A 
+DOWNLOADING EgetfromA.png chunk 170 from A 
+DOWNLOADING EgetfromA.png chunk 171 from A 
+DOWNLOADING EgetfromA.png chunk 172 from A 
+DOWNLOADING EgetfromA.png chunk 173 from A 
+DOWNLOADING EgetfromA.png chunk 174 from A 
+DOWNLOADING EgetfromA.png chunk 175 from A 
+DOWNLOADING EgetfromA.png chunk 176 from A 
+DOWNLOADING EgetfromA.png chunk 177 from A 
+DOWNLOADING EgetfromA.png chunk 178 from A 
+RECONSTRUCTED file EgetfromA.png 
+RUMOR origin A from 127.0.0.1:5003 ID 27 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 26 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 24 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 25 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 23 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 28 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 27 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 26 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 25 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 26 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 24 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 29 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 26 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 27 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 28 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 28 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 28 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 26 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 29 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 30 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 29 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 27 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 28 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 28 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 30 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 29 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 28 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 30 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 27 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 32 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 29 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 30 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 30 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 32 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 30 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 30 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 32 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 34 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 34 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 34 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 32 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 31 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 35 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 34 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 32 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 32 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 34 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 36 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 35 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 35 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 32 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 37 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 35 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 34 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 34 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 35 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 37 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 36 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 36 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 36 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 33 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 38 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 36 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 37 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 35 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 34 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 39 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 36 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 37 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 38 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 37 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 40 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 38 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 39 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 41 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 40 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 38 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 39 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 42 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 41 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 39 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 40 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 39 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 40 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 40 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 43 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 43 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 42 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 40 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 39 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 41 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 41 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 39 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 44 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 44 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 42 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 43 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 42 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 41 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 41 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 41 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 44 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 45 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 43 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 43 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 42 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 42 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 43 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 44 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 44 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 46 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 46 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 45 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 46 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 45 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 45 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 42 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 42 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 42 contents  
