@@ -25,8 +25,6 @@ const CHUNK_SIZE = 8 * 1024
 const DOWNLOAD_TIMEOUT = 5 * time.Second
 const DOWNLOAD_RETRIES = 5
 
-const NUM_DOWNLOAD_ROUTINE = 5
-
 type SHA256_HASH [sha256.Size]byte
 
 type FileType int
@@ -138,36 +136,6 @@ func (g *Gossiper) RunFileSystem() {
 	// Initiallize the new requestchan not need till now
 	// g.fileHandler.requestTaskChan = g.RunRequestChan()
 }
-
-// func (g *Gossiper) RunRequestChan() chan *DownloadRequest {
-// 	reqChan := make(chan *DownloadRequest, CHANNEL_BUFFER_SIZE)
-
-// 	for i := 0; i < NUM_DOWNLOAD_ROUTINE; i++ {
-// 		go func() {
-// 			for {
-// 				select {
-// 				case req, ok := <-reqChan:
-// 					if !ok {
-// 						// The channel has been closed here
-// 						return
-// 					}
-
-// 					reply, success := g.RequestFileChunk(req)
-// 					// donot need to further check the reply as it has already been checked in the RequestFileChunk
-
-// 					if success {
-// 						// download successful and accept the chunk
-// 						g.fileHandler.acceptFileChunk(reply)
-// 					} else {
-// 						// TODO: Abort the download here
-// 					}
-// 				}
-// 			}
-// 		}()
-// 	}
-
-// 	return reqChan
-// }
 
 func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileName string) bool {
 	// whether the file has already in local or not
@@ -866,3 +834,35 @@ func (f *FileHandler) prepareNewReply(dataReply *DataReply) (*DataReply, bool) {
 	}
 	return newDataReply, true
 }
+
+// Just some file as archive
+// const NUM_DOWNLOAD_ROUTINE = 5
+// func (g *Gossiper) RunRequestChan() chan *DownloadRequest {
+// 	reqChan := make(chan *DownloadRequest, CHANNEL_BUFFER_SIZE)
+
+// 	for i := 0; i < NUM_DOWNLOAD_ROUTINE; i++ {
+// 		go func() {
+// 			for {
+// 				select {
+// 				case req, ok := <-reqChan:
+// 					if !ok {
+// 						// The channel has been closed here
+// 						return
+// 					}
+
+// 					reply, success := g.RequestFileChunk(req)
+// 					// donot need to further check the reply as it has already been checked in the RequestFileChunk
+
+// 					if success {
+// 						// download successful and accept the chunk
+// 						g.fileHandler.acceptFileChunk(reply)
+// 					} else {
+// 						// TODO: Abort the download here
+// 					}
+// 				}
+// 			}
+// 		}()
+// 	}
+
+// 	return reqChan
+// }

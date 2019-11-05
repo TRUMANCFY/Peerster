@@ -1,3 +1,5 @@
+tar --exclude='.git/' --exclude='_SharedFiles/' --exclude='_Downloads/' --exclude='node_modules/' --exclude='dist/' --exclude='src/golang.org/' --exclude='src/github.com/gorilla/' --exclude='src/github.com/dedis/' --exclude='src/github.com/stretchr' --exclude='LiangweiCHEN/' --exclude='reviews/' -zcvf Fengyu.tar.gz src/
+
 Review Homework 1 CS-438 Fall 2019
 
 Reviewer Name: Fengyu Cai
