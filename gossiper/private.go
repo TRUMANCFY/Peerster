@@ -24,7 +24,10 @@ func (g *Gossiper) HandlePrivatePacket(privateMsg *PrivateMessage, sender *net.U
 		return
 	}
 
+	// add lock here
+	g.routeTable.Mux.Lock()
 	nextNode, present := g.routeTable.routeTable[dest]
+	g.routeTable.Mux.Unlock()
 
 	if !present {
 		if DEBUG {
