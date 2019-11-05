@@ -1,4 +1,5 @@
 # Code Structure for Homework 1
+# Sorry because time limit, no update about homework2
 ## Data Structure
 1. Self peerStatus: A map containing the local message status ```map[string]PeerStatus```
 

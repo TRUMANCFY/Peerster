@@ -1,0 +1,29 @@
+Gossiper
+UI port is 8002 
+Gossip address is 127.0.0.1:5002 
+Gossip name is B 
+Gossip peers are 127.0.0.1:5003 
+Simple mode is false 
+AntiEntropy Value is 10 
+Route timer value is 100 
+GUI Port is 127.0.0.1:8082 
+Server runs at 127.0.0.1:8082 
+RUMOR origin A from 127.0.0.1:5001 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5001 ID 1 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  

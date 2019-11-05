@@ -761,7 +761,10 @@ func HashToSha256(h []byte) (SHA256_HASH, error) {
 
 func (g *Gossiper) RouteDataRequest(dataReq *DataRequest) bool {
 	dest := dataReq.Destination
+
+	g.routeTable.Mux.Lock()
 	nextNode, present := g.routeTable.routeTable[dest]
+	g.routeTable.Mux.Unlock()
 
 	if !present {
 		if DEBUGFILE {
@@ -781,7 +784,10 @@ func (g *Gossiper) RouteDataRequest(dataReq *DataRequest) bool {
 
 func (g *Gossiper) RouteDataReply(dataReply *DataReply) bool {
 	dest := dataReply.Destination
+
+	g.routeTable.Mux.Lock()
 	nextNode, present := g.routeTable.routeTable[dest]
+	g.routeTable.Mux.Unlock()
 
 	if !present {
 		if DEBUGFILE {

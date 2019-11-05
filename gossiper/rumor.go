@@ -207,27 +207,34 @@ func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 	messageID := r.ID
 
 	g.rumorListLock.Lock()
-	defer g.rumorListLock.Unlock()
-
-	g.peerStatusesLock.Lock()
-	defer g.peerStatusesLock.Unlock()
-
 	_, ok := g.rumorList[origin]
+	g.rumorListLock.Unlock()
 
 	if ok {
+		g.rumorListLock.Lock()
 		g.rumorList[origin][messageID] = *r
+		g.rumorListLock.Unlock()
+
+		g.peerStatusesLock.Lock()
 		g.peerStatuses[r.Origin] = PeerStatus{
 			Identifier: r.Origin,
 			NextID:     messageID + 1,
 		}
+		g.peerStatusesLock.Unlock()
+
 	} else {
 		// this has been done during the *RumorStatusCheck* for the case not ok
 		g.rumorList[origin] = make(map[uint32]RumorMessage)
+		g.rumorListLock.Lock()
 		g.rumorList[origin][messageID] = *r
+		g.rumorListLock.Unlock()
+
+		g.peerStatusesLock.Lock()
 		g.peerStatuses[r.Origin] = PeerStatus{
 			Identifier: r.Origin,
 			NextID:     messageID + 1,
 		}
+		g.peerStatusesLock.Unlock()
 	}
 }
 

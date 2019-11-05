@@ -1,0 +1,20 @@
+Gossiper
+UI port is 8004 
+Gossip address is 127.0.0.1:5004 
+Gossip name is D 
+Gossip peers are 127.0.0.1:5003 
+Simple mode is false 
+AntiEntropy Value is 10 
+Route timer value is 100 
+GUI Port is 127.0.0.1:8084 
+Server runs at 127.0.0.1:8084 
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin A from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin C from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin D from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5003 ID 1 contents  
+CLIENT MESSAGE PrivateFromDToC dest C 

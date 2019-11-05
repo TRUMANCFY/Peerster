@@ -5,7 +5,7 @@ import (
 	"time"
 
 	. "github.com/TRUMANCFY/Peerster/message"
-	. "github.com/TRUMANCFY/Peerster/util"
+	// . "github.com/TRUMANCFY/Peerster/util"
 )
 
 const HOPLIMIT = 10
@@ -25,11 +25,12 @@ func (g *Gossiper) RunRoutingMessage() {
 			fmt.Println("Send routing rumor")
 		}
 
-		peerSelect, present := g.SelectRandomNeighbor(nil)
+		// peerSelect, present := g.SelectRandomNeighbor(nil)
 
-		if present {
-			g.SendRoutingMessage(GenerateStringSetSingleton(peerSelect).ToArray())
-		}
+		// if present {
+		// 	g.SendRoutingMessage(GenerateStringSetSingleton(peerSelect).ToArray())
+		// }
+		g.SendRoutingMessage(nil)
 	}
 
 }
@@ -89,9 +90,14 @@ func (g *Gossiper) SendRoutingMessage(peers []string) {
 	g.AcceptRumor(routeMessage)
 
 	if peers == nil {
-		for _, peer := range peers {
+		g.peersList.Mux.Lock()
+		localPeers := g.peersList.PeersList.ToArray()
+
+		for _, peer := range localPeers {
 			g.SendGossipPacketStrAddr(&GossipPacket{Rumor: routeMessage}, peer)
 		}
+
+		g.peersList.Mux.Unlock()
 
 		return
 	}

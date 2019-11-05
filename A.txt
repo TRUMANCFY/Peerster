@@ -1,0 +1,135 @@
+Gossiper
+UI port is 8001 
+Gossip address is 127.0.0.1:5001 
+Gossip name is A 
+Gossip peers are 127.0.0.1:5002 
+Simple mode is false 
+AntiEntropy Value is 10 
+Route timer value is 100 
+GUI Port is 127.0.0.1:8081 
+Server runs at 127.0.0.1:8081 
+RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
+RUMOR origin C from 127.0.0.1:5002 ID 1 contents  
+RUMOR origin B from 127.0.0.1:5002 ID 1 contents  
+RUMOR origin D from 127.0.0.1:5002 ID 1 contents  
+RUMOR origin D from 127.0.0.1:5002 ID 1 contents  
+RUMOR origin E from 127.0.0.1:5002 ID 1 contents  
+Index File QishanWang.png 
+Ask AgetfromE.png from dest E meta 2571718c9d1d4bbe9807df21f0dd84209d36b418ea15ca350c258495cdbe474d 
+DOWNLOADING metafile of AgetfromE.png from E 
+CLIENT MESSAGE PrivateFromAToE dest E 
+PRIVATE origin E hop-limit 7 contents PrivateFromEToA 
+DOWNLOADING AgetfromE.png chunk 1 from E 
+DOWNLOADING AgetfromE.png chunk 2 from E 
+DOWNLOADING AgetfromE.png chunk 3 from E 
+DOWNLOADING AgetfromE.png chunk 4 from E 
+DOWNLOADING AgetfromE.png chunk 5 from E 
+DOWNLOADING AgetfromE.png chunk 6 from E 
+DOWNLOADING AgetfromE.png chunk 7 from E 
+DOWNLOADING AgetfromE.png chunk 8 from E 
+DOWNLOADING AgetfromE.png chunk 9 from E 
+DOWNLOADING AgetfromE.png chunk 10 from E 
+DOWNLOADING AgetfromE.png chunk 11 from E 
+DOWNLOADING AgetfromE.png chunk 12 from E 
+DOWNLOADING AgetfromE.png chunk 13 from E 
+DOWNLOADING AgetfromE.png chunk 14 from E 
+DOWNLOADING AgetfromE.png chunk 15 from E 
+DOWNLOADING AgetfromE.png chunk 16 from E 
+DOWNLOADING AgetfromE.png chunk 17 from E 
+DOWNLOADING AgetfromE.png chunk 18 from E 
+DOWNLOADING AgetfromE.png chunk 19 from E 
+DOWNLOADING AgetfromE.png chunk 20 from E 
+DOWNLOADING AgetfromE.png chunk 21 from E 
+DOWNLOADING AgetfromE.png chunk 22 from E 
+DOWNLOADING AgetfromE.png chunk 23 from E 
+DOWNLOADING AgetfromE.png chunk 24 from E 
+DOWNLOADING AgetfromE.png chunk 25 from E 
+DOWNLOADING AgetfromE.png chunk 26 from E 
+DOWNLOADING AgetfromE.png chunk 27 from E 
+DOWNLOADING AgetfromE.png chunk 28 from E 
+DOWNLOADING AgetfromE.png chunk 29 from E 
+DOWNLOADING AgetfromE.png chunk 30 from E 
+DOWNLOADING AgetfromE.png chunk 31 from E 
+DOWNLOADING AgetfromE.png chunk 32 from E 
+DOWNLOADING AgetfromE.png chunk 33 from E 
+DOWNLOADING AgetfromE.png chunk 34 from E 
+DOWNLOADING AgetfromE.png chunk 35 from E 
+DOWNLOADING AgetfromE.png chunk 36 from E 
+DOWNLOADING AgetfromE.png chunk 37 from E 
+DOWNLOADING AgetfromE.png chunk 38 from E 
+DOWNLOADING AgetfromE.png chunk 39 from E 
+DOWNLOADING AgetfromE.png chunk 40 from E 
+DOWNLOADING AgetfromE.png chunk 41 from E 
+DOWNLOADING AgetfromE.png chunk 42 from E 
+DOWNLOADING AgetfromE.png chunk 43 from E 
+DOWNLOADING AgetfromE.png chunk 44 from E 
+DOWNLOADING AgetfromE.png chunk 45 from E 
+DOWNLOADING AgetfromE.png chunk 46 from E 
+DOWNLOADING AgetfromE.png chunk 47 from E 
+DOWNLOADING AgetfromE.png chunk 48 from E 
+DOWNLOADING AgetfromE.png chunk 49 from E 
+DOWNLOADING AgetfromE.png chunk 50 from E 
+DOWNLOADING AgetfromE.png chunk 51 from E 
+DOWNLOADING AgetfromE.png chunk 52 from E 
+DOWNLOADING AgetfromE.png chunk 53 from E 
+DOWNLOADING AgetfromE.png chunk 54 from E 
+DOWNLOADING AgetfromE.png chunk 55 from E 
+DOWNLOADING AgetfromE.png chunk 56 from E 
+DOWNLOADING AgetfromE.png chunk 57 from E 
+DOWNLOADING AgetfromE.png chunk 58 from E 
+DOWNLOADING AgetfromE.png chunk 59 from E 
+DOWNLOADING AgetfromE.png chunk 60 from E 
+DOWNLOADING AgetfromE.png chunk 61 from E 
+DOWNLOADING AgetfromE.png chunk 62 from E 
+DOWNLOADING AgetfromE.png chunk 63 from E 
+DOWNLOADING AgetfromE.png chunk 64 from E 
+DOWNLOADING AgetfromE.png chunk 65 from E 
+DOWNLOADING AgetfromE.png chunk 66 from E 
+DOWNLOADING AgetfromE.png chunk 67 from E 
+DOWNLOADING AgetfromE.png chunk 68 from E 
+DOWNLOADING AgetfromE.png chunk 69 from E 
+DOWNLOADING AgetfromE.png chunk 70 from E 
+DOWNLOADING AgetfromE.png chunk 71 from E 
+DOWNLOADING AgetfromE.png chunk 72 from E 
+DOWNLOADING AgetfromE.png chunk 73 from E 
+DOWNLOADING AgetfromE.png chunk 74 from E 
+DOWNLOADING AgetfromE.png chunk 75 from E 
+DOWNLOADING AgetfromE.png chunk 76 from E 
+DOWNLOADING AgetfromE.png chunk 77 from E 
+DOWNLOADING AgetfromE.png chunk 78 from E 
+DOWNLOADING AgetfromE.png chunk 79 from E 
+DOWNLOADING AgetfromE.png chunk 80 from E 
+DOWNLOADING AgetfromE.png chunk 81 from E 
+DOWNLOADING AgetfromE.png chunk 82 from E 
+DOWNLOADING AgetfromE.png chunk 83 from E 
+DOWNLOADING AgetfromE.png chunk 84 from E 
+DOWNLOADING AgetfromE.png chunk 85 from E 
+DOWNLOADING AgetfromE.png chunk 86 from E 
+DOWNLOADING AgetfromE.png chunk 87 from E 
+DOWNLOADING AgetfromE.png chunk 88 from E 
+DOWNLOADING AgetfromE.png chunk 89 from E 
+DOWNLOADING AgetfromE.png chunk 90 from E 
+DOWNLOADING AgetfromE.png chunk 91 from E 
+DOWNLOADING AgetfromE.png chunk 92 from E 
+DOWNLOADING AgetfromE.png chunk 93 from E 
+DOWNLOADING AgetfromE.png chunk 94 from E 
+DOWNLOADING AgetfromE.png chunk 95 from E 
+DOWNLOADING AgetfromE.png chunk 96 from E 
+DOWNLOADING AgetfromE.png chunk 97 from E 
+DOWNLOADING AgetfromE.png chunk 98 from E 
+DOWNLOADING AgetfromE.png chunk 99 from E 
+DOWNLOADING AgetfromE.png chunk 100 from E 
+DOWNLOADING AgetfromE.png chunk 101 from E 
+DOWNLOADING AgetfromE.png chunk 102 from E 
+DOWNLOADING AgetfromE.png chunk 103 from E 
+DOWNLOADING AgetfromE.png chunk 104 from E 
+DOWNLOADING AgetfromE.png chunk 105 from E 
+DOWNLOADING AgetfromE.png chunk 106 from E 
+DOWNLOADING AgetfromE.png chunk 107 from E 
+DOWNLOADING AgetfromE.png chunk 108 from E 
+DOWNLOADING AgetfromE.png chunk 109 from E 
+DOWNLOADING AgetfromE.png chunk 110 from E 
+DOWNLOADING AgetfromE.png chunk 111 from E 
+DOWNLOADING AgetfromE.png chunk 112 from E 
+RECONSTRUCTED file AgetfromE.png 
