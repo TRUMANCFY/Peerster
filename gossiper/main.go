@@ -29,6 +29,7 @@ const GUI_ADDR = "127.0.0.1:8080"
 const DEBUG = false
 const DEBUGFILE = false
 const DEBUGROUTE = false
+const DEBUGSEARCH = true
 
 // Memory arrangement
 // Think about the process and what dataframe do we need
@@ -244,12 +245,15 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 
 	case packet.Private != nil:
 		g.HandlePrivatePacket(packet.Private, sender)
-
 	case packet.DataReply != nil:
 		g.HandleDataReply(packet.DataReply, sender)
 
 	case packet.DataRequest != nil:
 		g.HandleDataRequest(packet.DataRequest, sender)
+	case packet.SearchReply != nil:
+		g.HandleSearchReply(packet.SearchReply, sender)
+	case packet.SearchRequest != nil:
+		g.HandleSearchRequest(packet.SearchRequest, sender)
 	}
 }
 

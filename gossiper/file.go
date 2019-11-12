@@ -64,7 +64,6 @@ type FileHandler struct {
 	fileChunksLock *sync.Mutex
 	sharedDir      string
 	downloadDir    string
-	// requestTaskChan chan<- *DownloadRequest
 	fileDispatcher *FileDispatcher
 }
 
