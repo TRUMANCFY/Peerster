@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strings"
 
 	. "github.com/TRUMANCFY/Peerster/message"
 	"github.com/dedis/protobuf"
@@ -17,6 +18,8 @@ var msg = flag.String("msg", "", "Please provide the message broadcasted")
 var dest = flag.String("dest", "", "destination for the private message")
 var file = flag.String("file", "", "file to be indexed by the gossiper, or filename of the requested file")
 var request = flag.String("request", "", "metafile hash of the downloaded file")
+var keywordsList = flag.String("keywords", "", "keyword search list")
+var budget = flag.Uint64("budget", 0, "the budget is 0 we will switch to the exponential mode for search")
 
 func main() {
 	flag.Parse()
@@ -24,6 +27,16 @@ func main() {
 	fmt.Printf("Message is %s \n", *msg)
 
 	sendMessage := &Message{}
+
+	// cope with keyword list
+	var keywords []string
+	if *keywordsList != "" {
+		keywords = strings.Split(*keywordsList, ",")
+	} else {
+		keywords = nil
+	}
+
+	fmt.Println(keywords)
 
 	switch {
 	case *msg != "" && *dest != "":
@@ -55,6 +68,9 @@ func main() {
 		// index file
 		sendMessage.File = file
 		break
+	case *keywordsList != "":
+		sendMessage.Keywords = keywords
+		sendMessage.Budget = *budget
 	default:
 		// wrong combination
 		fmt.Printf("ERROR %cBad argument combination%c \n", '(', ')')
