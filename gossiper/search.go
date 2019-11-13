@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net"
+	"regexp"
 	"sort"
 	"strings"
 	"sync"
@@ -59,10 +60,48 @@ func (g *Gossiper) HandleSearchReply(searchReply *SearchReply, sender *net.UDPAd
 }
 
 func (g *Gossiper) LocalSearch(searchRequest *SearchRequest) {
+	searchedFiles := g.fileHandler.SearchFileKeywords(searchRequest.Keywords)
+
+	fmt.Println(searchedFiles)
+
+}
+
+func (f *FileHandler) SearchFileKeywords(keywords []string) []*File {
+	regExpList := make([]*regexp.Regexp, 0)
+
+	// have a list of reg
+	for _, kw := range keywords {
+		kwRegExp, _ := regexp.Compile(kw)
+		regExpList = append(regExpList, kwRegExp)
+	}
+
+	flag := false
+	searchedFile := make([]*File, 0)
+
+	f.filesLock.Lock()
+
+	for _, file := range f.files {
+		flag = false
+		for _, re := range regExpList {
+			matchedStr := re.FindString(file.Name)
+			if matchedStr != "" {
+				flag = true
+			}
+		}
+
+		if flag {
+			searchedFile = append(searchedFile, file)
+		}
+	}
+
+	f.filesLock.Unlock()
+
+	return searchedFile
 
 }
 
 func (s *SearchHandler) checkDuplicate(searchRequest *SearchRequest) bool {
+	// we need to check whether it has been shown in previous 0.5 second
 	s.searchRecords.Mux.Lock()
 	defer s.searchRecords.Mux.Unlock()
 
