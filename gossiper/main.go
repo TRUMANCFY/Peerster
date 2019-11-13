@@ -140,6 +140,9 @@ func (g *Gossiper) Run() {
 	g.fileHandler = NewFileHandler(g.name)
 	go g.RunFileSystem()
 
+	// generate search handler
+	// g.searchHandler = NewSearchHandler()
+
 	g.dispatcher = StartPeerStatusDispatcher()
 	g.Listen(peerListener, clientListener)
 }

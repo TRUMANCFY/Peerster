@@ -42,6 +42,8 @@ type File struct {
 	Metafile     []byte
 	MetafileHash SHA256_HASH
 	State        FileType
+	ChunkMap     []int
+	ChunkCount   int
 }
 
 type FileChunk struct {
@@ -203,6 +205,11 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 
 		metachunks, valid := g.fileHandler.addMeta(metaFileReply)
 
+		// update the number of the total chunks
+		g.fileHandler.filesLock.Lock()
+		g.fileHandler.files[metafileHash].ChunkCount = len(metachunks)
+		g.fileHandler.filesLock.Unlock()
+
 		if !valid {
 			if DEBUGFILE {
 				fmt.Println("Cannot add Meta")
@@ -216,6 +223,9 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 		}
 
 		originData := make([]byte, 0)
+
+		// add chunk map here
+		chunkMap := make([]int, 0)
 
 		// send the dataRequest
 		for i, meta := range metachunks {
@@ -241,6 +251,9 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 				}
 
 				originData = append(originData, localData...)
+
+				chunkMap = append(chunkMap, i+1)
+
 				continue
 			}
 
@@ -259,11 +272,17 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 			}
 
 			originData = append(originData, dataReply.Data...)
+			chunkMap = append(chunkMap, i+1)
 		}
 
 		// Successful
-		g.fileHandler.combineChunks(metafileHash, originData, localFileName)
+		g.fileHandler.combineChunks(metafileHash, originData, localFileName, chunkMap)
 		result = true
+
+		if DEBUGSEARCH {
+			fmt.Println(g.fileHandler.files[metafileHash].ChunkMap)
+			fmt.Println(g.fileHandler.files[metafileHash].ChunkCount)
+		}
 
 		// OUTPUT
 		fmt.Printf("RECONSTRUCTED file %s \n", localFileName)
@@ -572,11 +591,12 @@ func (f *FileHandler) checkFile(dataReq *DataRequest) (*DataReply, bool) {
 	return nil, false
 }
 
-func (f *FileHandler) combineChunks(meshfileHash SHA256_HASH, data []byte, fileName string) {
+func (f *FileHandler) combineChunks(meshfileHash SHA256_HASH, data []byte, fileName string, chunkMap []int) {
 	f.filesLock.Lock()
 	f.files[meshfileHash].State = Downloaded
 	f.files[meshfileHash].Name = fileName
 	f.files[meshfileHash].Size = int64(len(data))
+	f.files[meshfileHash].ChunkMap = chunkMap
 	f.filesLock.Unlock()
 	localFile, err := os.OpenFile(filepath.Join(f.downloadDir, fileName), os.O_CREATE|os.O_WRONLY, 0755)
 
@@ -649,6 +669,9 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 
 	f.fileChunksLock.Lock()
 
+	chunkCount := 0
+	chunkMap := make([]int, 0)
+
 	for {
 		bytesread, err := file.Read(chunk)
 
@@ -685,6 +708,8 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 
 		f.fileChunks[hash] = newChunk
 
+		chunkCount++
+		chunkMap = append(chunkMap, chunkCount)
 	}
 
 	f.fileChunksLock.Unlock()
@@ -704,6 +729,8 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 		Metafile:     metaFile,
 		MetafileHash: metaFileHash,
 		State:        Shared,
+		ChunkMap:     chunkMap,
+		ChunkCount:   chunkCount,
 	}
 
 	return fileIndexed, nil

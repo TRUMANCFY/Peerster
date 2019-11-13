@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 	"net"
+	"sort"
+	"strings"
 	"sync"
 	"time"
 
@@ -20,20 +22,83 @@ type SearchHandler struct {
 }
 
 type SearchRecords struct {
-	SearchHistory map[string](map[string]time.Time) // map[Origin][]
+	SearchHistory map[string](map[string]time.Time) // map[Origin][keywordsStr]recordTime
 	Mux           *sync.Mutex
 }
 
 func NewSearchHandler() *SearchHandler {
-	// searchHistory := make(map[string])
+	searchHistory := make(map[string](map[string]time.Time))
+	searchRecords := &SearchRecords{
+		SearchHistory: searchHistory,
+		Mux:           &sync.Mutex{},
+	}
+
+	searchHandler := &SearchHandler{
+		searchRecords: searchRecords,
+	}
+
+	return searchHandler
 }
 
 func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net.UDPAddr) {
+	// check whether the search request has 0.5 second later
+	valid := g.searchHandler.checkDuplicate(searchRequest)
 
+	if !valid {
+		return
+	}
+
+	go g.DistributeSearchRequest(searchRequest, sender)
+
+	// local search
+	g.LocalSearch(searchRequest)
 }
 
 func (g *Gossiper) HandleSearchReply(searchReply *SearchReply, sender *net.UDPAddr) {
 
+}
+
+func (g *Gossiper) LocalSearch(searchRequest *SearchRequest) {
+
+}
+
+func (s *SearchHandler) checkDuplicate(searchRequest *SearchRequest) bool {
+	s.searchRecords.Mux.Lock()
+	defer s.searchRecords.Mux.Unlock()
+
+	origin := searchRequest.Origin
+	keywords := searchRequest.Keywords
+
+	sort.Strings(keywords)
+
+	keywordsStr := strings.Join(keywords, "")
+
+	_, present := s.searchRecords.SearchHistory[origin]
+
+	if !present {
+		s.searchRecords.SearchHistory[origin] = make(map[string]time.Time)
+	}
+
+	prevTime, present := s.searchRecords.SearchHistory[origin][keywordsStr]
+
+	// update the time
+	nowTime := time.Now()
+	s.searchRecords.SearchHistory[origin][keywordsStr] = nowTime
+
+	if !present {
+		return true
+	}
+
+	// get the currentTime
+	timeDiff := int64(nowTime.Sub(prevTime) / time.Millisecond)
+
+	if timeDiff > 500 {
+		return true
+	} else {
+		return false
+	}
+
+	return false
 }
 
 func (g *Gossiper) DistributeSearchRequest(searchRequest *SearchRequest, sender *net.UDPAddr) {
