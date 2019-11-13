@@ -59,14 +59,22 @@ type DownloadRequest struct {
 }
 
 type FileHandler struct {
-	Name           string
-	files          map[SHA256_HASH]*File
-	filesLock      *sync.Mutex
-	fileChunks     map[SHA256_HASH]*FileChunk
-	fileChunksLock *sync.Mutex
-	sharedDir      string
-	downloadDir    string
-	fileDispatcher *FileDispatcher
+	Name             string
+	files            map[SHA256_HASH]*File
+	filesLock        *sync.Mutex
+	fileChunks       map[SHA256_HASH]*FileChunk
+	fileChunksLock   *sync.Mutex
+	sharedDir        string
+	downloadDir      string
+	fileDispatcher   *FileDispatcher
+	searchDispatcher *SearchDispatcher
+	searchHandler    *SearchHandler
+	currentQueryID   *QueryID
+}
+
+type QueryID struct {
+	id  uint32
+	Mux *sync.Mutex
 }
 
 func (g *Gossiper) HandleDownloadRequest(cmw *ClientMessageWrapper) {
@@ -119,6 +127,13 @@ func NewFileHandler(name string) *FileHandler {
 		panic(err)
 	}
 
+	queryId := &QueryID{
+		id:  0,
+		Mux: &sync.Mutex{},
+	}
+
+	searchHandler := NewSearchHandler(name)
+
 	return &FileHandler{
 		Name:           name,
 		files:          make(map[SHA256_HASH]*File),
@@ -127,12 +142,17 @@ func NewFileHandler(name string) *FileHandler {
 		fileChunksLock: &sync.Mutex{},
 		sharedDir:      sharedDir,
 		downloadDir:    downloadDir,
+		currentQueryID: queryId,
+		searchHandler:  searchHandler,
 	}
 }
 
 func (g *Gossiper) RunFileSystem() {
 	// Launch the file dispatcher
 	g.fileHandler.fileDispatcher = LaunchFileDispatcher()
+
+	// Launch the search dispatcher
+	g.fileHandler.searchDispatcher = NewSearchReplyDispatcher()
 
 	// Initiallize the new requestchan not need till now
 	// g.fileHandler.requestTaskChan = g.RunRequestChan()

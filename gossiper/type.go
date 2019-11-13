@@ -36,7 +36,6 @@ type Gossiper struct {
 	rtimer             time.Duration
 	privateMessageList *PrivateMessageList
 	fileHandler        *FileHandler
-	searchHandler      *SearchHandler
 }
 
 type CurrentID struct {

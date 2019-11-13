@@ -13,6 +13,8 @@ import (
 	. "github.com/TRUMANCFY/Peerster/message"
 )
 
+const MATCH_THRESHOLD = 2
+
 type TaskDistribution struct {
 	Peer   string
 	Budget uint64
@@ -43,14 +45,35 @@ func NewSearchHandler(name string) *SearchHandler {
 	return searchHandler
 }
 
+func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
+	keywords := cmw.msg.Keywords
+	budget := cmw.msg.Budget
+
+	// query := g.fileHandler.searchHandler.WatchNewQuery(keywords)
+
+	if budget != 0 {
+		taskDistribution := g.DistributeBudget(budget, nil)
+
+		searchRequest := &SearchRequest{
+			Origin:   g.name,
+			Budget:   budget,
+			Keywords: keywords,
+		}
+		g.SpreadSearchRequest(searchRequest, taskDistribution)
+	} else {
+		// TODO: expotenial
+	}
+}
+
 func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net.UDPAddr) {
 	// check whether the search request has 0.5 second later
-	valid := g.searchHandler.checkDuplicate(searchRequest)
+	valid := g.fileHandler.searchHandler.checkDuplicate(searchRequest)
 
 	if !valid {
 		return
 	}
 
+	// forward request to the neighbors
 	go g.DistributeSearchRequest(searchRequest, sender)
 
 	// local search
@@ -58,13 +81,34 @@ func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net
 }
 
 func (g *Gossiper) HandleSearchReply(searchReply *SearchReply, sender *net.UDPAddr) {
+	if DEBUGSEARCH {
+		fmt.Printf("Receive DataReply from %s to %s \n", searchReply.Origin, searchReply.Destination)
+	}
+
+	if searchReply.Destination == g.name {
+		// TODO: accept the reply
+	}
+
+	reply, valid := g.fileHandler.searchHandler.prepareNewReply(searchReply)
+
+	if !valid {
+		return
+	}
+
+	success := g.RouteSearchReply(reply)
+
+	if !success {
+		if DEBUGSEARCH {
+			fmt.Println("Route Search Reply Fails")
+		}
+	}
 
 }
 
 func (g *Gossiper) LocalSearch(searchRequest *SearchRequest) {
 	searchedFiles := g.fileHandler.SearchFileKeywords(searchRequest.Keywords)
 
-	searchReply := g.searchHandler.GenerateSearchReply(searchedFiles, searchRequest.Origin)
+	searchReply := g.fileHandler.searchHandler.GenerateSearchReply(searchedFiles, searchRequest.Origin)
 
 	g.RouteSearchReply(searchReply)
 }
@@ -213,7 +257,12 @@ func (g *Gossiper) DistributeSearchRequest(searchRequest *SearchRequest, sender 
 func (g *Gossiper) DistributeBudget(budget uint64, sender *net.UDPAddr) []TaskDistribution {
 	taskDistribution := make([]TaskDistribution, 0)
 
-	senderStr := sender.String()
+	var senderStr string
+	if sender != nil {
+		senderStr = sender.String()
+	} else {
+		senderStr = ""
+	}
 
 	// divide the task first
 	g.peersList.Mux.Lock()
@@ -247,7 +296,7 @@ func (g *Gossiper) DistributeBudget(budget uint64, sender *net.UDPAddr) []TaskDi
 
 	numNeighbor := len(neighbors)
 	baseInt := int(budget) / numNeighbor
-	leftInt := int(budget) - baseInt*numNeighbor
+	leftInt := int(budget) % numNeighbor
 
 	budgetList := make([]uint64, numNeighbor)
 
@@ -282,4 +331,22 @@ func (g *Gossiper) SpreadSearchRequest(searchRequest *SearchRequest, tasks []Tas
 		}
 		g.SendGossipPacketStrAddr(&GossipPacket{SearchRequest: sReq}, task.Peer)
 	}
+}
+
+func (s *SearchHandler) prepareNewReply(searchReply *SearchReply) (*SearchReply, bool) {
+	if searchReply.HopLimit == 0 {
+		if DEBUGSEARCH {
+			fmt.Println("HopLimit has been ended")
+		}
+		return nil, false
+	}
+
+	newSearchReply := &SearchReply{
+		Origin:      searchReply.Origin,
+		Destination: searchReply.Destination,
+		HopLimit:    searchReply.HopLimit - 1,
+		Results:     searchReply.Results,
+	}
+
+	return newSearchReply, true
 }
