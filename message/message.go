@@ -87,10 +87,10 @@ type SearchReply struct {
 }
 
 type SearchResult struct {
-	Filename     string
+	FileName     string
 	MetafileHash []byte
 	ChunkMap     []uint64
-	ChunkCount   uint32
+	ChunkCount   uint64
 }
 
 type GossipPacket struct {

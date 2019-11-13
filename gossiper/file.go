@@ -42,8 +42,8 @@ type File struct {
 	Metafile     []byte
 	MetafileHash SHA256_HASH
 	State        FileType
-	ChunkMap     []int
-	ChunkCount   int
+	ChunkMap     []uint64
+	ChunkCount   uint64
 }
 
 type FileChunk struct {
@@ -207,7 +207,7 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 
 		// update the number of the total chunks
 		g.fileHandler.filesLock.Lock()
-		g.fileHandler.files[metafileHash].ChunkCount = len(metachunks)
+		g.fileHandler.files[metafileHash].ChunkCount = uint64(len(metachunks))
 		g.fileHandler.filesLock.Unlock()
 
 		if !valid {
@@ -225,7 +225,7 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 		originData := make([]byte, 0)
 
 		// add chunk map here
-		chunkMap := make([]int, 0)
+		chunkMap := make([]uint64, 0)
 
 		// send the dataRequest
 		for i, meta := range metachunks {
@@ -252,7 +252,7 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 
 				originData = append(originData, localData...)
 
-				chunkMap = append(chunkMap, i+1)
+				chunkMap = append(chunkMap, uint64(i+1))
 
 				continue
 			}
@@ -272,7 +272,7 @@ func (g *Gossiper) RequestFile(dest string, metafileHash SHA256_HASH, localFileN
 			}
 
 			originData = append(originData, dataReply.Data...)
-			chunkMap = append(chunkMap, i+1)
+			chunkMap = append(chunkMap, uint64(i+1))
 		}
 
 		// Successful
@@ -591,7 +591,7 @@ func (f *FileHandler) checkFile(dataReq *DataRequest) (*DataReply, bool) {
 	return nil, false
 }
 
-func (f *FileHandler) combineChunks(meshfileHash SHA256_HASH, data []byte, fileName string, chunkMap []int) {
+func (f *FileHandler) combineChunks(meshfileHash SHA256_HASH, data []byte, fileName string, chunkMap []uint64) {
 	f.filesLock.Lock()
 	f.files[meshfileHash].State = Downloaded
 	f.files[meshfileHash].Name = fileName
@@ -670,7 +670,7 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 	f.fileChunksLock.Lock()
 
 	chunkCount := 0
-	chunkMap := make([]int, 0)
+	chunkMap := make([]uint64, 0)
 
 	for {
 		bytesread, err := file.Read(chunk)
@@ -709,7 +709,7 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 		f.fileChunks[hash] = newChunk
 
 		chunkCount++
-		chunkMap = append(chunkMap, chunkCount)
+		chunkMap = append(chunkMap, uint64(chunkCount))
 	}
 
 	f.fileChunksLock.Unlock()
@@ -730,7 +730,7 @@ func (f *FileHandler) FileIndexing(abspath string) (*File, error) {
 		MetafileHash: metaFileHash,
 		State:        Shared,
 		ChunkMap:     chunkMap,
-		ChunkCount:   chunkCount,
+		ChunkCount:   uint64(chunkCount),
 	}
 
 	return fileIndexed, nil

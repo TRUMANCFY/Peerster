@@ -19,6 +19,7 @@ type TaskDistribution struct {
 }
 
 type SearchHandler struct {
+	Name          string
 	searchRecords *SearchRecords
 }
 
@@ -27,7 +28,7 @@ type SearchRecords struct {
 	Mux           *sync.Mutex
 }
 
-func NewSearchHandler() *SearchHandler {
+func NewSearchHandler(name string) *SearchHandler {
 	searchHistory := make(map[string](map[string]time.Time))
 	searchRecords := &SearchRecords{
 		SearchHistory: searchHistory,
@@ -36,6 +37,7 @@ func NewSearchHandler() *SearchHandler {
 
 	searchHandler := &SearchHandler{
 		searchRecords: searchRecords,
+		Name:          name,
 	}
 
 	return searchHandler
@@ -62,8 +64,32 @@ func (g *Gossiper) HandleSearchReply(searchReply *SearchReply, sender *net.UDPAd
 func (g *Gossiper) LocalSearch(searchRequest *SearchRequest) {
 	searchedFiles := g.fileHandler.SearchFileKeywords(searchRequest.Keywords)
 
-	fmt.Println(searchedFiles)
+	searchReply := g.searchHandler.GenerateSearchReply(searchedFiles, searchRequest.Origin)
 
+	g.RouteSearchReply(searchReply)
+}
+
+func (g *Gossiper) RouteSearchReply(searchReply *SearchReply) bool {
+	dest := searchReply.Destination
+
+	g.routeTable.Mux.Lock()
+	nextNode, present := g.routeTable.routeTable[dest]
+	g.routeTable.Mux.Unlock()
+
+	if !present {
+		if DEBUGFILE {
+			fmt.Println("Destination %s does not exist in the table \n", dest)
+		}
+		return false
+	}
+
+	if DEBUGFILE {
+		fmt.Printf("Send the searchReply Dest: %s to Nextnode %s \n", dest, nextNode)
+	}
+
+	g.SendGossipPacketStrAddr(&GossipPacket{SearchReply: searchReply}, nextNode)
+
+	return true
 }
 
 func (f *FileHandler) SearchFileKeywords(keywords []string) []*File {
@@ -98,6 +124,35 @@ func (f *FileHandler) SearchFileKeywords(keywords []string) []*File {
 
 	return searchedFile
 
+}
+
+func (s *SearchHandler) GenerateSearchResult(searchedFiles []*File) []*SearchResult {
+	searchResults := make([]*SearchResult, 0)
+
+	for _, f := range searchedFiles {
+		searchR := &SearchResult{
+			FileName:     s.Name,
+			MetafileHash: f.MetafileHash[:],
+			ChunkMap:     f.ChunkMap,
+			ChunkCount:   f.ChunkCount,
+		}
+
+		searchResults = append(searchResults, searchR)
+	}
+
+	return searchResults
+}
+
+func (s *SearchHandler) GenerateSearchReply(searchedFiles []*File, dest string) *SearchReply {
+	searchResult := s.GenerateSearchResult(searchedFiles)
+
+	searchReply := &SearchReply{
+		Origin:      s.Name,
+		Destination: dest,
+		HopLimit:    HOPLIMIT,
+		Results:     searchResult,
+	}
+	return searchReply
 }
 
 func (s *SearchHandler) checkDuplicate(searchRequest *SearchRequest) bool {
