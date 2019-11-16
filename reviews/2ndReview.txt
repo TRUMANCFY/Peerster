@@ -1,0 +1,132 @@
+Review Homework 2 CS-438 Fall 2019
+
+Reviewer Name: Fengyu Cai
+
+----------
+Review 0
+----------
+Score (min 1, max 5): 5
+
+Advantages and Disadvantages (150-300 words):
+1. Advantages:
+a) First of all, the author provide a couple of graphviz documents, which shows detailed
+and clear structural information about the project code, even though it does not include
+the part of the second homework, but it is still nice for me to have background about the
+whole system.
+
+b) Quite clean and effient method for the route table update, which provides a clear data
+structure to update the route target and route sequential ID.
+
+c) The modulization of the code is quite good. For example, the route forwarding can be
+reused in the transportation for private message, data reply and data request. Also,
+the verbose debugging inforamtion is helpful.
+
+d) Divide the tasks to dataRequester and dataReplier. Each one centralize subtasks, making
+the whole program clean and clear.
+
+2. Disadvantages:
+a) One minor problem is about the data request channel, which I am not pretty sure, but I
+would like to point out. When we recieved a data reply, which is not quanlified (the cases
+such as data missing, hash error etc.), it is better to reset the delay timer.
+
+b) Perhaps, no need to write the chunk in the dist, because based on my personal experience,
+writing and reading chunks from the dist will cause some errors in the online testing enviroment.
+
+Design recommendations (100-200 words):
+Overall, this is very model of the design for Homework 2. As mentioned above, there are several
+places that may need double consideration. The first is whether we need to reset the timer when 
+receiving the illegal reply. Secondly, it is also worth reconsidering whether it is better to keep
+all the storage in the memory.
+
+And what is more, it will better to have more comments for the reader to understand the code more easily,
+especially under the case putting several hundreds of code in one file.
+
+---
+Review 1
+----------
+Score (min 1, max 5): 5
+
+Advantages and Disadvantages (150-300 words):
+Advantages:
+
+Disadvantages:
+
+
+Design recommendations (100-200 words):
+a) For the first disadvantage about the manipulation of the status packet, it perhaps may be more effient to open two new goroutines
+to send the rumor and send the status packet at the same time.
+
+b) According to the second disadvantage, I think it is possible to build up a mechanisim to distinguish the urgency of the rumor.
+For example, the local status list is like :
+{
+Origin: A;
+NextID: 6;
+}
+{
+Origin: B;
+NextID: 2;
+}
+
+And the status packet list from the peer C is like following:
+{
+Origin: A;
+NextID: 1;
+}
+
+{
+Origin: B;
+NextID: 1;
+}
+
+And in the case above, we could find that the demand of the rumor from origin A for C is more urgent than the rumor from the origin.
+Meanwhile, for the rumor from Origin B, the ID 1 is more urgent than others for peer C. Therefore, we should send the rumor
+(Origin: A, ID: 1) to peer C.
+
+
+----------
+Review 2
+----------
+Score (min 1, max 5): 3
+
+Advantages and Disadvantages (150-300 words):
+Disadvantages:
+a) Just one lock
+In the code, there is just one lock for the whole gossiper object. Normally, it is a good practice to keep the mutex close to the data
+it is destined to protect. Therefore, it would be a better solution that we put the lock for every dataframe inside the gossiper object.
+
+b) Weird infinite for loop:
+I did not get the meaning why put an infinite for loop at the end of the main function. I believe there should be more applications
+for the goroutines and channels. And also, the code need to build up some data frame to store the channel and wait for the status packet
+as an acknowledgement from the receiver until timeout.
+
+c) RumorMongering
+There is no full implementation for the process of rumor-mongering. In this code, rumor-mongering is just to select one peer and send
+it the corresponding rumor, however, there is no channel built to listen to the acknowledgment from the receiver.
+
+d) Flip coin
+I believe there is some wrong implementations about the flip coin mechanism. In the line 416, the operation after the flip coin is not starting
+a new rumor-mongering, but send a new status packet to a random peer.
+
+e) randomness of the peer
+Some parts of peer randomness have some problems. For example, for the part of rumor-mongering, after acknowledging that we have received from
+the user. In this case, we do not need to take the recent peer into account, which will cause the redundancy of the communication and the waste
+of the network.
+
+Design recommendations (100-200 words):
+1) As mentioned in the part a) above, perhaps it is better to add different locks for different members of the gossiper object.
+
+For example:
+WantedList and WantedListLock can be combined as
+WantedListObject {
+WantedList map[string] *RumorMessage
+WantedListLock sync.RWMutex
+}
+
+2) Based on the rumor-mongering, we can use launch a specific goroutine and store it as part of the object to wait for the acknowledgment from
+the sender. A channel in GoLang would be helpful.
+
+3) The flip coin should work as a rumor-mongering, instead of sending the status packet. And also, the randomness of peers should exclude the previous
+peers.
+
+4) I think there should be more OOP design. For example, for function 'Rumormonger' should be a member function of the class gossiper. However, in this
+implementation, it put the gossiper as the input variable.
