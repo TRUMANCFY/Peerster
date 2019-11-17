@@ -32,11 +32,15 @@ such as data missing, hash error etc.), it is better to reset the delay timer.
 b) Perhaps, no need to write the chunk in the dist, because based on my personal experience,
 writing and reading chunks from the dist will cause some errors in the online testing enviroment.
 
+
+
+
 Design recommendations (100-200 words):
 Overall, this is very model of the design for Homework 2. As mentioned above, there are several
 places that may need double consideration. The first is whether we need to reset the timer when 
 receiving the illegal reply. Secondly, it is also worth reconsidering whether it is better to keep
-all the storage in the memory.
+all the storage in the memory. Even though there is more requirement for the thread-safety when saving
+the chunk in the memory, however, it can greatly decrease the burden for OS reading and writing.
 
 And what is more, it will better to have more comments for the reader to understand the code more easily,
 especially under the case putting several hundreds of code in one file.
@@ -44,44 +48,45 @@ especially under the case putting several hundreds of code in one file.
 ---
 Review 1
 ----------
-Score (min 1, max 5): 5
+Score (min 1, max 5): 4
 
 Advantages and Disadvantages (150-300 words):
 Advantages:
+a) There are a lot of locks to guarantee the thread safety such as the lock for the dsdv route table.
+
+b) There is a very clear `files` stucture in the gossiper, which is a map from hex string to the slice
+of bytes. It is quite easy and convenient to maintain this structure. However, there are side effects.
+Firstly, there is no clear mapping between file metafile and its corresponding chunks. It will cause 
+a lot of complication in the following operation of chunks. If there is a case whose operating target is
+a whole file, it means there will be a more expensive complexity O(N) to construct a new file. 
+
+c) It is very standard to use waitGroup to control the block of multiple routine. However, there is still
+space for improvement mentioned in the section `Design Recommendations`
 
 Disadvantages:
+a) There are still some missing locks for the thread safety. For example, in the line 462 in the file
+'main.go', when updating the private message list and appending the private message, there will be a potential
+threat for the thread safety.
 
+b) I am not clear about why there is one millisecond delay when receiving simple message from peers. But anyhow,
+it is just a confusion.
+
+c) It makes the code difficult to read when putting nearly one thousand of lines code in one file.
+
+c) The data request may have some problems
+i) The timeout should be focusing on one data request, instead of the group behavior of sending out
+the data request, even though perhaps there will be tiny difference on the performance.
+
+ii) Max retry counter has been missed for the channel of data requesting.
 
 Design recommendations (100-200 words):
-a) For the first disadvantage about the manipulation of the status packet, it perhaps may be more effient to open two new goroutines
-to send the rumor and send the status packet at the same time.
-
-b) According to the second disadvantage, I think it is possible to build up a mechanisim to distinguish the urgency of the rumor.
-For example, the local status list is like :
-{
-Origin: A;
-NextID: 6;
-}
-{
-Origin: B;
-NextID: 2;
-}
-
-And the status packet list from the peer C is like following:
-{
-Origin: A;
-NextID: 1;
-}
-
-{
-Origin: B;
-NextID: 1;
-}
-
-And in the case above, we could find that the demand of the rumor from origin A for C is more urgent than the rumor from the origin.
-Meanwhile, for the rumor from Origin B, the ID 1 is more urgent than others for peer C. Therefore, we should send the rumor
-(Origin: A, ID: 1) to peer C.
-
+Based on the points mentioned above, there are some design recommendations just for reference:
+a) There should be more locks to guarantee the thread safety.
+b) As there is already usage of waitGroup in the implementation, for the part of data request for each chunk.
+There should be one channel for one specific chunk, and the main channel should wait for the completation of all
+sub-routines, whether successful or not.
+c) If there is one routine (channel) for specific chunk request, the timer and the max-retry mechanism should be implemented
+inside this channel, instead of taking all the request as a group.
 
 ----------
 Review 2
@@ -90,43 +95,37 @@ Score (min 1, max 5): 3
 
 Advantages and Disadvantages (150-300 words):
 Disadvantages:
-a) Just one lock
-In the code, there is just one lock for the whole gossiper object. Normally, it is a good practice to keep the mutex close to the data
-it is destined to protect. Therefore, it would be a better solution that we put the lock for every dataframe inside the gossiper object.
+a) In this implementation, there is no re-sending mechanism for the time-out data request
+or illegal data reply. Therefore, there will cause potential issue. For example, when requesting
+the metafile, if the metafile keep illegal, the whole process will be stuck at the point.
+The same case for the following chunk data request: this implementaion sends the data chunk
+request one by one. When one of them is trapped, it will be idle forever.
 
-b) Weird infinite for loop:
-I did not get the meaning why put an infinite for loop at the end of the main function. I believe there should be more applications
-for the goroutines and channels. And also, the code need to build up some data frame to store the channel and wait for the status packet
-as an acknowledgement from the receiver until timeout.
+b) There is also an issue about the timer implemetation in the process of data request sending.
+The timer starting time is not the time when sending out the request. Therefore, there will be
+wrong match between timer interval and request sending out.
 
-c) RumorMongering
-There is no full implementation for the process of rumor-mongering. In this code, rumor-mongering is just to select one peer and send
-it the corresponding rumor, however, there is no channel built to listen to the acknowledgment from the receiver.
+c) There may need more locks for the thread safety, such as for the dsdv routing table. Otherwise,
+the program will be in trouble of race condition.
 
-d) Flip coin
-I believe there is some wrong implementations about the flip coin mechanism. In the line 416, the operation after the flip coin is not starting
-a new rumor-mongering, but send a new status packet to a random peer.
+d) Also, there is an issue about the routing table update. For the line 71 in the file 'ConnectionActor.go',
+the update of route table will occur after checking the nextid is smaller than or equal to
+the received rumor ID. However, there is an issue that the nextid will be only updated after the nextid is
+exactly equal to the received rumor id. It will cause trouble.
 
-e) randomness of the peer
-Some parts of peer randomness have some problems. For example, for the part of rumor-mongering, after acknowledging that we have received from
-the user. In this case, we do not need to take the recent peer into account, which will cause the redundancy of the communication and the waste
-of the network.
+For example, our local next id is 8. However, we received the rumor whose ID is 10 first. Therefore,
+we will update the routing table. Then, we received the rumor from the same origin whose ID is 9.
+We will accept this into the memory of gossiper, however, we do not need to update the routing table
+again, as the last ID we met is 10, which is larger than 9.
 
 Design recommendations (100-200 words):
-1) As mentioned in the part a) above, perhaps it is better to add different locks for different members of the gossiper object.
+Based on the disadvantages mentioned above, there are some design recommendations.
+a) It will be better to put one specific channel to deal with one data request. The reasons are following:
+i) It will be easy to deal with retry-time problem.
+ii) Also, one specific timer will be set for this channel only. Therefore, it will be precise and fulfill 
+the requirement.
+iii) The data requesting procedure can be implemented in parallel. And later, we can put the request for
+different chunk in multiple routines, and using waitGroup to collect all the sub-channels.
 
-For example:
-WantedList and WantedListLock can be combined as
-WantedListObject {
-WantedList map[string] *RumorMessage
-WantedListLock sync.RWMutex
-}
-
-2) Based on the rumor-mongering, we can use launch a specific goroutine and store it as part of the object to wait for the acknowledgment from
-the sender. A channel in GoLang would be helpful.
-
-3) The flip coin should work as a rumor-mongering, instead of sending the status packet. And also, the randomness of peers should exclude the previous
-peers.
-
-4) I think there should be more OOP design. For example, for function 'Rumormonger' should be a member function of the class gossiper. However, in this
-implementation, it put the gossiper as the input variable.
+b) There should be more locks to guarantee the thread safety.
+c) The implementation of route table update should be corrected.
