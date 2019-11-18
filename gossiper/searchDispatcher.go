@@ -1,6 +1,8 @@
 package gossiper
 
 import (
+	"fmt"
+
 	. "github.com/TRUMANCFY/Peerster/message"
 )
 
@@ -46,4 +48,33 @@ func (f *FileHandler) UnregisterQuery(q *Query) {
 
 func (sd *SearchDispatcher) WatchSearchReply() {
 	// TODO: Monitor the search reply
+	// the query mapping is from TagID to the observeChannel
+	queryObserver := make(map[uint32]chan<- *SearchReply)
+
+	go func() {
+		for {
+			select {
+			case regTag := <-sd.registerChan:
+				switch regTag.msgType {
+				case TakeIn:
+					queryObserver[regTag.TagID] = regTag.observer
+					break
+				case TakeOut:
+					_, present := queryObserver[regTag.TagID]
+
+					if !present {
+						if DEBUGSEARCH {
+							fmt.Println("The search tag does not exist!")
+						}
+					} else {
+						delete(queryObserver, regTag.TagID)
+					}
+				}
+			case searchReply := <-sd.searchReplyChan:
+				for _, queryChan := range queryObserver {
+					queryChan <- searchReply
+				}
+			}
+		}
+	}()
 }

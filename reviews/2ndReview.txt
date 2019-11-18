@@ -8,7 +8,7 @@ Review 0
 Score (min 1, max 5): 5
 
 Advantages and Disadvantages (150-300 words):
-1. Advantages:
+Advantages:
 a) First of all, the author provide a couple of graphviz documents, which shows detailed
 and clear structural information about the project code, even though it does not include
 the part of the second homework, but it is still nice for me to have background about the
@@ -24,16 +24,13 @@ the verbose debugging inforamtion is helpful.
 d) Divide the tasks to dataRequester and dataReplier. Each one centralize subtasks, making
 the whole program clean and clear.
 
-2. Disadvantages:
+Disadvantages:
 a) One minor problem is about the data request channel, which I am not pretty sure, but I
 would like to point out. When we recieved a data reply, which is not quanlified (the cases
 such as data missing, hash error etc.), it is better to reset the delay timer.
 
 b) Perhaps, no need to write the chunk in the dist, because based on my personal experience,
 writing and reading chunks from the dist will cause some errors in the online testing enviroment.
-
-
-
 
 Design recommendations (100-200 words):
 Overall, this is very model of the design for Homework 2. As mentioned above, there are several
@@ -45,7 +42,7 @@ the chunk in the memory, however, it can greatly decrease the burden for OS read
 And what is more, it will better to have more comments for the reader to understand the code more easily,
 especially under the case putting several hundreds of code in one file.
 
----
+----------
 Review 1
 ----------
 Score (min 1, max 5): 4

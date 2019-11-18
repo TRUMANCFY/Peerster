@@ -13,16 +13,15 @@ import (
 	. "github.com/TRUMANCFY/Peerster/message"
 )
 
-const MATCH_THRESHOLD = 2
-
 type TaskDistribution struct {
 	Peer   string
 	Budget uint64
 }
 
 type SearchHandler struct {
-	Name          string
-	searchRecords *SearchRecords
+	Name           string
+	searchRecords  *SearchRecords
+	currentQueryID *QueryID
 }
 
 type SearchRecords struct {
@@ -37,9 +36,15 @@ func NewSearchHandler(name string) *SearchHandler {
 		Mux:           &sync.Mutex{},
 	}
 
+	queryId := &QueryID{
+		id:  0,
+		Mux: &sync.Mutex{},
+	}
+
 	searchHandler := &SearchHandler{
-		searchRecords: searchRecords,
-		Name:          name,
+		searchRecords:  searchRecords,
+		Name:           name,
+		currentQueryID: queryId,
 	}
 
 	return searchHandler
@@ -49,9 +54,11 @@ func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
 	keywords := cmw.msg.Keywords
 	budget := cmw.msg.Budget
 
-	// query := g.fileHandler.searchHandler.WatchNewQuery(keywords)
+	query := g.fileHandler.WatchNewQuery(keywords)
 
 	if budget != 0 {
+		fmt.Println("Common Search with budget ", budget)
+
 		taskDistribution := g.DistributeBudget(budget, nil)
 
 		searchRequest := &SearchRequest{

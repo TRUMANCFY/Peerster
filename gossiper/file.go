@@ -69,7 +69,6 @@ type FileHandler struct {
 	fileDispatcher   *FileDispatcher
 	searchDispatcher *SearchDispatcher
 	searchHandler    *SearchHandler
-	currentQueryID   *QueryID
 }
 
 type QueryID struct {
@@ -127,11 +126,6 @@ func NewFileHandler(name string) *FileHandler {
 		panic(err)
 	}
 
-	queryId := &QueryID{
-		id:  0,
-		Mux: &sync.Mutex{},
-	}
-
 	searchHandler := NewSearchHandler(name)
 
 	return &FileHandler{
@@ -142,7 +136,6 @@ func NewFileHandler(name string) *FileHandler {
 		fileChunksLock: &sync.Mutex{},
 		sharedDir:      sharedDir,
 		downloadDir:    downloadDir,
-		currentQueryID: queryId,
 		searchHandler:  searchHandler,
 	}
 }
