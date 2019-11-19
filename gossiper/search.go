@@ -13,6 +13,10 @@ import (
 	. "github.com/TRUMANCFY/Peerster/message"
 )
 
+const START_BUDGET = 2
+const MAX_BUDGET = 32
+const EXP_SLEEP_TIME = 1 * time.Second
+
 type TaskDistribution struct {
 	Peer   string
 	Budget uint64
@@ -62,18 +66,40 @@ func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
 	if budget != 0 {
 		fmt.Println("Common Search with budget ", budget)
 
-		taskDistribution := g.DistributeBudget(budget, nil)
-
 		searchRequest := &SearchRequest{
 			Origin:   g.name,
 			Budget:   budget,
 			Keywords: keywords,
 		}
 
-		g.SpreadSearchRequest(searchRequest, taskDistribution)
+		// TODO: In this case, if the budget is not enough just leave the query channel here?????
+		g.HandleSearchRequest(searchRequest, nil)
 	} else {
 		// TODO: expotenial
+		budget = 2
+
+		for !(query.isDone() || budget > MAX_BUDGET) {
+			fmt.Println("EXP BUDGET ", budget)
+			searchRequest := &SearchRequest{
+				Origin:   g.name,
+				Budget:   budget,
+				Keywords: keywords,
+			}
+
+			g.HandleSearchRequest(searchRequest, nil)
+
+			time.Sleep(EXP_SLEEP_TIME)
+			budget *= 2
+		}
 	}
+
+	// put the result of the query into the file
+	// and what is more, after double check there is not necessary to download it automoticlly
+	g.fileHandler.searchFiles.Mux.Lock()
+	for _, sha := range query.Result {
+		g.fileHandler.searchFiles.searchedFiles[sha] = query.fileInfo[sha]
+	}
+	g.fileHandler.searchFiles.Mux.Unlock()
 }
 
 func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net.UDPAddr) {

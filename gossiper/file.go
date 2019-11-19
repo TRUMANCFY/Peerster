@@ -69,11 +69,17 @@ type FileHandler struct {
 	fileDispatcher   *FileDispatcher
 	searchDispatcher *SearchDispatcher
 	searchHandler    *SearchHandler
+	searchFiles      *SearchedFiles
 }
 
 type QueryID struct {
 	id  uint32
 	Mux *sync.Mutex
+}
+
+type SearchedFiles struct {
+	searchedFiles map[SHA256_HASH]*SearchFile
+	Mux           *sync.Mutex
 }
 
 func (g *Gossiper) HandleDownloadRequest(cmw *ClientMessageWrapper) {

@@ -282,9 +282,11 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 		// Handle with file download
 		fmt.Printf("Ask %s from dest %s meta %s \n", *msg.File, *msg.Destination, hex.EncodeToString(*msg.Request))
 		g.HandleDownloadRequest(cmw)
-	} else if msg.File != nil {
+	} else if msg.File != nil && msg.Request == nil {
 		fmt.Printf("Index File %s \n", *msg.File)
 		g.HandleFileIndexing(cmw)
+	} else if msg.File != nil && msg.Request != nil {
+		fmt.Printf("Download Searched file %s with meta %s \n", *msg.File, hex.EncodeToString(*msg.Request))
 	} else if *msg.Keywords != "" {
 		fmt.Printf("Start Query for the keywords %s with budget %d \n", *msg.Keywords, *msg.Budget)
 		g.HandleClientSearch(cmw)
