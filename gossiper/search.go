@@ -51,8 +51,11 @@ func NewSearchHandler(name string) *SearchHandler {
 }
 
 func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
-	keywords := cmw.msg.Keywords
-	budget := cmw.msg.Budget
+	// we have already checked in the client operation that
+	keywordsStr := *cmw.msg.Keywords
+	budget := *cmw.msg.Budget
+
+	keywords := strings.Split(keywordsStr, ",")
 
 	query := g.fileHandler.WatchNewQuery(keywords)
 
@@ -66,6 +69,7 @@ func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
 			Budget:   budget,
 			Keywords: keywords,
 		}
+
 		g.SpreadSearchRequest(searchRequest, taskDistribution)
 	} else {
 		// TODO: expotenial

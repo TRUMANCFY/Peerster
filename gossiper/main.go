@@ -4,7 +4,6 @@ import (
 	"encoding/hex"
 	"fmt" // check the type of variable
 	"net"
-	"strings"
 	"sync"
 	"time"
 
@@ -286,9 +285,8 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 	} else if msg.File != nil {
 		fmt.Printf("Index File %s \n", *msg.File)
 		g.HandleFileIndexing(cmw)
-	} else if len(msg.Keywords) > 0 {
-		keywordsStr := strings.Join(msg.Keywords, " ")
-		fmt.Printf("Start Query for the keywords %s with budget %d \n", keywordsStr, msg.Budget)
+	} else if *msg.Keywords != "" {
+		fmt.Printf("Start Query for the keywords %s with budget %d \n", *msg.Keywords, *msg.Budget)
 		g.HandleClientSearch(cmw)
 	}
 }
