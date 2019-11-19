@@ -224,11 +224,11 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 		g.HandleSimplePacket(packet.Simple)
 	case packet.Rumor != nil:
 		// OUTPUT-HW1
-		fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
-			packet.Rumor.Origin,
-			sender,
-			packet.Rumor.ID,
-			packet.Rumor.Text)
+		// fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
+		// 	packet.Rumor.Origin,
+		// 	sender,
+		// 	packet.Rumor.ID,
+		// 	packet.Rumor.Text)
 		if packet.Rumor.ID != 0 {
 			g.HandleRumorPacket(packet.Rumor, sender)
 		} else {

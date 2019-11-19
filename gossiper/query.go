@@ -34,7 +34,6 @@ type ChunkSource struct {
 }
 
 func (f *FileHandler) WatchNewQuery(keywords []string) *Query {
-	// TODO: Generate new query
 	replyChan := make(chan *SearchReply, CHANNEL_BUFFER_SIZE)
 	fileInfo := make(map[SHA256_HASH]*SearchFile)
 	f.searchHandler.currentQueryID.Mux.Lock()
@@ -65,6 +64,8 @@ func (f *FileHandler) WatchNewQuery(keywords []string) *Query {
 			// firstly check whether this reply is our needed
 			// if needed, put it in our data structure
 
+			fmt.Printf("Receive reply fromm %s with %d results \n", searchReply.Origin, len(searchReply.Results))
+
 			q.matchWithKeywords(searchReply)
 
 			if q.isDone() {
@@ -80,13 +81,12 @@ func (f *FileHandler) WatchNewQuery(keywords []string) *Query {
 func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 	searchResult := searchReply.Results
 	// check whether this data reply contains what we need
-
-	// DONE: TODO: whether need to add some lock to protect the keywords
 	q.qLock.Lock()
 	defer q.qLock.Unlock()
 
 	for _, kw := range q.keywords {
 		for _, sr := range searchResult {
+			fmt.Println(sr.FileName)
 			if strings.Contains(sr.FileName, kw) {
 				chunkStr := make([]string, len(sr.ChunkMap))
 				for i, c := range sr.ChunkMap {

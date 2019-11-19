@@ -57,14 +57,16 @@ func NewSearchHandler(name string) *SearchHandler {
 func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
 	// we have already checked in the client operation that
 	keywordsStr := *cmw.msg.Keywords
+	fmt.Println(keywordsStr)
 	budget := *cmw.msg.Budget
+	fmt.Println(budget)
 
 	keywords := strings.Split(keywordsStr, ",")
 
 	query := g.fileHandler.WatchNewQuery(keywords)
 
 	if budget != 0 {
-		fmt.Println("Common Search with budget ", budget)
+		fmt.Println("Common search with budget ", budget)
 
 		searchRequest := &SearchRequest{
 			Origin:   g.name,
@@ -106,6 +108,8 @@ func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net
 	// check whether the search request has 0.5 second later
 	valid := g.fileHandler.searchHandler.checkDuplicate(searchRequest)
 
+	fmt.Println("Handle Search Request")
+
 	if !valid {
 		return
 	}
@@ -119,11 +123,13 @@ func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net
 
 func (g *Gossiper) HandleSearchReply(searchReply *SearchReply, sender *net.UDPAddr) {
 	if DEBUGSEARCH {
-		fmt.Printf("Receive DataReply from %s to %s \n", searchReply.Origin, searchReply.Destination)
+		fmt.Printf("Receive Receive Reply from %s to %s \n", searchReply.Origin, searchReply.Destination)
 	}
 
 	if searchReply.Destination == g.name {
 		// TODO: accept the reply
+		g.fileHandler.searchDispatcher.searchReplyChan <- searchReply
+		return
 	}
 
 	reply, valid := g.fileHandler.searchHandler.prepareNewReply(searchReply)
@@ -174,6 +180,8 @@ func (g *Gossiper) RouteSearchReply(searchReply *SearchReply) bool {
 }
 
 func (f *FileHandler) SearchFileKeywords(keywords []string) []*File {
+
+	fmt.Println("Search ", strings.Join(keywords, ","))
 	regExpList := make([]*regexp.Regexp, 0)
 
 	// have a list of reg
@@ -203,8 +211,9 @@ func (f *FileHandler) SearchFileKeywords(keywords []string) []*File {
 
 	f.filesLock.Unlock()
 
-	return searchedFile
+	fmt.Println(searchedFile)
 
+	return searchedFile
 }
 
 func (s *SearchHandler) GenerateSearchResult(searchedFiles []*File) []*SearchResult {
@@ -212,7 +221,7 @@ func (s *SearchHandler) GenerateSearchResult(searchedFiles []*File) []*SearchRes
 
 	for _, f := range searchedFiles {
 		searchR := &SearchResult{
-			FileName:     s.Name,
+			FileName:     f.Name,
 			MetafileHash: f.MetafileHash[:],
 			ChunkMap:     f.ChunkMap,
 			ChunkCount:   f.ChunkCount,
@@ -244,6 +253,7 @@ func (s *SearchHandler) checkDuplicate(searchRequest *SearchRequest) bool {
 	origin := searchRequest.Origin
 	keywords := searchRequest.Keywords
 
+	// sort the str first
 	sort.Strings(keywords)
 
 	keywordsStr := strings.Join(keywords, "")

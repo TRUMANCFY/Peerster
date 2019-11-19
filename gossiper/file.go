@@ -134,15 +134,24 @@ func NewFileHandler(name string) *FileHandler {
 
 	searchHandler := NewSearchHandler(name)
 
+	searchDispatcher := NewSearchReplyDispatcher()
+
+	searchFiles := &SearchedFiles{
+		searchedFiles: make(map[SHA256_HASH]*SearchFile),
+		Mux:           &sync.Mutex{},
+	}
+
 	return &FileHandler{
-		Name:           name,
-		files:          make(map[SHA256_HASH]*File),
-		filesLock:      &sync.Mutex{},
-		fileChunks:     make(map[SHA256_HASH]*FileChunk),
-		fileChunksLock: &sync.Mutex{},
-		sharedDir:      sharedDir,
-		downloadDir:    downloadDir,
-		searchHandler:  searchHandler,
+		Name:             name,
+		files:            make(map[SHA256_HASH]*File),
+		filesLock:        &sync.Mutex{},
+		fileChunks:       make(map[SHA256_HASH]*FileChunk),
+		fileChunksLock:   &sync.Mutex{},
+		sharedDir:        sharedDir,
+		downloadDir:      downloadDir,
+		searchHandler:    searchHandler,
+		searchDispatcher: searchDispatcher,
+		searchFiles:      searchFiles,
 	}
 }
 

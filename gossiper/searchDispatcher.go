@@ -57,9 +57,11 @@ func (sd *SearchDispatcher) WatchSearchReply() {
 			case regTag := <-sd.registerChan:
 				switch regTag.msgType {
 				case TakeIn:
+					fmt.Printf("Query Register ID %d \n", regTag.TagID)
 					queryObserver[regTag.TagID] = regTag.observer
 					break
 				case TakeOut:
+					fmt.Printf("Query Unregister ID %d \n", regTag.TagID)
 					_, present := queryObserver[regTag.TagID]
 
 					if !present {
