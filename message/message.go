@@ -93,6 +93,39 @@ type SearchResult struct {
 	ChunkCount   uint64
 }
 
+type PeerStatusWrapper struct {
+	sender       string
+	peerStatuses []PeerStatus
+}
+
+type StatusTagger struct {
+	sender     string
+	identifier string
+}
+
+// hw3ex2
+type TxPublish struct {
+	Name         string
+	Size         int64 // this is a size in bytes
+	MetafileHash []byte
+}
+
+type BlockPublish struct {
+	PrevHash    [32]byte
+	Transaction TxPublish
+}
+
+type TLCMessage struct {
+	Origin      string
+	ID          uint32
+	Confirmed   bool
+	TxBlock     BlockPublish
+	VectorClock *StatusPacket
+	Fitness     float32
+}
+
+type TLCAck PrivateMessage
+
 type GossipPacket struct {
 	Simple        *SimpleMessage
 	Rumor         *RumorMessage
@@ -102,6 +135,8 @@ type GossipPacket struct {
 	DataReply     *DataReply
 	SearchRequest *SearchRequest
 	SearchReply   *SearchReply
+	TLCMessage    *TLCMessage
+	Ack           *TLCAck
 }
 
 func (sp *StatusPacket) SenderString(sender string) string {
