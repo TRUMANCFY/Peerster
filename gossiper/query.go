@@ -70,6 +70,11 @@ func (f *FileHandler) WatchNewQuery(keywords []string) *Query {
 
 			if q.isDone() {
 				fmt.Println("SEARCH FINISH")
+				f.searchFiles.Mux.Lock()
+				for _, sha := range q.Result {
+					f.searchFiles.searchedFiles[sha] = q.fileInfo[sha]
+				}
+				f.searchFiles.Mux.Unlock()
 				return
 			}
 		}

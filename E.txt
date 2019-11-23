@@ -8,6 +8,14 @@ AntiEntropy Value is 10
 Route timer value is 1 
 GUI Port is 127.0.0.1:8080 
 Handle Search Request
+No enough budget to devide
+Search  a,n
+[]
+Handle Search Request
+Search  a,n
+No enough budget to devide
+[]
+Handle Search Request
 Search  a,n
 []
 We do have one neighbor and it is exactly the source

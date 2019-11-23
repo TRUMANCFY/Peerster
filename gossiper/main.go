@@ -287,6 +287,7 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 		g.HandleFileIndexing(cmw)
 	} else if msg.File != nil && msg.Request != nil {
 		fmt.Printf("Download Searched file %s with meta %s \n", *msg.File, hex.EncodeToString(*msg.Request))
+		g.HandleClientSearchDownload(cmw)
 	} else if *msg.Keywords != "" {
 		fmt.Printf("Start Query for the keywords %s with budget %d \n", *msg.Keywords, *msg.Budget)
 		g.HandleClientSearch(cmw)

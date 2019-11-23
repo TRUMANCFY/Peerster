@@ -63,6 +63,20 @@ func main() {
 
 		sendMessage.Request = &decoded
 		break
+	case *file != "" && *request != "":
+		// download searched file
+		sendMessage.File = file
+
+		decoded, err := hex.DecodeString(*request)
+
+		if err != nil && len(decoded) != sha256.Size {
+			fmt.Printf("ERROR %cUnable to decode hex hash%c \n", '(', ')')
+			os.Exit(1)
+		}
+
+		sendMessage.Request = &decoded
+
+		break
 	case *file != "":
 		// index file
 		sendMessage.File = file

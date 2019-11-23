@@ -7,21 +7,48 @@ Simple mode is false
 AntiEntropy Value is 10 
 Route timer value is 1 
 GUI Port is 127.0.0.1:8080 
-Start Query for the keywords a,n with budget 8 
+Start Query for the keywords a,n with budget 0 
 a,n
-8
-Common search with budget  8
+0
+EXP BUDGET  2
+Query Register ID 0 
 Handle Search Request
 Search  a,n
 []
-Query Register ID 0 
-Receive Receive Reply from B to C 
-Receive reply fromm B with 0 results 
-Receive Receive Reply from E to C 
+Peer: 127.0.0.1:5005 Budget: 1 
+Peer: 127.0.0.1:5002 Budget: 0 
+Peer: 127.0.0.1:5004 Budget: 0 
+Receive Search Reply from E to C 
 Receive reply fromm E with 0 results 
-Receive Receive Reply from D to C 
+EXP BUDGET  4
+Handle Search Request
+Search  a,n
+[]
+Peer: 127.0.0.1:5005 Budget: 1 
+Peer: 127.0.0.1:5002 Budget: 1 
+Peer: 127.0.0.1:5004 Budget: 1 
+Receive Search Reply from D to C 
 Receive reply fromm D with 0 results 
-Receive Receive Reply from A to C 
+Receive Search Reply from E to C 
+Receive reply fromm E with 0 results 
+Receive Search Reply from B to C 
+Receive reply fromm B with 0 results 
+EXP BUDGET  8
+Handle Search Request
+Search  a,n
+[]
+Peer: 127.0.0.1:5004 Budget: 3 
+Peer: 127.0.0.1:5002 Budget: 2 
+Peer: 127.0.0.1:5005 Budget: 2 
+Receive Search Reply from D to C 
+Receive reply fromm D with 0 results 
+Receive Search Reply from E to C 
+Receive reply fromm E with 0 results 
+Receive Search Reply from B to C 
+Receive reply fromm B with 0 results 
+Download Searched file test.png with meta 2571718c9d1d4bbe9807df21f0dd84209d36b418ea15ca350c258495cdbe474d 
+ERROR! The file has not been searched
+Receive Search Reply from A to C 
 Receive reply fromm A with 2 results 
 Shaokang.png
 FOUND match Shaokang.png at A metafile=2571718c9d1d4bbe9807df21f0dd84209d36b418ea15ca350c258495cdbe474d chunks=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112 

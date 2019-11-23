@@ -23,7 +23,11 @@ cd client/
 ./client -UIPort=8001 -file=Shaokang.png &
 
 sleep 2
-./client -UIPort=8003 -keywords=a,n -budget=8 &
+# ./client -UIPort=8003 -keywords=a,n -budget=8 &
+./client -UIPort=8003 -keywords=a,n &
+
+sleep 2
+./client -UIPort=8003 -file=test.png -request=2571718c9d1d4bbe9807df21f0dd84209d36b418ea15ca350c258495cdbe474d
 cd ..
 
 sleep 20

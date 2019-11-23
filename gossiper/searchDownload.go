@@ -2,6 +2,14 @@ package gossiper
 
 import "fmt"
 
+func (g *Gossiper) HandleClientSearchDownload(cmw *ClientMessageWrapper) {
+	hash := *cmw.msg.Request
+	localFile := *cmw.msg.File
+
+	shaHash, _ := HashToSha256(hash)
+	g.RequestSearchedFile(shaHash, localFile)
+}
+
 func (g *Gossiper) RequestSearchedFile(metafileHash SHA256_HASH, localFileName string) bool {
 	// check whther it already exist local
 	g.fileHandler.filesLock.Lock()

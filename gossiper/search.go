@@ -88,20 +88,12 @@ func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
 				Keywords: keywords,
 			}
 
-			g.HandleSearchRequest(searchRequest, nil)
+			go g.HandleSearchRequest(searchRequest, nil)
 
 			time.Sleep(EXP_SLEEP_TIME)
 			budget *= 2
 		}
 	}
-
-	// put the result of the query into the file
-	// and what is more, after double check there is not necessary to download it automoticlly
-	g.fileHandler.searchFiles.Mux.Lock()
-	for _, sha := range query.Result {
-		g.fileHandler.searchFiles.searchedFiles[sha] = query.fileInfo[sha]
-	}
-	g.fileHandler.searchFiles.Mux.Unlock()
 }
 
 func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net.UDPAddr) {
@@ -123,7 +115,7 @@ func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net
 
 func (g *Gossiper) HandleSearchReply(searchReply *SearchReply, sender *net.UDPAddr) {
 	if DEBUGSEARCH {
-		fmt.Printf("Receive Receive Reply from %s to %s \n", searchReply.Origin, searchReply.Destination)
+		fmt.Printf("Receive Search Reply from %s to %s \n", searchReply.Origin, searchReply.Destination)
 	}
 
 	if searchReply.Destination == g.name {
@@ -298,6 +290,10 @@ func (g *Gossiper) DistributeSearchRequest(searchRequest *SearchRequest, sender 
 	// the budget will be decreased by 1
 	taskDistribution := g.DistributeBudget(searchRequest.Budget-1, sender)
 
+	for _, td := range taskDistribution {
+		fmt.Printf("Peer: %s Budget: %d \n", td.Peer, td.Budget)
+	}
+
 	g.SpreadSearchRequest(searchRequest, taskDistribution)
 }
 
@@ -371,12 +367,17 @@ func (g *Gossiper) DistributeBudget(budget uint64, sender *net.UDPAddr) []TaskDi
 
 func (g *Gossiper) SpreadSearchRequest(searchRequest *SearchRequest, tasks []TaskDistribution) {
 	for _, task := range tasks {
+		// Attention: sending a task with budget == 0 is dangerous
+		// for an unsigned int 18446744073709551615 == -1
+		if task.Budget == 0 {
+			continue
+		}
 		sReq := &SearchRequest{
 			Origin:   searchRequest.Origin,
 			Budget:   task.Budget,
 			Keywords: searchRequest.Keywords,
 		}
-		g.SendGossipPacketStrAddr(&GossipPacket{SearchRequest: sReq}, task.Peer)
+		go g.SendGossipPacketStrAddr(&GossipPacket{SearchRequest: sReq}, task.Peer)
 	}
 }
 

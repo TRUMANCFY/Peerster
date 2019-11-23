@@ -8,6 +8,11 @@ AntiEntropy Value is 10
 Route timer value is 1 
 GUI Port is 127.0.0.1:8080 
 Handle Search Request
+No enough budget to devide
 Search  a,n
 []
-Receive Receive Reply from A to C 
+Handle Search Request
+Search  a,n
+Peer: 127.0.0.1:5001 Budget: 1 
+[]
+Receive Search Reply from A to C 
