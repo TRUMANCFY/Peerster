@@ -39,6 +39,7 @@ type Gossiper struct {
 	hw3ex2             bool
 	hw3ex3             bool
 	hw3ex4             bool
+	numNodes           int
 }
 
 type CurrentID struct {
