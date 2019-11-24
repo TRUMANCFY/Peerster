@@ -36,6 +36,9 @@ type Gossiper struct {
 	rtimer             time.Duration
 	privateMessageList *PrivateMessageList
 	fileHandler        *FileHandler
+	hw3ex2             bool
+	hw3ex3             bool
+	hw3ex4             bool
 }
 
 type CurrentID struct {
@@ -98,15 +101,4 @@ type PeerStatusWrapper struct {
 type StatusTagger struct {
 	sender     string
 	identifier string
-}
-
-type TxPublish struct {
-	Name         string
-	Size         int64 // this is a size in bytes
-	MetafileHash []byte
-}
-
-type BLockPublish struct {
-	PrevHash    [32]byte
-	Transaction TxPublish
 }

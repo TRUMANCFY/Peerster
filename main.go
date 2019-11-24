@@ -18,6 +18,9 @@ var antiEntropy = flag.Int("antiEntropy", 10, "please provide the time interval 
 var gui = flag.Bool("gui", false, "gui??")
 var guiPort = flag.String("GUIPort", "8080", "GUI_port fixed to 8080?")
 var rtimer = flag.Int("rtimer", 0, "route rumors sending period in seconds, 0 to disable sending of route rumors (default 0)")
+var hw3ex2 = flag.Bool("hw3ex2", false, "Run the part of HW3Ex2")
+var hw3ex3 = flag.Bool("hw3ex3", false, "Run the part of HW3Ex3")
+var hw3ex4 = flag.Bool("hw3ex4", false, "Run the part of HW3Ex4")
 
 func main() {
 
@@ -39,7 +42,7 @@ func main() {
 		peersList = GenerateStringSet(strings.Split(*peersStr, ","))
 	}
 
-	gossiper := NewGossiper(*gossipAddr, *uiPort, *name, peersList, *rtimer, *simple, *antiEntropy, *gui, *guiPort)
+	gossiper := NewGossiper(*gossipAddr, *uiPort, *name, peersList, *rtimer, *simple, *antiEntropy, *gui, *guiPort, *hw3ex2, *hw3ex3, *hw3ex4)
 
 	gossiper.Run()
 }

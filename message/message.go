@@ -93,16 +93,6 @@ type SearchResult struct {
 	ChunkCount   uint64
 }
 
-type PeerStatusWrapper struct {
-	sender       string
-	peerStatuses []PeerStatus
-}
-
-type StatusTagger struct {
-	sender     string
-	identifier string
-}
-
 // hw3ex2
 type TxPublish struct {
 	Name         string

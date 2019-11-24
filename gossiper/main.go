@@ -37,7 +37,7 @@ const DEBUGSEARCH = true
 // 2. We need to record the peer status we have received from other peers, data format: map[string](map[string]PeerStatus) peerName => peerName => PeerStatus
 // 3. Also, we need to record the rumour we are maintain data format: map[string](map[int]RumorMessage) peerName => sequential number => rumorMessage
 
-func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, rtimer int, simple bool, antiEntropy int, gui bool, guiPort string) *Gossiper {
+func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *StringSet, rtimer int, simple bool, antiEntropy int, gui bool, guiPort string, hw3ex2 bool, hw3ex3 bool, hw3ex4 bool) *Gossiper {
 	// gossip
 	udpAddr, err := net.ResolveUDPAddr("udp4", gossipAddr)
 
@@ -116,6 +116,9 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		routeTable:         &routeTableObject,
 		rtimer:             time.Duration(rtimer) * time.Second,
 		privateMessageList: &privateMessageList,
+		hw3ex2:             hw3ex2,
+		hw3ex3:             hw3ex3,
+		hw3ex4:             hw3ex4,
 	}
 }
 
