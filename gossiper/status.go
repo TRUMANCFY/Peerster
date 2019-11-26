@@ -54,7 +54,9 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 
 	if len(rumorToSend) == 0 && len(rumorToAsk) == 0 {
 		// OUTPUT-HW1
-		fmt.Printf("IN SYNC WITH %s \n", sender)
+		if HW1OUTPUT {
+			fmt.Printf("IN SYNC WITH %s \n", sender)
+		}
 	}
 }
 

@@ -30,6 +30,7 @@ const DEBUG = false
 const DEBUGFILE = false
 const DEBUGROUTE = false
 const DEBUGSEARCH = true
+const HW1OUTPUT = true
 
 // Memory arrangement
 // Think about the process and what dataframe do we need
@@ -216,24 +217,31 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 	g.AddPeer(sender.String())
 
 	// OUTPUT-HW1
-	g.PrintPeers()
+	if HW1OUTPUT {
+		g.PrintPeers()
+	}
 
 	switch {
 	case packet.Simple != nil:
 		// OUTPUT-HW1
-		fmt.Printf("SIMPLE MESSAGE origin %s from %s contents %s \n",
-			packet.Simple.OriginalName,
-			packet.Simple.RelayPeerAddr,
-			packet.Simple.Contents)
+		if HW1OUTPUT {
+			fmt.Printf("SIMPLE MESSAGE origin %s from %s contents %s \n",
+				packet.Simple.OriginalName,
+				packet.Simple.RelayPeerAddr,
+				packet.Simple.Contents)
+		}
 
 		g.HandleSimplePacket(packet.Simple)
 	case packet.Rumor != nil:
 		// OUTPUT-HW1
-		fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
-			packet.Rumor.Origin,
-			sender,
-			packet.Rumor.ID,
-			packet.Rumor.Text)
+		if HW1OUTPUT {
+			fmt.Printf("RUMOR origin %s from %s ID %d contents %s \n",
+				packet.Rumor.Origin,
+				sender,
+				packet.Rumor.ID,
+				packet.Rumor.Text)
+		}
+
 		if packet.Rumor.ID != 0 {
 			g.HandleRumorPacket(packet, sender)
 		} else {
@@ -243,7 +251,10 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 
 	case packet.Status != nil:
 		// OUTPUT-HW1
-		fmt.Println(packet.Status.SenderString(sender.String()))
+		if HW1OUTPUT {
+			fmt.Println(packet.Status.SenderString(sender.String()))
+		}
+
 		g.HandleStatusPacket(packet.Status, sender)
 
 	case packet.Private != nil:
@@ -265,6 +276,10 @@ func (g *Gossiper) HandleClientMessage(cmw *ClientMessageWrapper) {
 
 	if msg.Text != "" && msg.Destination == nil {
 		// Handle with rumor message
+		if HW1OUTPUT {
+			fmt.Printf("CLIENT MESSAGE %s \n", cmw.msg.Text)
+		}
+
 		if g.simple {
 			newMsg := g.CreateClientPacket(msg)
 			newGossipPacket := &GossipPacket{Simple: newMsg}

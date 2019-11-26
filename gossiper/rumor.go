@@ -109,7 +109,9 @@ func (g *Gossiper) RumorMongeringAddrStr(gp *GossipPacket, peerStr string) {
 
 func (g *Gossiper) RumorMongering(gp *GossipPacket, peerAddr *net.UDPAddr) {
 	// HW1-OUTPUT
-	fmt.Printf("MONGERING with %s \n", peerAddr.String())
+	if HW1OUTPUT {
+		fmt.Printf("MONGERING with %s \n", peerAddr.String())
+	}
 
 	go func() {
 		// monitor the ack from the receiver
@@ -207,8 +209,9 @@ func (g *Gossiper) flipCoinRumorMongering(gp *GossipPacket, excludedPeers *Strin
 
 		if present {
 			// HW1-OUTPUT
-			fmt.Printf("FLIPPED COIN sending rumor to %s \n", neighborPeer)
-
+			if HW1OUTPUT {
+				fmt.Printf("FLIPPED COIN sending rumor to %s \n", neighborPeer)
+			}
 		} else {
 			if DEBUG {
 				fmt.Println("FLIPPED COIN not exist")
