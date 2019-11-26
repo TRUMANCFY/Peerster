@@ -225,7 +225,7 @@ func (g *Gossiper) FileIndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(file.FileName)
 
-	go g.fileHandler.FileIndexingRequest(file.FileName)
+	go g.FileIndexingRequest(file.FileName)
 
 	g.AckPost(true, w)
 }

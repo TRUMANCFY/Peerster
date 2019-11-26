@@ -17,6 +17,12 @@ func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) 
 	// diff > 0 => drop it (should we keep this for the future reference???)
 	// diff < 0 => drop it
 	// if sender is self, broadcast (mongering) the rumor
+
+	// if it is a TCLMessage
+	if gp.TLCMessage != nil {
+		g.HandleTLCMessage(gp, senderAddr)
+	}
+
 	diff := g.RumorStatusCheck(gp)
 
 	var origin string

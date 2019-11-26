@@ -29,8 +29,11 @@ const GUI_ADDR = "127.0.0.1:8080"
 const DEBUG = false
 const DEBUGFILE = false
 const DEBUGROUTE = false
-const DEBUGSEARCH = true
-const HW1OUTPUT = true
+const DEBUGSEARCH = false
+const DEBUGTLC = true
+
+const HW1OUTPUT = false
+const HW3OUTPUT = true
 
 // Memory arrangement
 // Think about the process and what dataframe do we need
@@ -146,7 +149,8 @@ func (g *Gossiper) Run() {
 	g.fileHandler = NewFileHandler(g.name)
 	go g.RunFileSystem()
 
-	// g.\blockPublishHandler = NewBlockPublishHandler(g.name)
+	// BlockPublishHandler
+	g.blockPublishHandler = NewBlockPublishHandler(g.name, g.numNodes)
 
 	g.dispatcher = StartPeerStatusDispatcher()
 	g.Listen(peerListener, clientListener)
@@ -167,6 +171,7 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 			packetBytes, err := protobuf.Encode(gp)
 
 			if err != nil {
+				fmt.Println(gp)
 				panic(err)
 			}
 
@@ -268,6 +273,8 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 		g.HandleSearchReply(packet.SearchReply, sender)
 	case packet.SearchRequest != nil:
 		g.HandleSearchRequest(packet.SearchRequest, sender)
+	case packet.TLCMessage != nil:
+		g.HandleRumorPacket(packet, sender)
 	}
 }
 

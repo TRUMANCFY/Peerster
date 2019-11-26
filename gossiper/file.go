@@ -98,7 +98,7 @@ func (g *Gossiper) HandleDownloadRequest(cmw *ClientMessageWrapper) {
 
 func (g *Gossiper) HandleFileIndexing(cmw *ClientMessageWrapper) {
 	filename := *cmw.msg.File
-	g.fileHandler.FileIndexingRequest(filename)
+	g.FileIndexingRequest(filename)
 }
 
 func tryCreateDir(abspath string) error {
@@ -638,10 +638,10 @@ func (f *FileHandler) combineChunks(meshfileHash SHA256_HASH, data []byte, fileN
 
 }
 
-func (f *FileHandler) FileIndexingRequest(filename string) {
-	abspath := filepath.Join(f.sharedDir, filename)
+func (g *Gossiper) FileIndexingRequest(filename string) {
+	abspath := filepath.Join(g.fileHandler.sharedDir, filename)
 
-	fileIndexed, err := f.FileIndexing(abspath)
+	fileIndexed, err := g.fileHandler.FileIndexing(abspath)
 
 	if err != nil {
 		fmt.Printf("%s does not exist \n", abspath)
@@ -654,17 +654,21 @@ func (f *FileHandler) FileIndexingRequest(filename string) {
 		fmt.Println("File size is ", fileIndexed.Size)
 	}
 
-	f.filesLock.Lock()
+	g.fileHandler.filesLock.Lock()
 
-	f.files[fileIndexed.MetafileHash] = fileIndexed
+	g.fileHandler.files[fileIndexed.MetafileHash] = fileIndexed
 
-	f.filesLock.Unlock()
+	g.fileHandler.filesLock.Unlock()
 
 	metafileHash := fileIndexed.MetafileHash
 
 	if DEBUGFILE {
 		fmt.Println(hex.EncodeToString(metafileHash[:]))
 	}
+
+	// after indexing we need to broadcast that we have indexed a new file
+	g.AnnounceFile(fileIndexed)
+
 	// fmt.Println("FURTHER VERIFIED")
 	// for h, k := range f.fileChunks {
 	// 	fmt.Println("Key")
