@@ -12,15 +12,28 @@ import (
 	. "github.com/TRUMANCFY/Peerster/util"
 )
 
-func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
+func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) {
 	// diff == 0 => accept the rumor as rumor is rightly updated
 	// diff > 0 => drop it (should we keep this for the future reference???)
 	// diff < 0 => drop it
 	// if sender is self, broadcast (mongering) the rumor
-	diff := g.RumorStatusCheck(r)
+	diff := g.RumorStatusCheck(gp)
+
+	var origin string
+	var id uint32
+
+	if gp.Rumor != nil {
+		origin = gp.Rumor.Origin
+		id = gp.Rumor.ID
+	} else if gp.TLCMessage != nil {
+		origin = gp.TLCMessage.Origin
+		id = gp.TLCMessage.ID
+	} else {
+		fmt.Println("The GossipPacket is illegal!!!")
+	}
 
 	if DEBUGROUTE {
-		fmt.Printf("Origin: %s, ID: %d, From: %s \n", r.Origin, r.ID, senderAddr.String())
+		fmt.Printf("Origin: %s, ID: %d, From: %s \n", origin, id, senderAddr.String())
 	}
 
 	// CHECKOUT
@@ -28,7 +41,7 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		fmt.Println("DIFF is", diff)
 	}
 
-	g.updateRouteTable(r, senderAddr.String())
+	g.updateRouteTable(gp, senderAddr.String())
 
 	// fmt.Printf("The difference between the comming rumor and current peerstatus is %d \n", diff)
 
@@ -42,12 +55,12 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 		if g.address == senderAddr {
 			// CHECK
 			// The message is from local client
-			go g.RumorMongeringPrepare(r, nil)
+			go g.RumorMongeringPrepare(gp, nil)
 		} else {
-			go g.RumorMongeringPrepare(r, GenerateStringSetSingleton(senderAddr.String()))
+			go g.RumorMongeringPrepare(gp, GenerateStringSetSingleton(senderAddr.String()))
 		}
 
-		g.AcceptRumor(r)
+		g.AcceptRumor(gp)
 
 	case diff > 0:
 		// TODO: consider the out-of-order problem
@@ -79,26 +92,24 @@ func (g *Gossiper) HandleRumorPacket(r *RumorMessage, senderAddr *net.UDPAddr) {
 	}
 }
 
-func (g *Gossiper) RumorMongeringPrepare(rumor *RumorMessage, excludedPeers *StringSet) (string, bool) {
+func (g *Gossiper) RumorMongeringPrepare(gp *GossipPacket, excludedPeers *StringSet) (string, bool) {
 	randomNeighbor, present := g.SelectRandomNeighbor(excludedPeers)
 
 	if present {
-		go g.RumorMongeringAddrStr(rumor, randomNeighbor)
+		go g.RumorMongeringAddrStr(gp, randomNeighbor)
 	}
 
 	return randomNeighbor, present
 }
 
-func (g *Gossiper) RumorMongeringAddrStr(rumor *RumorMessage, peerStr string) {
+func (g *Gossiper) RumorMongeringAddrStr(gp *GossipPacket, peerStr string) {
 	peerAddr, _ := net.ResolveUDPAddr("udp4", peerStr)
-	g.RumorMongering(rumor, peerAddr)
+	g.RumorMongering(gp, peerAddr)
 }
 
-func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
-	// OUTPUT
-	if DEBUG {
-		fmt.Printf("MONGERING with %s \n", peerAddr.String())
-	}
+func (g *Gossiper) RumorMongering(gp *GossipPacket, peerAddr *net.UDPAddr) {
+	// HW1-OUTPUT
+	fmt.Printf("MONGERING with %s \n", peerAddr.String())
 
 	go func() {
 		// monitor the ack from the receiver
@@ -108,11 +119,25 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 
 		// Register First
 		// fmt.Printf("Register Identifier: %s Sender: %s \n", rumor.Origin, peerStr)
+
+		var origin string
+		var id uint32
+
+		if gp.Rumor != nil {
+			origin = gp.Rumor.Origin
+			id = gp.Rumor.ID
+		} else if gp.TLCMessage != nil {
+			origin = gp.TLCMessage.Origin
+			id = gp.TLCMessage.ID
+		} else {
+			fmt.Println("The GossipPacket is illegal!!!!")
+		}
+
 		g.dispatcher.taggerListener <- TaggerMessage{
 			observerChan: observerChan,
 			tagger: StatusTagger{
 				sender:     peerStr,
-				identifier: rumor.Origin,
+				identifier: origin,
 			},
 			taggerMsgType: TakeIn,
 		}
@@ -140,12 +165,12 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 				// this means that the peer has received the rumor (in this case, ps.nextID=rumor.ID+1)
 				// or it already contains more advanced
 
-				if peerStatus.NextID >= rumor.ID {
+				if peerStatus.NextID >= id {
 					g.updatePeerStatusList(peerStr, peerStatus)
 					// check whether the peer has been synced
-					if g.isRumorSync(rumor, peerStr) {
+					if g.isRumorSync(gp, peerStr) {
 						// flip a coin to choose the next one
-						g.flipCoinRumorMongering(rumor, GenerateStringSetSingleton(peerStr))
+						g.flipCoinRumorMongering(gp, GenerateStringSetSingleton(peerStr))
 					}
 
 					// channel exit
@@ -158,7 +183,7 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 					fmt.Println("TIMEOUT")
 				}
 
-				g.flipCoinRumorMongering(rumor, GenerateStringSetSingleton(peerStr))
+				g.flipCoinRumorMongering(gp, GenerateStringSetSingleton(peerStr))
 				unregister()
 			}
 		}
@@ -166,10 +191,10 @@ func (g *Gossiper) RumorMongering(rumor *RumorMessage, peerAddr *net.UDPAddr) {
 	}()
 
 	// fmt.Println("MONGERING WITH PEER ", peerAddr)
-	g.SendGossipPacket(&GossipPacket{Rumor: rumor}, peerAddr)
+	g.SendGossipPacket(gp, peerAddr)
 }
 
-func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *StringSet) {
+func (g *Gossiper) flipCoinRumorMongering(gp *GossipPacket, excludedPeers *StringSet) {
 	// 50 - 50
 	if DEBUG {
 		fmt.Println("Prepare to flip the coin")
@@ -178,12 +203,12 @@ func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *St
 	// rand.Seed(time.Now().UTC().UnixNano())
 	randInt := rand.Intn(2)
 	if randInt == 0 {
-		neighborPeer, present := g.RumorMongeringPrepare(rumor, excludedPeers)
+		neighborPeer, present := g.RumorMongeringPrepare(gp, excludedPeers)
 
 		if present {
-			if DEBUG {
-				fmt.Printf("FLIPPED COIN sending rumor to %s \n", neighborPeer)
-			}
+			// HW1-OUTPUT
+			fmt.Printf("FLIPPED COIN sending rumor to %s \n", neighborPeer)
+
 		} else {
 			if DEBUG {
 				fmt.Println("FLIPPED COIN not exist")
@@ -196,15 +221,25 @@ func (g *Gossiper) flipCoinRumorMongering(rumor *RumorMessage, excludedPeers *St
 	}
 }
 
-func (g *Gossiper) AcceptRumor(r *RumorMessage) {
+func (g *Gossiper) AcceptRumor(gp *GossipPacket) {
 	// 1. put the rumor in the list
 	// 2. update the peer status
 
-	if DEBUG {
-		fmt.Printf("Accept Rumor Origin: %s ID: %d \n", r.Origin, r.ID)
+	var origin string
+	var messageID uint32
+
+	if gp.Rumor != nil {
+		origin = gp.Rumor.Origin
+		messageID = gp.Rumor.ID
+	} else if gp.TLCMessage != nil {
+		origin = gp.TLCMessage.Origin
+		messageID = gp.TLCMessage.ID
+	} else {
+		fmt.Println("The GossipPacket is illegal!!!")
 	}
-	origin := r.Origin
-	messageID := r.ID
+	if DEBUG {
+		fmt.Printf("Accept Rumor Origin: %s ID: %d \n", origin, messageID)
+	}
 
 	g.rumorListLock.Lock()
 	_, ok := g.rumorList[origin]
@@ -212,45 +247,59 @@ func (g *Gossiper) AcceptRumor(r *RumorMessage) {
 
 	if ok {
 		g.rumorListLock.Lock()
-		g.rumorList[origin][messageID] = *r
+		g.rumorList[origin][messageID] = gp
 		g.rumorListLock.Unlock()
 
 		g.peerStatusesLock.Lock()
-		g.peerStatuses[r.Origin] = PeerStatus{
-			Identifier: r.Origin,
+		g.peerStatuses[origin] = PeerStatus{
+			Identifier: origin,
 			NextID:     messageID + 1,
 		}
 		g.peerStatusesLock.Unlock()
 
 	} else {
 		// this has been done during the *RumorStatusCheck* for the case not ok
-		g.rumorList[origin] = make(map[uint32]RumorMessage)
+		g.rumorList[origin] = make(map[uint32]*GossipPacket)
 		g.rumorListLock.Lock()
-		g.rumorList[origin][messageID] = *r
+		g.rumorList[origin][messageID] = gp
 		g.rumorListLock.Unlock()
 
 		g.peerStatusesLock.Lock()
-		g.peerStatuses[r.Origin] = PeerStatus{
-			Identifier: r.Origin,
+		g.peerStatuses[origin] = PeerStatus{
+			Identifier: origin,
 			NextID:     messageID + 1,
 		}
 		g.peerStatusesLock.Unlock()
 	}
 }
 
-func (g *Gossiper) isRumorSync(rumor *RumorMessage, peerStr string) bool {
+func (g *Gossiper) isRumorSync(gp *GossipPacket, peerStr string) bool {
 	g.peerWantListLock.Lock()
 	defer g.peerWantListLock.Unlock()
+
+	var origin string
+	var id uint32
+
+	if gp.Rumor != nil {
+		origin = gp.Rumor.Origin
+		id = gp.Rumor.ID
+	} else if gp.TLCMessage != nil {
+		origin = gp.TLCMessage.Origin
+		id = gp.TLCMessage.ID
+	} else {
+		fmt.Println("The GossipPacket is illegal!!!!")
+	}
+
 	originList, present := g.peerWantList[peerStr]
 	if !present {
 		return false
 	}
 
-	peerStatus, present := originList[rumor.Origin]
+	peerStatus, present := originList[origin]
 
 	if !present {
 		return false
 	}
 
-	return peerStatus.NextID > rumor.ID
+	return peerStatus.NextID > id
 }

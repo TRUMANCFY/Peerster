@@ -17,8 +17,10 @@ func (g *Gossiper) GetMessages() []RumorMessage {
 
 	for _, l1 := range g.rumorList {
 		for _, l2 := range l1 {
-			if l2.Text != "" {
-				buffer = append(buffer, l2)
+			if l2.Rumor != nil {
+				if l2.Rumor.Text != "" {
+					buffer = append(buffer, *l2.Rumor)
+				}
 			}
 		}
 	}
@@ -130,8 +132,10 @@ func (g *Gossiper) randomRumorMongering(peerStr string) {
 			}
 
 			for _, rm := range rumor {
-				fmt.Println(rm)
-				go g.RumorMongeringAddrStr(&rm, peerStr)
+				if rm.TLCMessage != nil {
+					continue
+				}
+				go g.RumorMongeringAddrStr(rm, peerStr)
 				// go g.SendGossipPacketStrAddr(&GossipPacket{Rumor: &rm}, peerStr)
 				// break
 			}

@@ -35,8 +35,15 @@ func (g *Gossiper) RunRoutingMessage() {
 
 }
 
-func (g *Gossiper) updateRouteTable(newRumor *RumorMessage, senderAddrStr string) {
+func (g *Gossiper) updateRouteTable(gp *GossipPacket, senderAddrStr string) {
 	// if the roumour is from my self should end
+	if gp.TLCMessage != nil {
+		// if it is tlc message, it wont involve in the route table update
+		return
+	}
+
+	newRumor := gp.Rumor
+
 	if newRumor.Origin == g.name {
 		return
 	}
@@ -87,7 +94,7 @@ func (g *Gossiper) updateRouteTable(newRumor *RumorMessage, senderAddrStr string
 func (g *Gossiper) SendRoutingMessage(peers []string) {
 	routeMessage := g.CreateRumorPacket(&Message{Text: ""})
 
-	g.AcceptRumor(routeMessage)
+	g.AcceptRumor(&GossipPacket{Rumor: routeMessage})
 
 	if peers == nil {
 		g.peersList.Mux.Lock()

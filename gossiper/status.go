@@ -39,7 +39,7 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 			g.rumorListLock.Lock()
 			firstObject := g.rumorList[firstPeerStatus.Identifier][firstPeerStatus.NextID]
 			g.rumorListLock.Unlock()
-			firstRumor = &firstObject
+			firstRumor = firstObject
 		}
 
 		go g.RumorMongering(firstRumor, sender)
@@ -54,33 +54,44 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 
 	if len(rumorToSend) == 0 && len(rumorToAsk) == 0 {
 		// OUTPUT-HW1
-		if DEBUG {
-			fmt.Printf("IN SYNC WITH %s \n", sender)
-		}
+		fmt.Printf("IN SYNC WITH %s \n", sender)
 	}
 }
 
-func (g *Gossiper) RumorStatusCheck(r *RumorMessage) int {
+func (g *Gossiper) RumorStatusCheck(gp *GossipPacket) int {
 	// To Check the status of the rumor message
 	// If diff == 0, rightly updated, therefore
 	// If diff > 0, the rumorMessage is head of the record peerStatus
 	// if diff < 0, the rumorMessage is behind the record peerStatus
 	g.peerStatusesLock.Lock()
 	defer g.peerStatusesLock.Unlock()
-	_, ok := g.peerStatuses[r.Origin]
+
+	var origin string
+	var id uint32
+
+	if gp.Rumor != nil {
+		origin = gp.Rumor.Origin
+		id = gp.Rumor.ID
+	} else if gp.TLCMessage != nil {
+		origin = gp.TLCMessage.Origin
+		id = gp.TLCMessage.ID
+	} else {
+		fmt.Println("The packet is illegal!!!")
+	}
+	_, ok := g.peerStatuses[origin]
 
 	if !ok {
 		// fmt.Println("This origin does not EXIST")
 		// if r.ID == 1 {
 		peerStatus := PeerStatus{
-			Identifier: r.Origin,
+			Identifier: origin,
 			NextID:     1,
 		}
-		g.peerStatuses[r.Origin] = peerStatus
+		g.peerStatuses[origin] = peerStatus
 		// }
 	}
 
-	return int(g.peerStatuses[r.Origin].NextID) - int(r.ID)
+	return int(g.peerStatuses[origin].NextID) - int(id)
 
 }
 
@@ -119,7 +130,7 @@ func (g *Gossiper) syncWithPeer(peerStr string) bool {
 	return len(rumorToSend) == 0 && len(rumorToAsk) == 0
 }
 
-func (g *Gossiper) FindMostUrgent(peerWant []PeerStatus) *RumorMessage {
+func (g *Gossiper) FindMostUrgent(peerWant []PeerStatus) *GossipPacket {
 	// make the same node
 	nodepeer := make([]string, 0)
 	nodeself := make([]string, 0)
@@ -158,10 +169,10 @@ func (g *Gossiper) FindMostUrgent(peerWant []PeerStatus) *RumorMessage {
 
 	newRumor := g.rumorList[target][idWant]
 	if DEBUG {
-		fmt.Printf("The most urgent is Origin: %s ID: %d \n", newRumor.Origin, newRumor.ID)
+		fmt.Printf("The most urgent is Origin: %s ID: %d \n", target, idWant)
 	}
 
-	return &newRumor
+	return newRumor
 }
 
 func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, rumorToAsk []PeerStatus) {
