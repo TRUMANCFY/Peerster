@@ -275,6 +275,8 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 		g.HandleSearchRequest(packet.SearchRequest, sender)
 	case packet.TLCMessage != nil:
 		g.HandleRumorPacket(packet, sender)
+	case packet.Ack != nil:
+		g.HandleTLCAck(packet, sender)
 	}
 }
 

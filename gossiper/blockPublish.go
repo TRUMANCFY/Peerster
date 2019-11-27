@@ -4,6 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"net"
+	"strings"
 	"sync"
 	"time"
 
@@ -80,6 +81,7 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 	g.HandleRumorPacket(&GossipPacket{TLCMessage: tlcMessage}, g.address)
 	observer := make(chan *TLCAck, CHANNEL_BUFFER_SIZE)
 	receivedNodes := make([]string, 0)
+	receivedNodes = append(receivedNodes, g.name)
 
 	blockPublishWatcher := &BlockPublishWatcher{
 		ackChan:      observer,
@@ -93,9 +95,14 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 	timer := time.NewTicker(time.Duration(g.stubbornTimeout) * time.Second)
 	go func() {
 		defer g.blockPublishHandler.UnregisterBlockPublish(blockPublishWatcher)
+		defer timer.Stop()
 		for {
 			select {
 			case ackReply := <-observer:
+				if DEBUGTLC {
+					fmt.Printf("ACK Received from %s with ID %d \n", ackReply.Origin, ackReply.ID)
+				}
+
 				newOrigin := ackReply.Origin
 				// check whether it already exist in the list
 				existence := false
@@ -122,12 +129,21 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 					if DEBUGTLC {
 						fmt.Println("The block publish requirement has been reached!")
 					}
+
+					tlcMessage.Confirmed = true
+					if HW3OUTPUT {
+						fmt.Printf("RE-BROADCAST ID %d WITNESSES %s,etc", tlcMessage.ID, strings.Join(blockPublishWatcher.receivedAcks, ","))
+					}
+
+					// Resend the confirmed TLCMessage
+					g.HandleRumorPacket(&GossipPacket{TLCMessage: tlcMessage}, g.address)
 					return
 				}
 			case <-timer.C:
 				g.HandleRumorPacket(&GossipPacket{TLCMessage: tlcMessage}, g.address)
 			}
 		}
+
 	}()
 }
 
@@ -147,11 +163,20 @@ func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
 
 	ack := g.GenerateAck(gp)
 
+	if HW3OUTPUT {
+		fmt.Printf("SENDING ACK origin %s ID %d \n", ack.Origin, ack.ID)
+	}
+
 	g.SendTLCAck(&GossipPacket{Ack: ack})
 }
 
 func (g *Gossiper) HandleTLCAck(gp *GossipPacket, sender *net.UDPAddr) {
 	dest := gp.Ack.Destination
+
+	if DEBUGTLC {
+		fmt.Printf("Receive ACK From %s To %s with ID %d with HopLimit %d \n", gp.Ack.Destination, gp.Ack.Origin, gp.Ack.ID, gp.Ack.HopLimit)
+	}
+
 	if dest == g.name {
 		g.blockPublishHandler.blockPublishDispatcher.tlcAckChan <- gp.Ack
 		return
@@ -202,6 +227,10 @@ func (g *Gossiper) SendTLCAck(gp *GossipPacket) {
 	if !present {
 		fmt.Printf("Destination %s does not exist in the table \n", dest)
 		return
+	}
+
+	if DEBUGTLC {
+		fmt.Printf("Send TLCAck from %s to %s with %d \n", gp.Ack.Origin, gp.Ack.Destination, gp.Ack.ID)
 	}
 
 	g.SendGossipPacketStrAddr(gp, nextNode)
@@ -259,7 +288,3 @@ func (bp *BlockPublishHandler) ContainFile(tlcMessage *TLCMessage) bool {
 
 	return true
 }
-
-// func (g *Gossiper) HandleTLCAck(cmw *ClientMessageWrapper) {
-
-// }
