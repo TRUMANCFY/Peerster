@@ -9,28 +9,29 @@ Route timer value is 1
 GUI Port is 127.0.0.1:8081 
 Server runs at 127.0.0.1:8081 
 Index File QishanWang.png 
+Handle TLC Message from A 
+Register TLC Message ID 16 
+Receive ACK From A To B with ID 16 with HopLimit 10 
+ACK Received from B with ID 16 
 Handle TLC Message from E 
 UNCONFIRMED GOSSIP origin E ID 12 file name Shaokang.png size 913250 metahash 32353731373138633964316434626265393830376466323166306464383432303964333662343138656131356361333530633235383439356364626534373464 
 SENDING ACK origin A ID 12 
 Send TLCAck from A to E with 12 
-Handle TLC Message from A 
-Register TLC Message ID 16 
+Handle TLC Message from E 
+UNCONFIRMED GOSSIP origin E ID 12 file name Shaokang.png size 913250 metahash 32353731373138633964316434626265393830376466323166306464383432303964333662343138656131356361333530633235383439356364626534373464 
 Handle TLC Message from E 
 CONFIRMED GOSSIP origin E ID 13 file name Shaokang.png size 913250 metahash 32353731373138633964316434626265393830376466323166306464383432303964333662343138656131356361333530633235383439356364626534373464 
-Handle TLC Message from E 
-CONFIRMED GOSSIP origin E ID 13 file name Shaokang.png size 913250 metahash 32353731373138633964316434626265393830376466323166306464383432303964333662343138656131356361333530633235383439356364626534373464 
-Receive ACK From A To B with ID 16 with HopLimit 10 
-ACK Received from B with ID 16 
 Receive ACK From A To C with ID 16 with HopLimit 9 
 ACK Received from C with ID 16 
 The block publish requirement has been reached!
 RE-BROADCAST ID 16 WITNESSES A,B,C,etcHandle TLC Message from A 
 Unregister TLC Message ID 16 
-Receive ACK From A To E with ID 16 with HopLimit 8 
-The tlc tag does not exist
 Receive ACK From A To D with ID 16 with HopLimit 8 
 The tlc tag does not exist
-Handle TLC Message from A 
+Handle TLC Message from E 
+CONFIRMED GOSSIP origin E ID 13 file name Shaokang.png size 913250 metahash 32353731373138633964316434626265393830376466323166306464383432303964333662343138656131356361333530633235383439356364626534373464 
+Receive ACK From A To E with ID 16 with HopLimit 8 
+The tlc tag does not exist
 Handle TLC Message from A 
 Ask AgetfromE.png from dest E meta 2571718c9d1d4bbe9807df21f0dd84209d36b418ea15ca350c258495cdbe474d 
 DOWNLOADING metafile of AgetfromE.png from E 

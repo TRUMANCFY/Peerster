@@ -66,7 +66,7 @@ func (g *Gossiper) AnnounceFile(f *File) {
 	tlcMessage := &TLCMessage{
 		Origin:      g.name,
 		ID:          g.currentID.currentID,
-		Confirmed:   false,
+		Confirmed:   0,
 		TxBlock:     blockPublish,
 		VectorClock: nil,
 		Fitness:     0,
@@ -131,11 +131,11 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 					}
 
 					if HW3OUTPUT {
-						fmt.Printf("RE-BROADCAST ID %d WITNESSES %s,etc", tlcMessage.ID, strings.Join(blockPublishWatcher.receivedAcks, ","))
+						fmt.Printf("RE-BROADCAST ID %d WITNESSES %s,etc \n", tlcMessage.ID, strings.Join(blockPublishWatcher.receivedAcks, ","))
 					}
 
 					// Resend the confirmed TLCMessage
-					tlcMessage.Confirmed = true
+					tlcMessage.Confirmed = tlcMessage.ID
 
 					g.currentID.Mux.Lock()
 					tlcMessage.ID = g.currentID.currentID
@@ -246,7 +246,7 @@ func (bp *BlockPublishHandler) ContainFile(tlcMessage *TLCMessage) bool {
 	bp.blockPublishList.Mux.Lock()
 	defer bp.blockPublishList.Mux.Unlock()
 
-	if tlcMessage.Confirmed {
+	if tlcMessage.Confirmed > 0 {
 		// already confirmed
 		if HW3OUTPUT {
 			fmt.Printf("CONFIRMED GOSSIP origin %s ID %d file name %s size %d metahash %x \n",
