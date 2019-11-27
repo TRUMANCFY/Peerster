@@ -130,12 +130,18 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 						fmt.Println("The block publish requirement has been reached!")
 					}
 
-					tlcMessage.Confirmed = true
 					if HW3OUTPUT {
 						fmt.Printf("RE-BROADCAST ID %d WITNESSES %s,etc", tlcMessage.ID, strings.Join(blockPublishWatcher.receivedAcks, ","))
 					}
 
 					// Resend the confirmed TLCMessage
+					tlcMessage.Confirmed = true
+
+					g.currentID.Mux.Lock()
+					tlcMessage.ID = g.currentID.currentID
+					g.currentID.currentID++
+					g.currentID.Mux.Unlock()
+
 					g.HandleRumorPacket(&GossipPacket{TLCMessage: tlcMessage}, g.address)
 					return
 				}
