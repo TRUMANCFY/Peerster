@@ -36,15 +36,24 @@ func (g *Gossiper) RunRoutingMessage() {
 }
 
 func (g *Gossiper) updateRouteTable(gp *GossipPacket, senderAddrStr string) {
-	// if the roumour is from my self should end
-	if gp.TLCMessage != nil {
-		// if it is tlc message, it wont involve in the route table update
-		return
+	// if tlc message also need to update the tlc
+	// if gp.TLCMessage != nil {
+	// 	return
+	// }
+
+	var origin string
+	var id uint32
+
+	if gp.Rumor != nil {
+		origin = gp.Rumor.Origin
+		id = gp.Rumor.ID
+	} else if gp.TLCMessage != nil {
+		origin = gp.TLCMessage.Origin
+		id = gp.TLCMessage.ID
 	}
 
-	newRumor := gp.Rumor
-
-	if newRumor.Origin == g.name {
+	// No update
+	if origin == g.name {
 		return
 	}
 
@@ -52,42 +61,45 @@ func (g *Gossiper) updateRouteTable(gp *GossipPacket, senderAddrStr string) {
 	g.routeTable.Mux.Lock()
 	defer g.routeTable.Mux.Unlock()
 
-	origin := newRumor.Origin
 	prevAddr, present := g.routeTable.routeTable[origin]
 
 	if !present {
 		g.routeTable.routeTable[origin] = senderAddrStr
-		g.routeTable.IDTable[origin] = newRumor.ID
-		if newRumor.Text != "" {
-			// OUTPUT
-			fmt.Printf("DSDV %s %s \n", origin, senderAddrStr)
-			// fmt.Printf("Text is %s \n", newRumor.Text)
+		g.routeTable.IDTable[origin] = id
+		if gp.Rumor != nil {
+			if gp.Rumor.Text != "" {
+				// OUTPUT
+				fmt.Printf("DSDV %s %s \n", origin, senderAddrStr)
+				// fmt.Printf("Text is %s \n", newRumor.Text)
+			}
 		}
 		return
 	}
 
-	id, _ := g.routeTable.IDTable[origin]
+	prev_id, _ := g.routeTable.IDTable[origin]
 
-	if id < newRumor.ID {
+	if prev_id < id {
 		if DEBUGROUTE {
-			fmt.Printf("Origin: %s ID from %d to %d \n", origin, id, newRumor.ID)
+			fmt.Printf("Origin: %s ID %d \n", origin, id)
 		}
-		g.routeTable.IDTable[origin] = newRumor.ID
+		g.routeTable.IDTable[origin] = id
 		if prevAddr != senderAddrStr {
 			g.routeTable.routeTable[origin] = senderAddrStr
 
 			if DEBUGROUTE {
 				g.PrintPeers()
-				fmt.Printf("Route Rumor Origin: %s, ID: %d from %s \n", newRumor.Origin, newRumor.ID, senderAddrStr)
+				fmt.Printf("Route Rumor Origin: %s, ID: %d from %s \n", origin, id, senderAddrStr)
 				fmt.Println(g.routeTable.routeTable)
 			}
 
-			if newRumor.Text != "" {
-				// OUTPUT
-				fmt.Printf("DSDV %s %s \n", origin, senderAddrStr)
+			if gp.Rumor != nil {
+				if gp.Rumor.Text != "" {
+					// OUTPUT
+					fmt.Printf("DSDV %s %s \n", origin, senderAddrStr)
+				}
 			}
-		}
 
+		}
 	}
 }
 

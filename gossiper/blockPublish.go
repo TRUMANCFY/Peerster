@@ -74,10 +74,25 @@ func (g *Gossiper) AnnounceFile(f *File) {
 	g.currentID.currentID++
 	g.currentID.Mux.Unlock()
 
-	g.SendTLCMessage(tlcMessage)
+	if g.hw3ex2 {
+		g.SendTLCMessage(tlcMessage)
+	} else if g.hw3ex3 {
+		g.roundHandler.my_time.Mux.Lock()
+		if g.roundHandler.firstRound {
+			g.SendTLCMessage(tlcMessage)
+			g.roundHandler.messageChan <- tlcMessage
+			g.roundHandler.firstRound = false
+		} else {
+			g.roundHandler.messageChan <- tlcMessage
+		}
+		g.roundHandler.my_time.Mux.Unlock()
+	}
 }
 
 func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
+	if DEBUGTLC {
+		fmt.Printf("Send TLCMessage from %s ID %d Confirmed %d \n", tlcMessage.Origin, tlcMessage.ID, tlcMessage.Confirmed)
+	}
 	g.HandleRumorPacket(&GossipPacket{TLCMessage: tlcMessage}, g.address)
 	observer := make(chan *TLCAck, CHANNEL_BUFFER_SIZE)
 	receivedNodes := make([]string, 0)
@@ -154,17 +169,52 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 }
 
 func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
-	fmt.Printf("Handle TLC Message from %s \n", gp.TLCMessage.Origin)
+	fmt.Printf("Handle TLC Message Origin %s from %s \n", gp.TLCMessage.Origin, senderAddr.String())
 	if gp.TLCMessage.Origin == g.name {
 		return
 	}
 
 	tlcMessage := gp.TLCMessage
+
+	if HW3OUTPUT {
+		if tlcMessage.Confirmed > 0 {
+			// already confirmed
+			fmt.Printf("CONFIRMED GOSSIP origin %s ID %d file name %s size %d metahash %x \n",
+				tlcMessage.Origin,
+				tlcMessage.ID,
+				tlcMessage.TxBlock.Transaction.Name,
+				tlcMessage.TxBlock.Transaction.Size,
+				hex.EncodeToString(tlcMessage.TxBlock.Transaction.MetafileHash))
+		} else {
+			fmt.Printf("UNCONFIRMED GOSSIP origin %s ID %d file name %s size %d metahash %x \n",
+				tlcMessage.Origin,
+				tlcMessage.ID,
+				tlcMessage.TxBlock.Transaction.Name,
+				tlcMessage.TxBlock.Transaction.Size,
+				hex.EncodeToString(tlcMessage.TxBlock.Transaction.MetafileHash))
+		}
+	}
 	// check whether the file name already exist
 	valid := g.blockPublishHandler.ContainFile(tlcMessage)
 
 	if !valid {
 		return
+	}
+
+	// check round: if the message round is smaller than the current round, we will not ack
+	if g.hw3ex3 {
+		round := g.GetRound(gp)
+
+		g.roundHandler.my_time.Mux.Lock()
+		currentRound := g.roundHandler.my_time.round
+		g.roundHandler.my_time.Mux.Unlock()
+
+		if int(currentRound) > round {
+			if DEBUGTLC {
+				fmt.Printf("Round Behind: current: %d, received: %d \n", currentRound, round)
+			}
+			return
+		}
 	}
 
 	ack := g.GenerateAck(gp)
@@ -247,26 +297,7 @@ func (bp *BlockPublishHandler) ContainFile(tlcMessage *TLCMessage) bool {
 	defer bp.blockPublishList.Mux.Unlock()
 
 	if tlcMessage.Confirmed > 0 {
-		// already confirmed
-		if HW3OUTPUT {
-			fmt.Printf("CONFIRMED GOSSIP origin %s ID %d file name %s size %d metahash %x \n",
-				tlcMessage.Origin,
-				tlcMessage.ID,
-				tlcMessage.TxBlock.Transaction.Name,
-				tlcMessage.TxBlock.Transaction.Size,
-				hex.EncodeToString(tlcMessage.TxBlock.Transaction.MetafileHash))
-		}
-
 		return false
-	}
-
-	if HW3OUTPUT {
-		fmt.Printf("UNCONFIRMED GOSSIP origin %s ID %d file name %s size %d metahash %x \n",
-			tlcMessage.Origin,
-			tlcMessage.ID,
-			tlcMessage.TxBlock.Transaction.Name,
-			tlcMessage.TxBlock.Transaction.Size,
-			hex.EncodeToString(tlcMessage.TxBlock.Transaction.MetafileHash))
 	}
 
 	inputFileName := tlcMessage.TxBlock.Transaction.Name

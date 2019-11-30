@@ -29,7 +29,7 @@ const GUI_ADDR = "127.0.0.1:8080"
 const DEBUG = false
 const DEBUGFILE = false
 const DEBUGROUTE = false
-const DEBUGSEARCH = false
+const DEBUGSEARCH = true
 const DEBUGTLC = true
 
 const HW1OUTPUT = false
@@ -92,6 +92,11 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		Mux:       &sync.Mutex{},
 	}
 
+	bufferMsg := &MsgBuffer{
+		msgBuffer: make(map[string](map[uint32]*GossipPacket)),
+		Mux:       &sync.Mutex{},
+	}
+
 	return &Gossiper{
 		address: udpAddr,
 		conn:    udpConn,
@@ -125,6 +130,7 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 		hw3ex4:             hw3ex4,
 		numNodes:           numNodes,
 		stubbornTimeout:    stubbornTimeout,
+		bufferMsg:          bufferMsg,
 	}
 }
 
@@ -150,7 +156,14 @@ func (g *Gossiper) Run() {
 	go g.RunFileSystem()
 
 	// BlockPublishHandler
-	g.blockPublishHandler = NewBlockPublishHandler(g.name, g.numNodes)
+	if g.hw3ex2 || g.hw3ex3 {
+		g.blockPublishHandler = NewBlockPublishHandler(g.name, g.numNodes)
+	}
+
+	if g.hw3ex3 {
+		g.roundHandler = NewRoundHandler(g.name)
+		go g.RunRound()
+	}
 
 	g.dispatcher = StartPeerStatusDispatcher()
 	g.Listen(peerListener, clientListener)
@@ -266,7 +279,6 @@ func (g *Gossiper) HandlePeerMessage(gpw *GossipPacketWrapper) {
 		g.HandlePrivatePacket(packet.Private, sender)
 	case packet.DataReply != nil:
 		g.HandleDataReply(packet.DataReply, sender)
-
 	case packet.DataRequest != nil:
 		g.HandleDataRequest(packet.DataRequest, sender)
 	case packet.SearchReply != nil:

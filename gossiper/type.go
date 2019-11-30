@@ -42,9 +42,14 @@ type Gossiper struct {
 	numNodes            int
 	stubbornTimeout     int
 	blockPublishHandler *BlockPublishHandler
+	roundHandler        *RoundHandler
+	bufferMsg           *MsgBuffer
 }
 
-// rumorList           map[string](map[uint32]RumorMessage)
+type MsgBuffer struct {
+	msgBuffer map[string](map[uint32]*GossipPacket)
+	Mux       *sync.Mutex
+}
 
 type CurrentID struct {
 	currentID uint32

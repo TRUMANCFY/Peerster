@@ -31,19 +31,20 @@ cd ..
 # ./client -UIPort=8001 -dest=E -msg=PrivateFromAToE &
 # ./client -UIPort=8005 -dest=A -msg=PrivateFromEToA &
 
-./Peerster -gossipAddr=127.0.0.1:5001 -gui -GUIPort=8081 -peers=127.0.0.1:5002 -name=A -UIPort=8001 -rtimer=1 -N=5 > A.txt &
+./Peerster -gossipAddr=127.0.0.1:5001 -gui -GUIPort=8081 -peers=127.0.0.1:5002 -name=A -UIPort=8001 -rtimer=1 -N=5 -hw3ex2 > A.txt &
 sleep 1
-./Peerster -gossipAddr=127.0.0.1:5002 -gui -GUIPort=8082 -peers=127.0.0.1:5003 -name=B -UIPort=8002 -rtimer=1 -N=5 > B.txt &
+./Peerster -gossipAddr=127.0.0.1:5002 -gui -GUIPort=8082 -peers=127.0.0.1:5003 -name=B -UIPort=8002 -rtimer=1 -N=5 -hw3ex2 > B.txt &
 sleep 1
-./Peerster -gossipAddr=127.0.0.1:5003 -gui -GUIPort=8083 -peers=127.0.0.1:5004 -name=C -UIPort=8003 -rtimer=1 -N=5 > C.txt &
+./Peerster -gossipAddr=127.0.0.1:5003 -gui -GUIPort=8083 -peers=127.0.0.1:5004 -name=C -UIPort=8003 -rtimer=1 -N=5 -hw3ex2 > C.txt &
 sleep 1
-./Peerster -gossipAddr=127.0.0.1:5004 -gui -GUIPort=8084 -peers=127.0.0.1:5003 -name=D -UIPort=8004 -rtimer=1 -N=5 > D.txt &
+./Peerster -gossipAddr=127.0.0.1:5004 -gui -GUIPort=8084 -peers=127.0.0.1:5003 -name=D -UIPort=8004 -rtimer=1 -N=5 -hw3ex2 > D.txt &
 sleep 1
-./Peerster -gossipAddr=127.0.0.1:5005 -gui -GUIPort=8085 -peers=127.0.0.1:5003 -name=E -UIPort=8005 -rtimer=1 -N=5 > E.txt &
+./Peerster -gossipAddr=127.0.0.1:5005 -gui -GUIPort=8085 -peers=127.0.0.1:5003 -name=E -UIPort=8005 -rtimer=1 -N=5 -hw3ex2 > E.txt &
 
 sleep 10
 cd client/
 ./client -UIPort=8001 -file=QishanWang.png &
+./client -UIPort=8003 -file=Shaokang.png &
 ./client -UIPort=8005 -file=Shaokang.png &
 
 sleep 1

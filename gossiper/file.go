@@ -667,7 +667,9 @@ func (g *Gossiper) FileIndexingRequest(filename string) {
 	}
 
 	// after indexing we need to broadcast that we have indexed a new file
-	g.AnnounceFile(fileIndexed)
+	if g.hw3ex2 || g.hw3ex3 {
+		g.AnnounceFile(fileIndexed)
+	}
 
 	// fmt.Println("FURTHER VERIFIED")
 	// for h, k := range f.fileChunks {

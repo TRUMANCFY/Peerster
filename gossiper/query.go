@@ -17,12 +17,12 @@ type Query struct {
 	keywords  []string
 	qLock     *sync.Mutex
 	Result    []SHA256_HASH
+	FullMatch int
 }
 
 // TODO: think about what kind of data object is good to maintain the query
 type SearchFile struct {
 	MetafileHash  SHA256_HASH
-	FileName      string
 	ChunkCount    uint64
 	TotalChunkMap []uint64
 	chunkSrc      map[string]*ChunkSource
@@ -31,6 +31,7 @@ type SearchFile struct {
 type ChunkSource struct {
 	Origin   string
 	ChunkMap []uint64
+	Filename string
 }
 
 func (f *FileHandler) WatchNewQuery(keywords []string) *Query {
@@ -45,6 +46,7 @@ func (f *FileHandler) WatchNewQuery(keywords []string) *Query {
 		keywords:  keywords,
 		qLock:     &sync.Mutex{},
 		Result:    make([]SHA256_HASH, 0),
+		FullMatch: 0,
 	}
 
 	// increase the current query ID
@@ -69,10 +71,13 @@ func (f *FileHandler) WatchNewQuery(keywords []string) *Query {
 			q.matchWithKeywords(searchReply)
 
 			if q.isDone() {
-				fmt.Println("SEARCH FINISH")
+				fmt.Println("SEARCH FINISHED")
+
 				f.searchFiles.Mux.Lock()
 				for _, sha := range q.Result {
+					q.qLock.Lock()
 					f.searchFiles.searchedFiles[sha] = q.fileInfo[sha]
+					q.qLock.Unlock()
 				}
 				f.searchFiles.Mux.Unlock()
 				return
@@ -87,7 +92,6 @@ func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 	searchResult := searchReply.Results
 	// check whether this data reply contains what we need
 	q.qLock.Lock()
-	defer q.qLock.Unlock()
 
 	for _, kw := range q.keywords {
 		for _, sr := range searchResult {
@@ -99,7 +103,9 @@ func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 				}
 
 				// Print std output
-				fmt.Printf("FOUND match %s at %s metafile=%x chunks=%s \n", sr.FileName, searchReply.Origin, sr.MetafileHash, strings.Join(chunkStr, ","))
+				if HW3OUTPUT {
+					fmt.Printf("FOUND match %s at %s metafile=%x chunks=%s \n", sr.FileName, searchReply.Origin, sr.MetafileHash, strings.Join(chunkStr, ","))
+				}
 				// check the query whether it already know about this information
 				sha, _ := HashToSha256(sr.MetafileHash)
 				searchFile, present := q.fileInfo[sha]
@@ -112,6 +118,7 @@ func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 					chunkSrc[searchReply.Origin] = &ChunkSource{
 						Origin:   searchReply.Origin,
 						ChunkMap: sr.ChunkMap,
+						Filename: sr.FileName,
 					}
 
 					totalChunkMap := make([]uint64, sr.ChunkCount)
@@ -128,7 +135,6 @@ func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 
 					q.fileInfo[sha] = &SearchFile{
 						MetafileHash:  sha,
-						FileName:      sr.FileName,
 						ChunkCount:    sr.ChunkCount,
 						TotalChunkMap: totalChunkMap,
 						chunkSrc:      chunkSrc,
@@ -144,6 +150,7 @@ func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 					for _, ind := range sr.ChunkMap {
 						q.fileInfo[sha].TotalChunkMap[ind-1] = uint64(1)
 					}
+
 					// TODO: think about whether we should update here????
 					// if what we received is the same file with the same origin
 					_, present := searchFile.chunkSrc[searchReply.Origin]
@@ -152,6 +159,7 @@ func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 						q.fileInfo[sha].chunkSrc[searchReply.Origin] = &ChunkSource{
 							Origin:   searchReply.Origin,
 							ChunkMap: sr.ChunkMap,
+							Filename: sr.FileName,
 						}
 					}
 
@@ -160,26 +168,68 @@ func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 		}
 	}
 
+	q.qLock.Unlock()
+
 	q.GenerateDownloadList()
 }
 
 func (q *Query) GenerateDownloadList() {
 	downloadList := make([]SHA256_HASH, 0)
 
-	for sha, sf := range q.fileInfo {
-		existingChunkNum := sum(sf.TotalChunkMap)
+	// HASH - FILENAME - NODE
+	shaFilenameRecord := make(map[SHA256_HASH](map[string](map[string]bool)))
 
-		// fulfill the requirement
-		if existingChunkNum == sf.ChunkCount {
-			downloadList = append(downloadList, sha)
+	for sha, sf := range q.fileInfo {
+		// outdated
+		// existingChunkNum := sum(sf.TotalChunkMap)
+
+		// // fulfill the requirement
+		// if existingChunkNum == sf.ChunkCount {
+		// 	downloadList = append(downloadList, sha)
+		// }
+
+		// the current one is (hash, filename) all the chunks in the one node
+		for _, src := range sf.chunkSrc {
+			if uint64(len(src.ChunkMap)) == sf.ChunkCount {
+				// this is a full match
+				_, present := shaFilenameRecord[sha]
+				if !present {
+					shaFilenameRecord[sha] = make(map[string](map[string]bool))
+					shaFilenameRecord[sha][src.Filename] = make(map[string]bool)
+					shaFilenameRecord[sha][src.Filename][src.Origin] = true
+				} else {
+					_, present = shaFilenameRecord[sha][src.Filename]
+					if !present {
+						shaFilenameRecord[sha][src.Filename] = make(map[string]bool)
+					}
+					shaFilenameRecord[sha][src.Filename][src.Origin] = true
+				}
+			}
+		}
+	}
+	// get the number first
+	num := 0
+	for sha, filenameOriginMap := range shaFilenameRecord {
+		downloadList = append(downloadList, sha)
+		for _, originMap := range filenameOriginMap {
+			for _, _ = range originMap {
+				num++
+			}
 		}
 	}
 
+	q.qLock.Lock()
 	q.Result = downloadList
+	q.FullMatch = num
+	q.qLock.Unlock()
+
 }
 
 func (q *Query) isDone() bool {
-	if len(q.Result) >= MATCH_THRESHOLD {
+	// if len(q.Result) >= MATCH_THRESHOLD {
+	// 	return true
+	// }
+	if q.FullMatch >= MATCH_THRESHOLD {
 		return true
 	}
 	return false

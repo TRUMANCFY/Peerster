@@ -78,13 +78,26 @@ func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) 
 		}
 
 		// send the rumor the sender want
-
-		// TODO-2: update the rumorTable
-
 	case diff < 0:
 		if DEBUG {
 			fmt.Println("The new coming rumor ID is larger than our local")
 		}
+
+		// we need to keep some advanced in our buffer
+		if g.hw3ex3 {
+			if gp.TLCMessage != nil {
+				fmt.Printf("We have buffer TLC message from %s with ID %d \n", gp.TLCMessage.Origin, gp.TLCMessage.ID)
+				g.bufferMsg.Mux.Lock()
+				_, present := g.bufferMsg.msgBuffer[gp.TLCMessage.Origin]
+				if !present {
+					g.bufferMsg.msgBuffer[gp.TLCMessage.Origin] = make(map[uint32]*GossipPacket)
+				}
+
+				g.bufferMsg.msgBuffer[gp.TLCMessage.Origin][gp.TLCMessage.ID] = gp
+				g.bufferMsg.Mux.Unlock()
+			}
+		}
+
 	}
 
 	// Send the StatusMessageToSender if the rumor is not from self
@@ -279,6 +292,21 @@ func (g *Gossiper) AcceptRumor(gp *GossipPacket) {
 			NextID:     messageID + 1,
 		}
 		g.peerStatusesLock.Unlock()
+	}
+
+	// check the buffer
+	if g.hw3ex3 {
+		if gp.TLCMessage != nil {
+			g.bufferMsg.Mux.Lock()
+			idGpMap, presentOrigin := g.bufferMsg.msgBuffer[origin]
+			g.bufferMsg.Mux.Unlock()
+			if presentOrigin {
+				newGp, presentID := idGpMap[messageID+1]
+				if presentID {
+					go g.AcceptRumor(newGp)
+				}
+			}
+		}
 	}
 }
 

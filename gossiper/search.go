@@ -1,10 +1,9 @@
 package gossiper
 
 import (
+	"crypto/sha256"
 	"fmt"
-	"math/rand"
 	"net"
-	"regexp"
 	"sort"
 	"strings"
 	"sync"
@@ -77,26 +76,30 @@ func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
 		// TODO: In this case, if the budget is not enough just leave the query channel here?????
 		g.HandleSearchRequest(searchRequest, nil)
 	} else {
-		// TODO: expotenial
-		budget = 2
 
-		for !(query.isDone() || budget > MAX_BUDGET) {
-			fmt.Println("EXP BUDGET ", budget)
-			searchRequest := &SearchRequest{
-				Origin:   g.name,
-				Budget:   budget,
-				Keywords: keywords,
+		go func() {
+			budget = 2
+			for !(query.isDone() || budget > MAX_BUDGET) {
+				fmt.Println("EXP BUDGET ", budget)
+				searchRequest := &SearchRequest{
+					Origin:   g.name,
+					Budget:   budget,
+					Keywords: keywords,
+				}
+
+				go g.HandleSearchRequest(searchRequest, nil)
+
+				time.Sleep(EXP_SLEEP_TIME)
+				budget *= 2
 			}
-
-			go g.HandleSearchRequest(searchRequest, nil)
-
-			time.Sleep(EXP_SLEEP_TIME)
-			budget *= 2
-		}
+		}()
 	}
 }
 
 func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net.UDPAddr) {
+	if DEBUGSEARCH {
+		fmt.Printf("Received Search Request from %s with Budget %d Origin %s \n", sender.String(), searchRequest.Budget, searchRequest.Origin)
+	}
 	// check whether the search request has 0.5 second later
 	valid := g.fileHandler.searchHandler.checkDuplicate(searchRequest)
 
@@ -107,10 +110,12 @@ func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net
 	}
 
 	// forward request to the neighbors
-	go g.DistributeSearchRequest(searchRequest, sender)
+	g.DistributeSearchRequest(searchRequest, sender)
 
-	// local search
-	g.LocalSearch(searchRequest)
+	// local search (and if the node is sender, no need for local search)
+	if sender != nil {
+		g.LocalSearch(searchRequest)
+	}
 }
 
 func (g *Gossiper) HandleSearchReply(searchReply *SearchReply, sender *net.UDPAddr) {
@@ -119,7 +124,6 @@ func (g *Gossiper) HandleSearchReply(searchReply *SearchReply, sender *net.UDPAd
 	}
 
 	if searchReply.Destination == g.name {
-		// TODO: accept the reply
 		g.fileHandler.searchDispatcher.searchReplyChan <- searchReply
 		return
 	}
@@ -137,15 +141,31 @@ func (g *Gossiper) HandleSearchReply(searchReply *SearchReply, sender *net.UDPAd
 			fmt.Println("Route Search Reply Fails")
 		}
 	}
-
 }
 
 func (g *Gossiper) LocalSearch(searchRequest *SearchRequest) {
+	if DEBUGSEARCH {
+		fmt.Printf("Start Local Search for keywords: %s \n", strings.Join(searchRequest.Keywords, ","))
+	}
+
 	searchedFiles := g.fileHandler.SearchFileKeywords(searchRequest.Keywords)
 
-	searchReply := g.fileHandler.searchHandler.GenerateSearchReply(searchedFiles, searchRequest.Origin)
+	if DEBUGSEARCH {
+		fmt.Printf("Found %d files \n", len(searchedFiles))
+	}
+
+	if len(searchedFiles) == 0 {
+		return
+	}
+
+	searchReply := g.fileHandler.GenerateSearchReply(searchedFiles, searchRequest.Origin)
+
+	if DEBUGSEARCH {
+		fmt.Printf("Generate Reply to %s with %d results \n", searchReply.Destination, len(searchReply.Results))
+	}
 
 	g.RouteSearchReply(searchReply)
+
 }
 
 func (g *Gossiper) RouteSearchReply(searchReply *SearchReply) bool {
@@ -156,13 +176,13 @@ func (g *Gossiper) RouteSearchReply(searchReply *SearchReply) bool {
 	g.routeTable.Mux.Unlock()
 
 	if !present {
-		if DEBUGFILE {
+		if DEBUGSEARCH {
 			fmt.Println("Destination %s does not exist in the table \n", dest)
 		}
 		return false
 	}
 
-	if DEBUGFILE {
+	if DEBUGSEARCH {
 		fmt.Printf("Send the searchReply Dest: %s to Nextnode %s \n", dest, nextNode)
 	}
 
@@ -174,13 +194,6 @@ func (g *Gossiper) RouteSearchReply(searchReply *SearchReply) bool {
 func (f *FileHandler) SearchFileKeywords(keywords []string) []*File {
 
 	fmt.Println("Search ", strings.Join(keywords, ","))
-	regExpList := make([]*regexp.Regexp, 0)
-
-	// have a list of reg
-	for _, kw := range keywords {
-		kwRegExp, _ := regexp.Compile(kw)
-		regExpList = append(regExpList, kwRegExp)
-	}
 
 	flag := false
 	searchedFile := make([]*File, 0)
@@ -189,9 +202,8 @@ func (f *FileHandler) SearchFileKeywords(keywords []string) []*File {
 
 	for _, file := range f.files {
 		flag = false
-		for _, re := range regExpList {
-			matchedStr := re.FindString(file.Name)
-			if matchedStr != "" {
+		for _, kw := range keywords {
+			if strings.Contains(file.Name, kw) {
 				flag = true
 			}
 		}
@@ -203,33 +215,71 @@ func (f *FileHandler) SearchFileKeywords(keywords []string) []*File {
 
 	f.filesLock.Unlock()
 
-	fmt.Println(searchedFile)
-
 	return searchedFile
 }
 
-func (s *SearchHandler) GenerateSearchResult(searchedFiles []*File) []*SearchResult {
+func (fh *FileHandler) GenerateSearchResult(searchedFiles []*File) []*SearchResult {
 	searchResults := make([]*SearchResult, 0)
 
 	for _, f := range searchedFiles {
+		// searchR := &SearchResult{
+		// 	FileName:     f.Name,
+		// 	MetafileHash: f.MetafileHash[:],
+		// 	ChunkMap:     f.ChunkMap,
+		// 	ChunkCount:   f.ChunkCount,
+		// }
+
+		// generate chunkMap and chunkCount
+
+		chunkMap := fh.chunkMap(f)
+		chunkCount := f.chunkCount()
+
 		searchR := &SearchResult{
 			FileName:     f.Name,
 			MetafileHash: f.MetafileHash[:],
-			ChunkMap:     f.ChunkMap,
-			ChunkCount:   f.ChunkCount,
+			ChunkMap:     chunkMap,
+			ChunkCount:   chunkCount,
 		}
 
 		searchResults = append(searchResults, searchR)
 	}
 
+	if DEBUGSEARCH {
+		fmt.Printf("Found %d results \n", len(searchResults))
+	}
+
 	return searchResults
 }
 
-func (s *SearchHandler) GenerateSearchReply(searchedFiles []*File, dest string) *SearchReply {
-	searchResult := s.GenerateSearchResult(searchedFiles)
+func (fh *FileHandler) chunkMap(f *File) []uint64 {
+	chunkMap := make([]uint64, 0)
+	numChunks := len(f.Metafile) / sha256.Size
+
+	for i := 0; i < numChunks; i++ {
+		metaChunk, _ := HashToSha256(f.Metafile[i*sha256.Size : (i+1)*sha256.Size])
+		fh.fileChunksLock.Lock()
+		if _, present := fh.fileChunks[metaChunk]; present {
+			chunkMap = append(chunkMap, uint64(i+1))
+		}
+		fh.fileChunksLock.Unlock()
+	}
+
+	if DEBUGSEARCH {
+		fmt.Printf("File %s with %d chunks \n", f.Name, len(chunkMap))
+	}
+
+	return chunkMap
+}
+
+func (f *File) chunkCount() uint64 {
+	return uint64(len(f.Metafile) / sha256.Size)
+}
+
+func (fh *FileHandler) GenerateSearchReply(searchedFiles []*File, dest string) *SearchReply {
+	searchResult := fh.GenerateSearchResult(searchedFiles)
 
 	searchReply := &SearchReply{
-		Origin:      s.Name,
+		Origin:      fh.Name,
 		Destination: dest,
 		HopLimit:    HOPLIMIT,
 		Results:     searchResult,
@@ -274,8 +324,6 @@ func (s *SearchHandler) checkDuplicate(searchRequest *SearchRequest) bool {
 	} else {
 		return false
 	}
-
-	return false
 }
 
 func (g *Gossiper) DistributeSearchRequest(searchRequest *SearchRequest, sender *net.UDPAddr) {
@@ -289,10 +337,6 @@ func (g *Gossiper) DistributeSearchRequest(searchRequest *SearchRequest, sender 
 	// the budget is enough to redistribute
 	// the budget will be decreased by 1
 	taskDistribution := g.DistributeBudget(searchRequest.Budget-1, sender)
-
-	for _, td := range taskDistribution {
-		fmt.Printf("Peer: %s Budget: %d \n", td.Peer, td.Budget)
-	}
 
 	g.SpreadSearchRequest(searchRequest, taskDistribution)
 }
@@ -338,26 +382,32 @@ func (g *Gossiper) DistributeBudget(budget uint64, sender *net.UDPAddr) []TaskDi
 	}
 
 	numNeighbor := len(neighbors)
-	baseInt := int(budget) / numNeighbor
-	leftInt := int(budget) % numNeighbor
+	baseInt := budget / uint64(numNeighbor)
+	leftInt := budget % uint64(numNeighbor)
 
 	budgetList := make([]uint64, numNeighbor)
 
 	for ind := range budgetList {
-		if ind < leftInt {
-			budgetList[ind] = uint64(baseInt + 1)
+		if uint64(ind) < leftInt {
+			budgetList[ind] = baseInt + 1
 		} else {
-			budgetList[ind] = uint64(baseInt)
+			budgetList[ind] = baseInt
 		}
 	}
 
 	// shuffle the neighbors
-	rand.Shuffle(numNeighbor, func(i, j int) { neighbors[i], neighbors[j] = neighbors[j], neighbors[i] })
+	// rand.Shuffle(numNeighbor, func(i, j int) { neighbors[i], neighbors[j] = neighbors[j], neighbors[i] })
+
+	fmt.Println("Total Budget is ", budget)
 
 	for ind := range neighbors {
 		task := TaskDistribution{
 			Peer:   neighbors[ind],
 			Budget: budgetList[ind],
+		}
+
+		if DEBUGSEARCH {
+			fmt.Printf("=== Peer Target: %s; Budget: %d === \n", task.Peer, task.Budget)
 		}
 		taskDistribution = append(taskDistribution, task)
 	}
@@ -390,9 +440,9 @@ func (s *SearchHandler) prepareNewReply(searchReply *SearchReply) (*SearchReply,
 	}
 
 	newSearchReply := &SearchReply{
-		Origin:      searchReply.Origin,
 		Destination: searchReply.Destination,
 		HopLimit:    searchReply.HopLimit - 1,
+		Origin:      searchReply.Origin,
 		Results:     searchReply.Results,
 	}
 

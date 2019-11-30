@@ -72,6 +72,8 @@ func (bpd *BlockPublishDispatcher) WatchTLCAck() {
 							fmt.Println("The tlc tag does not exist!!!")
 						}
 					} else {
+						// close the routine
+						close(ackObserver[regTag.TagID])
 						delete(ackObserver, regTag.TagID)
 					}
 				}
@@ -89,33 +91,4 @@ func (bpd *BlockPublishDispatcher) WatchTLCAck() {
 			}
 		}
 	}()
-
-	// go func() {
-	// 	for {
-	// 		select {
-	// 		case regTag := <-sd.registerChan:
-	// 			switch regTag.msgType {
-	// 			case TakeIn:
-	// 				fmt.Printf("Query Register ID %d \n", regTag.TagID)
-	// 				queryObserver[regTag.TagID] = regTag.observer
-	// 				break
-	// 			case TakeOut:
-	// 				fmt.Printf("Query Unregister ID %d \n", regTag.TagID)
-	// 				_, present := queryObserver[regTag.TagID]
-
-	// 				if !present {
-	// 					if DEBUGSEARCH {
-	// 						fmt.Println("The search tag does not exist!")
-	// 					}
-	// 				} else {
-	// 					delete(queryObserver, regTag.TagID)
-	// 				}
-	// 			}
-	// 		case searchReply := <-sd.searchReplyChan:
-	// 			for _, queryChan := range queryObserver {
-	// 				queryChan <- searchReply
-	// 			}
-	// 		}
-	// 	}
-	// }()
 }
