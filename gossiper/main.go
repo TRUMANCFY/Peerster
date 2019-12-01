@@ -29,8 +29,8 @@ const GUI_ADDR = "127.0.0.1:8080"
 const DEBUG = false
 const DEBUGFILE = false
 const DEBUGROUTE = false
-const DEBUGSEARCH = true
-const DEBUGTLC = true
+const DEBUGSEARCH = false
+const DEBUGTLC = false
 
 const HW1OUTPUT = false
 const HW3OUTPUT = true

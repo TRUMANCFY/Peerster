@@ -23,9 +23,9 @@ cd client/
 sleep 2
 ./client -UIPort=8003 -file=Shaokang.png &
 sleep 2
-./client -UIPort=8005 -file=Shaokang.png &
+./client -UIPort=8005 -file=1.png &
 sleep 2
-./client -UIPort=8001 -file=Shaokang.png &
+./client -UIPort=8001 -file=2.png &
 cd ..
 
 sleep 10

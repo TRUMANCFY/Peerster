@@ -150,14 +150,18 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 					}
 
 					// Resend the confirmed TLCMessage
-					tlcMessage.Confirmed = tlcMessage.ID
+					confirmedTLCMessage := &TLCMessage{
+						Confirmed: tlcMessage.ID,
+						Origin:    tlcMessage.Origin,
+						TxBlock:   tlcMessage.TxBlock,
+					}
 
 					g.currentID.Mux.Lock()
-					tlcMessage.ID = g.currentID.currentID
+					confirmedTLCMessage.ID = g.currentID.currentID
 					g.currentID.currentID++
 					g.currentID.Mux.Unlock()
 
-					g.HandleRumorPacket(&GossipPacket{TLCMessage: tlcMessage}, g.address)
+					g.HandleRumorPacket(&GossipPacket{TLCMessage: confirmedTLCMessage}, g.address)
 					return
 				}
 			case <-timer.C:

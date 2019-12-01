@@ -259,7 +259,8 @@ func (g *Gossiper) AcceptRumor(gp *GossipPacket) {
 	} else {
 		fmt.Println("The GossipPacket is illegal!!!")
 	}
-	if DEBUG {
+
+	if DEBUGTLC {
 		fmt.Printf("Accept Rumor Origin: %s ID: %d \n", origin, messageID)
 	}
 
