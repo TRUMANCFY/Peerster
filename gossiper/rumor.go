@@ -19,6 +19,8 @@ func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) 
 	// if sender is self, broadcast (mongering) the rumor
 
 	// if it is a TCLMessage
+	g.updateRouteTable(gp, senderAddr.String())
+
 	if gp.TLCMessage != nil {
 		g.HandleTLCMessage(gp, senderAddr)
 	}
@@ -47,8 +49,6 @@ func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) 
 		fmt.Println("DIFF is", diff)
 	}
 
-	g.updateRouteTable(gp, senderAddr.String())
-
 	// fmt.Printf("The difference between the comming rumor and current peerstatus is %d \n", diff)
 
 	switch {
@@ -58,9 +58,13 @@ func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) 
 		// update the table, maybe have been done in acceptrumor function
 
 		// CHECK
+		if gp == nil {
+			fmt.Println("CP1")
+		}
 		if g.address == senderAddr {
 			// CHECK
 			// The message is from local client
+
 			go g.RumorMongeringPrepare(gp, nil)
 		} else {
 			go g.RumorMongeringPrepare(gp, GenerateStringSetSingleton(senderAddr.String()))
@@ -115,6 +119,9 @@ func (g *Gossiper) RumorMongeringPrepare(gp *GossipPacket, excludedPeers *String
 	randomNeighbor, present := g.SelectRandomNeighbor(excludedPeers)
 
 	if present {
+		if gp == nil {
+			fmt.Println("CP2")
+		}
 		go g.RumorMongeringAddrStr(gp, randomNeighbor)
 	}
 
@@ -224,6 +231,9 @@ func (g *Gossiper) flipCoinRumorMongering(gp *GossipPacket, excludedPeers *Strin
 	// rand.Seed(time.Now().UTC().UnixNano())
 	randInt := rand.Intn(2)
 	if randInt == 0 {
+		if gp == nil {
+			fmt.Println("CP3")
+		}
 		neighborPeer, present := g.RumorMongeringPrepare(gp, excludedPeers)
 
 		if present {
@@ -260,8 +270,16 @@ func (g *Gossiper) AcceptRumor(gp *GossipPacket) {
 		fmt.Println("The GossipPacket is illegal!!!")
 	}
 
-	if DEBUGTLC {
+	if DEBUGTLC || DEBUGROUND {
 		fmt.Printf("Accept Rumor Origin: %s ID: %d \n", origin, messageID)
+	}
+
+	if g.hw3ex3 {
+		if gp.TLCMessage != nil {
+			if gp.TLCMessage.Origin != g.name {
+				g.roundHandler.messageChan <- gp.TLCMessage
+			}
+		}
 	}
 
 	g.rumorListLock.Lock()

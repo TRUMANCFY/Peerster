@@ -668,7 +668,7 @@ func (g *Gossiper) FileIndexingRequest(filename string) {
 
 	// after indexing we need to broadcast that we have indexed a new file
 	if g.hw3ex2 || g.hw3ex3 {
-		g.AnnounceFile(fileIndexed)
+		go g.AnnounceFile(fileIndexed)
 	}
 
 	// fmt.Println("FURTHER VERIFIED")

@@ -42,6 +42,12 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 			firstRumor = firstObject
 		}
 
+		if firstRumor == nil {
+			fmt.Println(len(rumorToSend))
+			fmt.Println(rumorToSend[0])
+			fmt.Println("CP4")
+		}
+
 		go g.RumorMongering(firstRumor, sender)
 
 	}

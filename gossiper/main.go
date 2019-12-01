@@ -31,6 +31,7 @@ const DEBUGFILE = false
 const DEBUGROUTE = false
 const DEBUGSEARCH = false
 const DEBUGTLC = false
+const DEBUGROUND = true
 
 const HW1OUTPUT = false
 const HW3OUTPUT = true
@@ -95,6 +96,18 @@ func NewGossiper(gossipAddr string, uiPort string, name string, peersStr *String
 	bufferMsg := &MsgBuffer{
 		msgBuffer: make(map[string](map[uint32]*GossipPacket)),
 		Mux:       &sync.Mutex{},
+	}
+
+	if hw3ex2 {
+		fmt.Println("Mode hw3ex2")
+	}
+
+	if hw3ex3 {
+		fmt.Println("Mode hw3ex3")
+	}
+
+	if hw3ex4 {
+		fmt.Println("Mode hw3ex4")
 	}
 
 	return &Gossiper{
@@ -181,9 +194,14 @@ func (g *Gossiper) Listen(peerListener <-chan *GossipPacketWrapper, clientListen
 			gp := gpw.gossipPacket
 
 			peerAddr := gpw.sender
+
+			if gp == nil {
+				continue
+			}
 			packetBytes, err := protobuf.Encode(gp)
 
 			if err != nil {
+				fmt.Println(peerAddr)
 				fmt.Println(gp)
 				panic(err)
 			}

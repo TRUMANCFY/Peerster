@@ -38,7 +38,7 @@ func NewRoundHandler(name string) *RoundHandler {
 		Mux:   &sync.Mutex{},
 	}
 	// this channel should be blocking
-	messageChan := make(chan *TLCMessage, 1)
+	messageChan := make(chan *TLCMessage, CHANNEL_BUFFER_SIZE)
 
 	roundCounter := &RoundCounter{
 		roundCounter: make(map[string][]*TLCMessage),
@@ -70,6 +70,10 @@ func (g *Gossiper) RunRound() {
 			// because the input of the channel will put inside the `AcceptRumor` function
 			// which is not duplicate
 
+			if DEBUGROUND {
+				fmt.Printf("Round Unconfirmed TLCMessage Origin: %s ID: %d, Name: %s \n", msg.Origin, msg.ID, msg.TxBlock.Transaction.Name)
+			}
+
 			g.roundHandler.roundCounter.Mux.Lock()
 			_, present := g.roundHandler.roundCounter.roundCounter[msg.Origin]
 
@@ -87,8 +91,11 @@ func (g *Gossiper) RunRound() {
 			// get the message round
 			// this one must exist because the uncomfirmed has already come
 			// when there is just one message uncomfirmed, the round should be 0
+			if DEBUGROUND {
+				fmt.Printf("Round Confirmed TLCMessage Origin: %s ID: %d, Name: %s \n", msg.Origin, msg.ID, msg.TxBlock.Transaction.Name)
+			}
 			g.roundHandler.roundCounter.Mux.Lock()
-			roundNum := uint32(len(g.roundHandler.roundCounter.roundCounter[msg.Origin]))
+			roundNum := uint32(len(g.roundHandler.roundCounter.roundCounter[msg.Origin])) - 1
 			g.roundHandler.roundCounter.Mux.Unlock()
 
 			g.roundHandler.roundMessageMap.Mux.Lock()
@@ -98,6 +105,11 @@ func (g *Gossiper) RunRound() {
 			}
 
 			g.roundHandler.roundMessageMap.roundMessageMap[roundNum] = append(g.roundHandler.roundMessageMap.roundMessageMap[roundNum], msg)
+
+			if DEBUGROUND {
+				fmt.Printf("Current Round: %d Confirmed Number %d \n", roundNum, len(g.roundHandler.roundMessageMap.roundMessageMap[roundNum]))
+			}
+
 			g.roundHandler.roundMessageMap.Mux.Unlock()
 		}
 
@@ -108,7 +120,7 @@ func (g *Gossiper) RunRound() {
 func (g *Gossiper) CheckRound() {
 	// self round checking
 	g.roundHandler.roundCounter.Mux.Lock()
-	numSelfMsg := uint32(len(g.roundHandler.roundCounter.roundCounter[g.name]))
+	numSelfMsg := int(len(g.roundHandler.roundCounter.roundCounter[g.name]))
 	g.roundHandler.roundCounter.Mux.Unlock()
 
 	// check num of confirmed msg in this round
@@ -122,16 +134,26 @@ func (g *Gossiper) CheckRound() {
 	numCurrentRound := len(g.roundHandler.roundMessageMap.roundMessageMap[currentRound])
 	g.roundHandler.roundMessageMap.Mux.Unlock()
 
-	if numSelfMsg-1 > currentRound && numCurrentRound > g.numNodes/2 {
+	if DEBUGROUND {
+		fmt.Printf("Num of Self Unconfirmed: %d; CurrentRound: %d; Number of Confirmed: %d \n", numSelfMsg, currentRound, numCurrentRound)
+	}
+	// not use uint32,, negative is dangerous
+	if numSelfMsg-1 > int(currentRound) && numCurrentRound > g.numNodes/2 {
+		if DEBUGROUND {
+			fmt.Println("Round condition has been reached")
+		}
 		// update my_time
 		g.roundHandler.my_time.Mux.Lock()
 		// get the message to send out
 		g.roundHandler.my_time.round++
 
 		if HW3OUTPUT {
-			fmt.Printf("ADVANCING TO round ​%d BASED ON CONFIRMED MESSAGES %d \n", g.roundHandler.my_time.round, g.roundHandler.generateOriginText(currentRound))
+			fmt.Printf("ADVANCING TO round ​%d BASED ON CONFIRMED MESSAGES %s \n", g.roundHandler.my_time.round, g.roundHandler.generateOriginText(currentRound))
 		}
-		msgToSend := g.roundHandler.roundCounter.roundCounter[g.name][g.roundHandler.my_time.round]
+
+		fmt.Println(len(g.roundHandler.roundCounter.roundCounter[g.name]))
+		fmt.Println(int(g.roundHandler.my_time.round))
+		msgToSend := g.roundHandler.roundCounter.roundCounter[g.name][int(g.roundHandler.my_time.round)]
 		g.roundHandler.my_time.Mux.Unlock()
 
 		// send out the msg

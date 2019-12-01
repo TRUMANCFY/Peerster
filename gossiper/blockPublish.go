@@ -75,14 +75,22 @@ func (g *Gossiper) AnnounceFile(f *File) {
 	g.currentID.Mux.Unlock()
 
 	if g.hw3ex2 {
+		fmt.Println("HW3Ex2 Send")
 		g.SendTLCMessage(tlcMessage)
 	} else if g.hw3ex3 {
+		fmt.Println("HW3Ex3 Send")
+		if DEBUGROUND {
+			fmt.Printf("The round is %d \n", g.roundHandler.my_time.round)
+		}
 		g.roundHandler.my_time.Mux.Lock()
+
 		if g.roundHandler.firstRound {
-			g.SendTLCMessage(tlcMessage)
+			fmt.Println("Send First Round TLC")
+			go g.SendTLCMessage(tlcMessage)
 			g.roundHandler.messageChan <- tlcMessage
 			g.roundHandler.firstRound = false
 		} else {
+			fmt.Println("Send Additional Round TLC")
 			g.roundHandler.messageChan <- tlcMessage
 		}
 		g.roundHandler.my_time.Mux.Unlock()
@@ -90,7 +98,7 @@ func (g *Gossiper) AnnounceFile(f *File) {
 }
 
 func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
-	if DEBUGTLC {
+	if DEBUGROUND || DEBUGTLC {
 		fmt.Printf("Send TLCMessage from %s ID %d Confirmed %d \n", tlcMessage.Origin, tlcMessage.ID, tlcMessage.Confirmed)
 	}
 	g.HandleRumorPacket(&GossipPacket{TLCMessage: tlcMessage}, g.address)
@@ -161,7 +169,13 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 					g.currentID.currentID++
 					g.currentID.Mux.Unlock()
 
-					g.HandleRumorPacket(&GossipPacket{TLCMessage: confirmedTLCMessage}, g.address)
+					go g.HandleRumorPacket(&GossipPacket{TLCMessage: confirmedTLCMessage}, g.address)
+
+					// send self confirmed tlc message
+					if g.hw3ex3 {
+						g.roundHandler.messageChan <- confirmedTLCMessage
+					}
+
 					return
 				}
 			case <-timer.C:
@@ -214,7 +228,7 @@ func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
 		g.roundHandler.my_time.Mux.Unlock()
 
 		if int(currentRound) > round {
-			if DEBUGTLC {
+			if DEBUGROUND {
 				fmt.Printf("Round Behind: current: %d, received: %d \n", currentRound, round)
 			}
 			return
@@ -289,7 +303,7 @@ func (g *Gossiper) SendTLCAck(gp *GossipPacket) {
 		return
 	}
 
-	if DEBUGTLC {
+	if DEBUGTLC || DEBUGROUND {
 		fmt.Printf("Send TLCAck from %s to %s with %d \n", gp.Ack.Origin, gp.Ack.Destination, gp.Ack.ID)
 	}
 
