@@ -56,16 +56,21 @@ func NewSearchHandler(name string) *SearchHandler {
 func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
 	// we have already checked in the client operation that
 	keywordsStr := *cmw.msg.Keywords
-	fmt.Println(keywordsStr)
 	budget := *cmw.msg.Budget
-	fmt.Println(budget)
+
+	if DEBUGSEARCH {
+		fmt.Println(keywordsStr)
+		fmt.Println(budget)
+	}
 
 	keywords := strings.Split(keywordsStr, ",")
 
 	query := g.fileHandler.WatchNewQuery(keywords)
 
 	if budget != 0 {
-		fmt.Println("Common search with budget ", budget)
+		if DEBUGSEARCH {
+			fmt.Println("Common search with budget ", budget)
+		}
 
 		searchRequest := &SearchRequest{
 			Origin:   g.name,
@@ -80,7 +85,10 @@ func (g *Gossiper) HandleClientSearch(cmw *ClientMessageWrapper) {
 		go func() {
 			budget = 2
 			for !(query.isDone() || budget > MAX_BUDGET) {
-				fmt.Println("EXP BUDGET ", budget)
+				if DEBUGSEARCH {
+					fmt.Println("EXP BUDGET ", budget)
+				}
+
 				searchRequest := &SearchRequest{
 					Origin:   g.name,
 					Budget:   budget,
@@ -102,8 +110,6 @@ func (g *Gossiper) HandleSearchRequest(searchRequest *SearchRequest, sender *net
 	}
 	// check whether the search request has 0.5 second later
 	valid := g.fileHandler.searchHandler.checkDuplicate(searchRequest)
-
-	fmt.Println("Handle Search Request")
 
 	if !valid {
 		return
@@ -397,8 +403,9 @@ func (g *Gossiper) DistributeBudget(budget uint64, sender *net.UDPAddr) []TaskDi
 
 	// shuffle the neighbors
 	// rand.Shuffle(numNeighbor, func(i, j int) { neighbors[i], neighbors[j] = neighbors[j], neighbors[i] })
-
-	fmt.Println("Total Budget is ", budget)
+	if DEBUGSEARCH {
+		fmt.Println("Total Budget is ", budget)
+	}
 
 	for ind := range neighbors {
 		task := TaskDistribution{

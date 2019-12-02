@@ -58,14 +58,18 @@ func (bpd *BlockPublishDispatcher) WatchTLCAck() {
 			case regTag := <-bpd.registerChan:
 				switch regTag.msgType {
 				case TakeIn:
-					if DEBUGTLC {
+					if DEBUGTLC || DEBUGROUND {
 						fmt.Printf("Register TLC Message ID %d \n", regTag.TagID)
 					}
+
 					ackObserver[regTag.TagID] = regTag.observer
 					break
 				case TakeOut:
-					fmt.Printf("Unregister TLC Message ID %d \n", regTag.TagID)
-					_, present := ackObserver[regTag.TagID]
+					if DEBUGTLC || DEBUGROUND {
+						fmt.Printf("Unregister TLC Message ID %d \n", regTag.TagID)
+					}
+
+					closedChan, present := ackObserver[regTag.TagID]
 
 					if !present {
 						if DEBUGTLC {
@@ -73,18 +77,22 @@ func (bpd *BlockPublishDispatcher) WatchTLCAck() {
 						}
 					} else {
 						// close the routine
-						close(ackObserver[regTag.TagID])
 						delete(ackObserver, regTag.TagID)
+						close(closedChan)
 					}
 				}
 			case ackReply := <-bpd.tlcAckChan:
 				// add to the specific channel
+				if DEBUGTLC {
+					fmt.Printf("DISPATCHER ACK Received from %s with ID %d \n", ackReply.Origin, ackReply.ID)
+				}
+
 				ackChan, present := ackObserver[ackReply.ID]
 				if !present {
 					if DEBUGTLC {
 						fmt.Println("The tlc tag does not exist")
-						continue
 					}
+					continue
 				}
 
 				ackChan <- ackReply

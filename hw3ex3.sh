@@ -20,21 +20,21 @@ sleep 1
 sleep 2
 cd client/
 ./client -UIPort=8001 -file=QishanWang.png &
-sleep 2
+sleep 1
 ./client -UIPort=8002 -file=2.png &
-sleep 2
+sleep 1
 ./client -UIPort=8003 -file=Shaokang.png &
-sleep 2
+sleep 1
 ./client -UIPort=8005 -file=1.png &
-sleep 2
+sleep 1
 ./client -UIPort=8001 -file=lake.jpg &
-sleep 2
-./client -UIPort=8003 -file=1.png &
-sleep 2
-./client -UIPort=8005 -file=2.png &
+sleep 1
+./client -UIPort=8003 -file=3.png &
+sleep 1
+./client -UIPort=8005 -file=4.png &
 cd ..
 
-sleep 10
+sleep 20
 pkill -f Peerster
 rm Peerster
 cd client

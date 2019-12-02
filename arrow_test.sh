@@ -44,7 +44,11 @@ sleep 1
 sleep 10
 cd client/
 ./client -UIPort=8001 -file=QishanWang.png &
+sleep 1
+./client -UIPort=8005 -file=2.png &
+sleep 1
 ./client -UIPort=8003 -file=Shaokang.png &
+sleep 1
 ./client -UIPort=8005 -file=1.png &
 
 # sleep 1

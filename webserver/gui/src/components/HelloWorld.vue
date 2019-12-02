@@ -115,6 +115,22 @@
       </div>
     </b-form>
     </b-col>
+    <b-col>
+      <b-form>
+      <label>Please provide the Message</label>
+      <b-form-input
+          id="Message"
+          placeholder="Message"
+          v-model="msgToSend"
+        ></b-form-input>
+        <br>
+        <b-button class='float-right' @click="submitMsg" >Submit</b-button>
+
+
+
+    
+    </b-form>
+    </b-col>
   </b-row>
 </b-container>
   </div>

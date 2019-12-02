@@ -44,6 +44,7 @@ type Gossiper struct {
 	blockPublishHandler *BlockPublishHandler
 	roundHandler        *RoundHandler
 	bufferMsg           *MsgBuffer
+	ackAll              bool
 }
 
 type MsgBuffer struct {

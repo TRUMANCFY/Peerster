@@ -23,6 +23,7 @@ var hw3ex3 = flag.Bool("hw3ex3", false, "Run the part of HW3Ex3")
 var hw3ex4 = flag.Bool("hw3ex4", false, "Run the part of HW3Ex4")
 var numNodes = flag.Int("N", 0, "Total number of nodes in the network")
 var stubbornTimeout = flag.Int("stubbornTimeout", 5, "stubbornTimeout")
+var ackAll = flag.Bool("ackAll", false, "Ack To All")
 
 func main() {
 
@@ -44,7 +45,7 @@ func main() {
 		peersList = GenerateStringSet(strings.Split(*peersStr, ","))
 	}
 
-	gossiper := NewGossiper(*gossipAddr, *uiPort, *name, peersList, *rtimer, *simple, *antiEntropy, *gui, *guiPort, *hw3ex2, *hw3ex3, *hw3ex4, *numNodes, *stubbornTimeout)
+	gossiper := NewGossiper(*gossipAddr, *uiPort, *name, peersList, *rtimer, *simple, *antiEntropy, *gui, *guiPort, *hw3ex2, *hw3ex3, *hw3ex4, *numNodes, *stubbornTimeout, *ackAll)
 
 	gossiper.Run()
 }

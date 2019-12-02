@@ -21,10 +21,6 @@ func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) 
 	// if it is a TCLMessage
 	g.updateRouteTable(gp, senderAddr.String())
 
-	if gp.TLCMessage != nil {
-		g.HandleTLCMessage(gp, senderAddr)
-	}
-
 	diff := g.RumorStatusCheck(gp)
 
 	var origin string
@@ -49,6 +45,10 @@ func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) 
 		fmt.Println("DIFF is", diff)
 	}
 
+	if gp.TLCMessage != nil {
+		g.HandleTLCMessage(gp, senderAddr)
+	}
+
 	// fmt.Printf("The difference between the comming rumor and current peerstatus is %d \n", diff)
 
 	switch {
@@ -70,7 +70,7 @@ func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) 
 			go g.RumorMongeringPrepare(gp, GenerateStringSetSingleton(senderAddr.String()))
 		}
 
-		g.AcceptRumor(gp)
+		go g.AcceptRumor(gp)
 
 	case diff > 0:
 		// TODO: consider the out-of-order problem
@@ -322,6 +322,9 @@ func (g *Gossiper) AcceptRumor(gp *GossipPacket) {
 			if presentOrigin {
 				newGp, presentID := idGpMap[messageID+1]
 				if presentID {
+					if DEBUGROUND {
+						fmt.Println("Get Gossip from buffer")
+					}
 					go g.AcceptRumor(newGp)
 				}
 			}

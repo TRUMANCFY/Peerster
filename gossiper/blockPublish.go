@@ -179,6 +179,10 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 					return
 				}
 			case <-timer.C:
+				if DEBUGTLC {
+					fmt.Println("Additional Broadcast")
+				}
+
 				g.HandleRumorPacket(&GossipPacket{TLCMessage: tlcMessage}, g.address)
 			}
 		}
@@ -187,9 +191,8 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 }
 
 func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
-	fmt.Printf("Handle TLC Message Origin %s from %s \n", gp.TLCMessage.Origin, senderAddr.String())
-	if gp.TLCMessage.Origin == g.name {
-		return
+	if DEBUGTLC {
+		fmt.Printf("Handle TLC Message Origin %s from %s \n", gp.TLCMessage.Origin, senderAddr.String())
 	}
 
 	tlcMessage := gp.TLCMessage
@@ -212,33 +215,42 @@ func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
 				hex.EncodeToString(tlcMessage.TxBlock.Transaction.MetafileHash))
 		}
 	}
+
 	// check whether the file name already exist
 	valid := g.blockPublishHandler.ContainFile(tlcMessage)
 
-	if !valid {
-		return
-	}
-
 	// check round: if the message round is smaller than the current round, we will not ack
-	if g.hw3ex3 {
+	if g.hw3ex3 && (!g.ackAll) {
 		round := g.GetRound(gp)
+
+		if DEBUGROUND {
+			fmt.Printf("Get TLC in Round %d from Origin %s with ID %d \n", round, gp.TLCMessage.Origin, gp.TLCMessage.ID)
+		}
 
 		g.roundHandler.my_time.Mux.Lock()
 		currentRound := g.roundHandler.my_time.round
 		g.roundHandler.my_time.Mux.Unlock()
 
 		if int(currentRound) > round {
-			if DEBUGROUND {
+			if DEBUGROUND && round != -1 {
 				fmt.Printf("Round Behind: current: %d, received: %d \n", currentRound, round)
 			}
 			return
 		}
 	}
 
+	if gp.TLCMessage.Origin == g.name {
+		return
+	}
+
+	if !valid {
+		return
+	}
+
 	ack := g.GenerateAck(gp)
 
 	if HW3OUTPUT {
-		fmt.Printf("SENDING ACK origin %s ID %d \n", ack.Origin, ack.ID)
+		fmt.Printf("SENDING ACK origin %s ID %d \n", ack.Destination, ack.ID)
 	}
 
 	g.SendTLCAck(&GossipPacket{Ack: ack})
@@ -246,9 +258,8 @@ func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
 
 func (g *Gossiper) HandleTLCAck(gp *GossipPacket, sender *net.UDPAddr) {
 	dest := gp.Ack.Destination
-
 	if DEBUGTLC {
-		fmt.Printf("Receive ACK From %s To %s with ID %d with HopLimit %d \n", gp.Ack.Destination, gp.Ack.Origin, gp.Ack.ID, gp.Ack.HopLimit)
+		fmt.Printf("Receive ACK From %s To %s with ID %d with HopLimit %d \n", gp.Ack.Origin, gp.Ack.Destination, gp.Ack.ID, gp.Ack.HopLimit)
 	}
 
 	if dest == g.name {

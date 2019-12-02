@@ -66,12 +66,16 @@ func (f *FileHandler) WatchNewQuery(keywords []string) *Query {
 			// firstly check whether this reply is our needed
 			// if needed, put it in our data structure
 
-			fmt.Printf("Receive reply fromm %s with %d results \n", searchReply.Origin, len(searchReply.Results))
+			if DEBUGSEARCH {
+				fmt.Printf("Receive reply fromm %s with %d results \n", searchReply.Origin, len(searchReply.Results))
+			}
 
 			q.matchWithKeywords(searchReply)
 
 			if q.isDone() {
-				fmt.Println("SEARCH FINISHED")
+				if HW3OUTPUT {
+					fmt.Println("SEARCH FINISHED")
+				}
 
 				f.searchFiles.Mux.Lock()
 				for _, sha := range q.Result {
@@ -95,7 +99,10 @@ func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 
 	for _, kw := range q.keywords {
 		for _, sr := range searchResult {
-			fmt.Println(sr.FileName)
+			if DEBUGSEARCH {
+				fmt.Println(sr.FileName)
+			}
+
 			if strings.Contains(sr.FileName, kw) {
 				chunkStr := make([]string, len(sr.ChunkMap))
 				for i, c := range sr.ChunkMap {
@@ -105,6 +112,7 @@ func (q *Query) matchWithKeywords(searchReply *SearchReply) {
 				// Print std output
 				if HW3OUTPUT {
 					fmt.Printf("FOUND match %s at %s metafile=%x chunks=%s \n", sr.FileName, searchReply.Origin, sr.MetafileHash, strings.Join(chunkStr, ","))
+					// fmt.Printf("DOWNLOADING metafile of %s from %s \n", sr.FileName, searchReply.Origin)
 				}
 				// check the query whether it already know about this information
 				sha, _ := HashToSha256(sr.MetafileHash)

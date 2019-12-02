@@ -19,7 +19,7 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 	}
 
 	// rumorToSend, and rumorToAsk is []PeerStatus
-	rumorToSend, rumorToAsk := g.ComputePeerStatusDiff(s.Want)
+	rumorToSend, rumorToAsk, firstRumor := g.ComputePeerStatusDiff(s.Want)
 
 	// fmt.Println("TO SEND")
 	// fmt.Println(rumorToSend)
@@ -31,8 +31,6 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 		// g.rumorListLock.Lock()
 		// firstRumor := g.rumorList[firstPeerStatus.Identifier][firstPeerStatus.NextID]
 		// TODO: mongering first or send the status to the dispatcher first????
-
-		firstRumor := g.FindMostUrgent(s.Want)
 
 		if firstRumor == nil {
 			firstPeerStatus := rumorToSend[0]
@@ -134,7 +132,7 @@ func (g *Gossiper) updatePeerStatusList(peerStr string, peerStatus PeerStatus) b
 func (g *Gossiper) syncWithPeer(peerStr string) bool {
 	// peerWant is a map[origin]PeerStatus
 	peerWant := g.getOwnPeerSlice(peerStr)
-	rumorToSend, rumorToAsk := g.ComputePeerStatusDiff(peerWant)
+	rumorToSend, rumorToAsk, _ := g.ComputePeerStatusDiff(peerWant)
 	return len(rumorToSend) == 0 && len(rumorToAsk) == 0
 }
 
@@ -147,11 +145,9 @@ func (g *Gossiper) FindMostUrgent(peerWant []PeerStatus) *GossipPacket {
 		nodepeer = append(nodepeer, psp.Identifier)
 	}
 
-	g.peerStatusesLock.Lock()
 	for _, pss := range g.peerStatuses {
 		nodeself = append(nodeself, pss.Identifier)
 	}
-	g.peerStatusesLock.Unlock()
 
 	nodepeerSet := GenerateStringSet(nodepeer)
 
@@ -183,10 +179,13 @@ func (g *Gossiper) FindMostUrgent(peerWant []PeerStatus) *GossipPacket {
 	return newRumor
 }
 
-func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, rumorToAsk []PeerStatus) {
+func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) ([]PeerStatus, []PeerStatus, *GossipPacket) {
+	g.peerStatusesLock.Lock()
+	defer g.peerStatusesLock.Unlock()
+
 	// TODO Check the concurrent map iteration and map write
-	rumorToSend = make([]PeerStatus, 0)
-	rumorToSend = make([]PeerStatus, 0)
+	rumorToSend := make([]PeerStatus, 0)
+	rumorToAsk := make([]PeerStatus, 0)
 	// record the ww
 	peerOrigins := make([]string, 0)
 
@@ -195,9 +194,7 @@ func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, ru
 	for _, pw := range peerWant {
 		peerOrigins = append(peerOrigins, pw.Identifier)
 
-		g.peerStatusesLock.Lock()
 		localStatus, present := g.peerStatuses[pw.Identifier]
-		g.peerStatusesLock.Unlock()
 
 		if !present {
 			rumorToAsk = append(rumorToAsk, PeerStatus{Identifier: pw.Identifier, NextID: 1})
@@ -211,16 +208,15 @@ func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, ru
 	// our StringSet has provided some useful api
 	peerOriginsSet := GenerateStringSet(peerOrigins)
 
-	g.peerStatusesLock.Lock()
-
 	for localPeer, _ := range g.peerStatuses {
 		if !peerOriginsSet.Has(localPeer) {
 			rumorToSend = append(rumorToSend, PeerStatus{Identifier: localPeer, NextID: 1})
 		}
 	}
 
-	g.peerStatusesLock.Unlock()
-	return
+	mostUrgent := g.FindMostUrgent(peerWant)
+
+	return rumorToSend, rumorToSend, mostUrgent
 }
 
 func (g *Gossiper) getOwnPeerSlice(peerStr string) []PeerStatus {
