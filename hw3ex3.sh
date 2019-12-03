@@ -32,9 +32,11 @@ sleep 1
 ./client -UIPort=8003 -file=3.png &
 sleep 1
 ./client -UIPort=8005 -file=4.png &
+sleep 1
+./client -UIPort=8001 -file=gui_test.txt &
 cd ..
 
-sleep 10
+sleep 1000
 pkill -f Peerster
 rm Peerster
 cd client

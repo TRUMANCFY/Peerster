@@ -15,6 +15,12 @@ type RoundHandler struct {
 	roundCounter    *RoundCounter
 	roundMessageMap *RoundMessageMap
 	firstRound      bool
+	roundMsg        *RoundMsg
+}
+
+type RoundMsg struct {
+	Mux      *sync.Mutex
+	roundMsg []string
 }
 
 type Round struct {
@@ -50,6 +56,11 @@ func NewRoundHandler(name string) *RoundHandler {
 		Mux:             &sync.Mutex{},
 	}
 
+	roundMsg := &RoundMsg{
+		Mux:      &sync.Mutex{},
+		roundMsg: make([]string, 0),
+	}
+
 	return &RoundHandler{
 		name:            name,
 		my_time:         my_time,
@@ -57,6 +68,7 @@ func NewRoundHandler(name string) *RoundHandler {
 		roundCounter:    roundCounter,
 		roundMessageMap: localRoundMessageMap,
 		firstRound:      true,
+		roundMsg:        roundMsg,
 	}
 }
 
@@ -148,7 +160,11 @@ func (g *Gossiper) CheckRound() {
 		g.roundHandler.my_time.round++
 
 		if HW3OUTPUT {
-			fmt.Printf("ADVANCING TO round ​%d BASED ON CONFIRMED MESSAGES %s \n", g.roundHandler.my_time.round, g.roundHandler.generateOriginText(currentRound))
+			msg := fmt.Sprintf("ADVANCING TO round ​%d BASED ON CONFIRMED MESSAGES %s", g.roundHandler.my_time.round, g.roundHandler.generateOriginText(currentRound))
+			fmt.Println(msg)
+			g.roundHandler.roundMsg.Mux.Lock()
+			g.roundHandler.roundMsg.roundMsg = append(g.roundHandler.roundMsg.roundMsg, msg)
+			g.roundHandler.roundMsg.Mux.Unlock()
 		}
 
 		fmt.Println(len(g.roundHandler.roundCounter.roundCounter[g.name]))

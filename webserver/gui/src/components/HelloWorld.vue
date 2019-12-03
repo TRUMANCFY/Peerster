@@ -115,6 +115,52 @@
       </div>
     </b-form>
     </b-col>
+     <b-col>
+      <b-form>
+         <label> Search </label>
+        <div style="height:50%">
+          <b-form-input
+          id="Keywords"
+          placeholder="Keywords(a,b,c)"
+          v-model="keywordsToSend"
+          style="width:60%;margin-bottom: 5px;float:left"
+        ></b-form-input>
+
+          <b-form-input
+          id="Budget"
+          placeholder="Budget"
+          v-model="budgetToSend"
+          style="width:30%;margin-bottom: 5px;float:right"
+        ></b-form-input>
+        </div>
+
+    
+        <b-button class='float-right' @click="searchFile" >Search</b-button>
+        <br><br><br><br><br>
+
+        <div>
+        <div style="width:50%;float:left">
+          <select v-model="searchedSelected" style="width:100%" multiple>
+              <option v-for="(sf,index) in searchedFiles" :key="`sf-${index}`">
+                {{ sf }}
+              </option>
+          </select>
+        </div>
+        <b-button @click="searchDownload" style="float:right" >Download</b-button>
+        </div>
+
+
+         <div class="form-group" style='float:left;width:100%'>
+          <label>Confirmed Message</label>
+          <textarea class="form-control" id="ConfirmedMessage" rows="3" v-model="confirmedMsg" readonly></textarea>
+        </div>
+
+         <div class="form-group" style='float:left;width:100%'>
+          <label>Round Information</label>
+          <textarea class="form-control" id="RoundBox" rows="3" v-model="roundMsg" readonly></textarea>
+        </div>
+      </b-form>
+    </b-col>
   </b-row>
 </b-container>
   </div>
@@ -156,10 +202,63 @@ export default {
       hex: "",
       destination: "",
       filename: "",
+      keywordsToSend: "",
+      budgetToSend: "",
+      searchedSelected: [],
+      searchedFiles: [],
+      confirmedMsg: "",
+      roundMsg: "",
       regExp: /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$/
     }
   },
   methods: {
+    searchFile: async function() {
+      var self = this;
+      console.log("Search File")
+      if (self.keywordsToSend == "") {
+        alert("Please give valid keywords")
+      }
+
+      var budget = 0;
+      if (self.budgetToSend != "") {
+        budget = parseInt(self.budgetToSend)
+      }
+
+      var payload = {"Keywords": self.keywordsToSend,"Budget": budget}
+
+      var a = await fetch("/search", {method: "POST", body: JSON.stringify(payload), mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          // var temp = res.json()
+          // return temp;
+        }
+      })
+
+      if (a) {
+        self.keywordsToSend = ""
+        self.budgetToSend = ""
+      }
+    },
+    searchDownload: async function() {
+      var self = this;
+
+      if (self.searchedSelected.length == 0) {
+        alert('Please select the searched file')
+        return
+      }
+
+      var payload = {
+        "FileName": self.searchedSelected[0]
+      }
+
+      var a = await fetch("/searchDownload", {method: "POST", body: JSON.stringify(payload), mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          var temp = res.json()
+          return temp
+        }
+      }) 
+    },
     submitMsg: async function() {
       var self = this
       console.log(self.msgToSend)
@@ -360,8 +459,6 @@ export default {
       })
       console.log(self.peerID)
       self.peerID = self.peerID.id
-
-      console.log(self.peerID)
       
     },
 
@@ -409,6 +506,64 @@ export default {
 
       console.log(self.originTarget)
 
+    },
+
+    pullSeachedFiles: async function() {
+      var self = this;
+      console.log("Search download")
+
+      self.searchedFiles = await fetch('/search', {method: 'GET', mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          var tmp = res.json();
+
+          console.log(tmp);
+          return tmp;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+      self.searchedFiles = self.searchedFiles.files.sort((a, b) => {
+        return self.sortMsgStr(a, b);
+      });
+
+      console.log(self.searchedFiles)
+    },
+
+    pullConfirmedMessage: async function() {
+      var self = this;
+
+      var confirmedMsg = await fetch('/confirmedMsg', {method: "GET", mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          var tmp = res.json();
+          return tmp;
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+      self.confirmedMsg = confirmedMsg.msgs.join('\n')
+    },
+
+    pullRoundMessage: async function() {
+      var self = this;
+
+      var roundMsg = await fetch('/roundMsg', {method: "GET", mode: 'cors'})
+      .then(res => {
+        if (res.ok) {
+          var tmp = res.json()
+          return tmp;
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+      self.roundMsg = roundMsg.msgs.join('\n')
     },
 
     sendFile: async function() {
@@ -475,11 +630,14 @@ export default {
 
     refresh: function() {
       console.log('refresh')
+      this.pullSeachedFiles()
       this.pullMessage()
       this.pullPeerID()
       this.pullNodes()
       this.pullPrivateMsg()
       this.pullRouteTarget()
+      this.pullConfirmedMessage()
+      this.pullRoundMessage()
       this.updateOtherComp()
     }
   },

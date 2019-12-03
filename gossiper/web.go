@@ -28,6 +28,30 @@ func (g *Gossiper) GetMessages() []RumorMessage {
 	return buffer
 }
 
+func (g *Gossiper) GetSearchedFiles() []string {
+	searchedFiles := make([]string, 0)
+	g.fileHandler.searchFiles.Mux.Lock()
+	for _, sf := range g.fileHandler.searchFiles.searchedFiles {
+		for _, csrc := range sf.chunkSrc {
+			if !Contains(searchedFiles, csrc.Filename) {
+				searchedFiles = append(searchedFiles, csrc.Filename)
+			}
+		}
+	}
+	g.fileHandler.searchFiles.Mux.Unlock()
+
+	return searchedFiles
+}
+
+func Contains(strList []string, subStr string) bool {
+	for _, strIn := range strList {
+		if strIn == subStr {
+			return true
+		}
+	}
+	return false
+}
+
 func (g *Gossiper) GetPrivateMsgs() []PrivateMessage {
 	buffer := make([]PrivateMessage, 0)
 
@@ -274,6 +298,137 @@ func (g *Gossiper) DownloadHandler(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func (g *Gossiper) RoundMsg(w http.ResponseWriter, r *http.Request) {
+	// g.roundHandler.roundMsg.roundMsg
+	if r.Method == "POST" {
+		return
+	}
+
+	var roundMsg struct {
+		Msgs []string `json:"msgs"`
+	}
+	g.roundHandler.roundMsg.Mux.Lock()
+	roundMsg.Msgs = g.roundHandler.roundMsg.roundMsg
+	g.roundHandler.roundMsg.Mux.Unlock()
+
+	json.NewEncoder(w).Encode(roundMsg)
+}
+
+func (g *Gossiper) ConfirmedMsg(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		return
+	}
+
+	var confirmedMsg struct {
+		Msgs []string `json:"msgs"`
+	}
+
+	confirmedMsg.Msgs = g.GetConfirmedMsg()
+
+	json.NewEncoder(w).Encode(confirmedMsg)
+}
+
+func (g *Gossiper) GetConfirmedMsg() []string {
+	res := make([]string, 0)
+	g.rumorListLock.Lock()
+	defer g.rumorListLock.Unlock()
+
+	for _, idMap := range g.rumorList {
+		for _, gp := range idMap {
+			if gp.TLCMessage != nil {
+				if gp.TLCMessage.Confirmed > 0 {
+					tlcMessage := gp.TLCMessage
+					res = append(res, fmt.Sprintf("CONFIRMED GOSSIP origin %s ID %d file name %s size %d metahash %x \n",
+						tlcMessage.Origin,
+						tlcMessage.ID,
+						tlcMessage.TxBlock.Transaction.Name,
+						tlcMessage.TxBlock.Transaction.Size,
+						hex.EncodeToString(tlcMessage.TxBlock.Transaction.MetafileHash)))
+				}
+			}
+		}
+	}
+	return res
+}
+
+func (g *Gossiper) SearchHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case "GET":
+		var searchedFiles struct {
+			Files []string `json:"files"`
+		}
+
+		searchedFiles.Files = g.GetSearchedFiles()
+
+		json.NewEncoder(w).Encode(searchedFiles)
+
+	case "POST":
+		// fmt.Println("Private POST")
+		var searchedReq struct {
+			Keywords string `json:"keywords"`
+			Budget   uint64 `json:"budget"`
+		}
+
+		json.NewDecoder(r.Body).Decode(&searchedReq)
+
+		var strPointer = new(string)
+		*strPointer = searchedReq.Keywords
+
+		var budgetPointer = new(uint64)
+		*budgetPointer = searchedReq.Budget
+
+		cmw := &ClientMessageWrapper{
+			msg: &Message{
+				Keywords: strPointer,
+				Budget:   budgetPointer,
+			},
+		}
+
+		go g.HandleClientSearch(cmw)
+
+	}
+}
+
+func (g *Gossiper) SearchDownloadHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		return
+	}
+
+	var searchDownloadReq struct {
+		FileName string `json:"filename"`
+	}
+	json.NewDecoder(r.Body).Decode(&searchDownloadReq)
+
+	fmt.Println(searchDownloadReq.FileName)
+
+	sha, valid := g.findSHA(searchDownloadReq.FileName)
+
+	if !valid {
+		return
+	}
+
+	go g.RequestSearchedFile(sha, searchDownloadReq.FileName)
+
+	g.AckPost(true, w)
+}
+
+func (g *Gossiper) findSHA(filename string) (SHA256_HASH, bool) {
+	var sha SHA256_HASH
+
+	g.fileHandler.searchFiles.Mux.Lock()
+	defer g.fileHandler.searchFiles.Mux.Unlock()
+
+	for _, sf := range g.fileHandler.searchFiles.searchedFiles {
+		for _, csrc := range sf.chunkSrc {
+			if csrc.Filename == filename {
+				return sf.MetafileHash, true
+			}
+		}
+	}
+
+	return sha, false
+}
+
 func (g *Gossiper) AckPost(success bool, w http.ResponseWriter) {
 	var response struct {
 		Success bool `json:"success"`
@@ -333,6 +488,12 @@ func (g *Gossiper) ListenToGUI() {
 	r.HandleFunc("/routes", g.RouteHandler).Methods("GET")
 	r.HandleFunc("/file", g.FileIndexHandler).Methods("POST")
 	r.HandleFunc("/download", g.DownloadHandler).Methods("POST")
+
+	// add search function
+	r.HandleFunc("/search", g.SearchHandler).Methods("GET", "POST")
+	r.HandleFunc("/searchDownload", g.SearchDownloadHandler).Methods("POST")
+	r.HandleFunc("/confirmedMsg", g.ConfirmedMsg).Methods("GET")
+	r.HandleFunc("/roundMsg", g.RoundMsg).Methods("GET")
 
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./webserver/gui/dist/"))))
 
