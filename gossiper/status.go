@@ -41,11 +41,19 @@ func (g *Gossiper) HandleStatusPacket(s *StatusPacket, sender *net.UDPAddr) {
 			g.rumorListLock.Unlock()
 			firstRumor = firstObject
 		}
+		// firstStatus := rumorToSend[0]
+		// originToSend := firstStatus.Identifier
+		// idToSend := firstStatus.NextID
+
+		// g.rumorListLock.Lock()
+		// firstRumor := g.rumorList[originToSend][idToSend]
+		// g.rumorListLock.Unlock()
 
 		if firstRumor == nil {
 			fmt.Println(len(rumorToSend))
 			fmt.Println(rumorToSend[0])
 			fmt.Println("CP4")
+			return
 		}
 
 		go g.RumorMongering(firstRumor, sender)
@@ -186,7 +194,7 @@ func (g *Gossiper) FindMostUrgent(peerWant []PeerStatus) *GossipPacket {
 func (g *Gossiper) ComputePeerStatusDiff(peerWant []PeerStatus) (rumorToSend, rumorToAsk []PeerStatus) {
 	// TODO Check the concurrent map iteration and map write
 	rumorToSend = make([]PeerStatus, 0)
-	rumorToSend = make([]PeerStatus, 0)
+	rumorToAsk = make([]PeerStatus, 0)
 	// record the ww
 	peerOrigins := make([]string, 0)
 

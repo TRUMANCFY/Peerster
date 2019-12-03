@@ -220,7 +220,7 @@ func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
 	}
 
 	// check round: if the message round is smaller than the current round, we will not ack
-	if g.hw3ex3 {
+	if g.hw3ex3 && (!g.ackAll) {
 		round := g.GetRound(gp)
 
 		g.roundHandler.my_time.Mux.Lock()
@@ -228,7 +228,7 @@ func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
 		g.roundHandler.my_time.Mux.Unlock()
 
 		if int(currentRound) > round {
-			if DEBUGROUND {
+			if DEBUGROUND && round != -1 {
 				fmt.Printf("Round Behind: current: %d, received: %d \n", currentRound, round)
 			}
 			return
@@ -238,7 +238,7 @@ func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
 	ack := g.GenerateAck(gp)
 
 	if HW3OUTPUT {
-		fmt.Printf("SENDING ACK origin %s ID %d \n", ack.Origin, ack.ID)
+		fmt.Printf("SENDING ACK origin %s ID %d \n", ack.Destination, ack.ID)
 	}
 
 	g.SendTLCAck(&GossipPacket{Ack: ack})

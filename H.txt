@@ -1,0 +1,13 @@
+Gossiper
+UI port is 8008 
+Gossip address is 127.0.0.1:5008 
+Gossip name is H 
+Gossip peers are 127.0.0.1:5006 
+Simple mode is false 
+AntiEntropy Value is 10 
+Route timer value is 1 
+GUI Port is 127.0.0.1:8080 
+Index File Shaokang.png 
+Handle Search Request
+Total Budget is  1
+Search  ang,shsh

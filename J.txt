@@ -1,0 +1,10 @@
+Gossiper
+UI port is 8010 
+Gossip address is 127.0.0.1:5010 
+Gossip name is J 
+Gossip peers are 127.0.0.1:5009 
+Simple mode is false 
+AntiEntropy Value is 10 
+Route timer value is 1 
+GUI Port is 127.0.0.1:8080 
+Index File Shaokang.png 

@@ -21,11 +21,11 @@ func (g *Gossiper) HandleRumorPacket(gp *GossipPacket, senderAddr *net.UDPAddr) 
 	// if it is a TCLMessage
 	g.updateRouteTable(gp, senderAddr.String())
 
+	diff := g.RumorStatusCheck(gp)
+
 	if gp.TLCMessage != nil {
 		g.HandleTLCMessage(gp, senderAddr)
 	}
-
-	diff := g.RumorStatusCheck(gp)
 
 	var origin string
 	var id uint32

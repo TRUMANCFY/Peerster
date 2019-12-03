@@ -83,8 +83,8 @@ func (bpd *BlockPublishDispatcher) WatchTLCAck() {
 				if !present {
 					if DEBUGTLC {
 						fmt.Println("The tlc tag does not exist")
-						continue
 					}
+					continue
 				}
 
 				ackChan <- ackReply

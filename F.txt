@@ -1,15 +1,14 @@
 Gossiper
-UI port is 8005 
-Gossip address is 127.0.0.1:5005 
-Gossip name is E 
-Gossip peers are 127.0.0.1:5004 
+UI port is 8006 
+Gossip address is 127.0.0.1:5006 
+Gossip name is F 
+Gossip peers are 127.0.0.1:5005 
 Simple mode is false 
 AntiEntropy Value is 10 
 Route timer value is 1 
 GUI Port is 127.0.0.1:8080 
 Handle Search Request
-Total Budget is  2
 Search  ang,shsh
 Handle Search Request
-Total Budget is  5
+Total Budget is  2
 Search  ang,shsh
