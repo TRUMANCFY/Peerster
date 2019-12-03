@@ -188,9 +188,6 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 
 func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
 	fmt.Printf("Handle TLC Message Origin %s from %s \n", gp.TLCMessage.Origin, senderAddr.String())
-	if gp.TLCMessage.Origin == g.name {
-		return
-	}
 
 	tlcMessage := gp.TLCMessage
 
@@ -213,6 +210,10 @@ func (g *Gossiper) HandleTLCMessage(gp *GossipPacket, senderAddr *net.UDPAddr) {
 		}
 	}
 	// check whether the file name already exist
+	if gp.TLCMessage.Origin == g.name {
+		return
+	}
+
 	valid := g.blockPublishHandler.ContainFile(tlcMessage)
 
 	if !valid {
