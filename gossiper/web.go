@@ -307,9 +307,9 @@ func (g *Gossiper) RoundMsg(w http.ResponseWriter, r *http.Request) {
 	var roundMsg struct {
 		Msgs []string `json:"msgs"`
 	}
-	g.roundHandler.roundMsg.Mux.Lock()
-	roundMsg.Msgs = g.roundHandler.roundMsg.roundMsg
-	g.roundHandler.roundMsg.Mux.Unlock()
+	// g.roundHandler.roundMsg.Mux.Lock()
+	copy(roundMsg.Msgs, g.roundHandler.roundMsg.roundMsg)
+	// g.roundHandler.roundMsg.Mux.Unlock()
 
 	json.NewEncoder(w).Encode(roundMsg)
 }
@@ -492,8 +492,13 @@ func (g *Gossiper) ListenToGUI() {
 	// add search function
 	r.HandleFunc("/search", g.SearchHandler).Methods("GET", "POST")
 	r.HandleFunc("/searchDownload", g.SearchDownloadHandler).Methods("POST")
-	r.HandleFunc("/confirmedMsg", g.ConfirmedMsg).Methods("GET")
-	r.HandleFunc("/roundMsg", g.RoundMsg).Methods("GET")
+	if g.hw3ex2 || g.hw3ex3 {
+		r.HandleFunc("/confirmedMsg", g.ConfirmedMsg).Methods("GET")
+	}
+
+	if g.hw3ex3 {
+		r.HandleFunc("/roundMsg", g.RoundMsg).Methods("GET")
+	}
 
 	r.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./webserver/gui/dist/"))))
 

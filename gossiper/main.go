@@ -156,11 +156,6 @@ func (g *Gossiper) Run() {
 		go g.AntiEntropy()
 	}
 
-	// Here to run the server
-	if g.gui {
-		go g.ListenToGUI()
-	}
-
 	// send route message
 	if g.rtimer > 0 {
 		go g.RunRoutingMessage()
@@ -177,6 +172,11 @@ func (g *Gossiper) Run() {
 	if g.hw3ex3 {
 		g.roundHandler = NewRoundHandler(g.name)
 		go g.RunRound()
+	}
+
+	// Here to run the server
+	if g.gui {
+		go g.ListenToGUI()
 	}
 
 	g.dispatcher = StartPeerStatusDispatcher()

@@ -36,7 +36,7 @@ sleep 1
 ./client -UIPort=8001 -file=gui_test.txt &
 cd ..
 
-sleep 1000
+sleep 100
 pkill -f Peerster
 rm Peerster
 cd client

@@ -15,3 +15,9 @@
 ### Exercise 3
 - Main files: round.go, blockPublish.go
 - Test files: hw3ex3.sh
+	- 5 nodes
+	- 2 rounds (A will go to the third round)
+	- 7 blockPublish
+
+### GUI
+- please refer to readme for further information (compilation ...)

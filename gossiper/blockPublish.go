@@ -154,7 +154,7 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 					}
 
 					if HW3OUTPUT {
-						fmt.Printf("RE-BROADCAST ID %d WITNESSES %s,etc \n", tlcMessage.ID, strings.Join(blockPublishWatcher.receivedAcks, ","))
+						fmt.Printf("RE-BROADCAST ID %d WITNESSES %s \n", tlcMessage.ID, strings.Join(blockPublishWatcher.receivedAcks, ","))
 					}
 
 					// Resend the confirmed TLCMessage
