@@ -546,7 +546,13 @@ export default {
         console.log(err);
       })
 
-      self.confirmedMsg = confirmedMsg.msgs.join('\n')
+      var confirmedMsgTmp = confirmedMsg.msgs
+
+      confirmedMsgTmp = confirmedMsgTmp.sort((a, b) => {
+        return self.sortMsgStr(a, b)
+      })
+
+      self.confirmedMsg = confirmedMsgTmp.join('\n')
     },
 
     pullRoundMessage: async function() {
@@ -563,7 +569,13 @@ export default {
         console.log(err)
       })
 
-      self.roundMsg = roundMsg.msgs.join('\n')
+      var roundMsgTmp = roundMsg.msgs
+
+      roundMsgTmp = roundMsgTmp.sort((a, b) => {
+        return self.sortMsgStr(a, b);
+      })
+
+      self.roundMsg = roundMsgTmp.join('\n')
     },
 
     sendFile: async function() {

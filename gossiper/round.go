@@ -14,7 +14,7 @@ type RoundHandler struct {
 	messageChan     chan *TLCMessage // both confirmed and unconfirmed tlcMessage
 	roundCounter    *RoundCounter
 	roundMessageMap *RoundMessageMap
-	firstRound      bool
+	sendRound       int
 	roundMsg        *RoundMsg
 }
 
@@ -67,7 +67,7 @@ func NewRoundHandler(name string) *RoundHandler {
 		messageChan:     messageChan,
 		roundCounter:    roundCounter,
 		roundMessageMap: localRoundMessageMap,
-		firstRound:      true,
+		sendRound:       0,
 		roundMsg:        roundMsg,
 	}
 }
@@ -95,6 +95,15 @@ func (g *Gossiper) RunRound() {
 
 			g.roundHandler.roundCounter.roundCounter[msg.Origin] = append(g.roundHandler.roundCounter.roundCounter[msg.Origin], msg)
 			g.roundHandler.roundCounter.Mux.Unlock()
+
+			if msg.Origin == g.name {
+				if len(g.roundHandler.roundCounter.roundCounter[g.name]) > int(g.roundHandler.my_time.round) {
+					msgToSend := g.roundHandler.roundCounter.roundCounter[g.name][int(g.roundHandler.my_time.round)]
+					fmt.Printf("ROUND Send TLCMessage from %s ID %d Confirmed %d \n", msgToSend.Origin, msgToSend.ID, msgToSend.Confirmed)
+					// send out the msg
+					go g.SendTLCMessage(msgToSend)
+				}
+			}
 
 		} else {
 			// this is a confirmed message which has already been accepted
@@ -150,7 +159,7 @@ func (g *Gossiper) CheckRound() {
 		fmt.Printf("Num of Self Unconfirmed: %d; CurrentRound: %d; Number of Confirmed: %d \n", numSelfMsg, currentRound, numCurrentRound)
 	}
 	// not use uint32,, negative is dangerous
-	if numSelfMsg-1 > int(currentRound) && numCurrentRound > g.numNodes/2 {
+	if numSelfMsg > int(currentRound) && numCurrentRound > g.numNodes/2 {
 		if DEBUGROUND {
 			fmt.Println("Round condition has been reached")
 		}
@@ -167,13 +176,24 @@ func (g *Gossiper) CheckRound() {
 			g.roundHandler.roundMsg.Mux.Unlock()
 		}
 
-		fmt.Println(len(g.roundHandler.roundCounter.roundCounter[g.name]))
-		fmt.Println(int(g.roundHandler.my_time.round))
-		msgToSend := g.roundHandler.roundCounter.roundCounter[g.name][int(g.roundHandler.my_time.round)]
+		// fmt.Println(len(g.roundHandler.roundCounter.roundCounter[g.name]))
+		// fmt.Println(int(g.roundHandler.my_time.round))
+		if len(g.roundHandler.roundCounter.roundCounter[g.name]) > int(g.roundHandler.my_time.round) {
+			msgToSend := g.roundHandler.roundCounter.roundCounter[g.name][int(g.roundHandler.my_time.round)]
+			// send out the msg
+			g.SendTLCMessage(msgToSend)
+		}
+
+		// if g.roundHandler.sendRound <= int(g.roundHandler.my_time.round) {
+		// 	fmt.Println(g.roundHandler.sendRound)
+		// 	fmt.Println(int(g.roundHandler.my_time.round))
+		// 	msgToSend := g.roundHandler.roundCounter.roundCounter[g.name][g.roundHandler.sendRound]
+		// 	g.roundHandler.sendRound++
+		// 	//send out the msg
+		// 	go g.SendTLCMessage(msgToSend)
+		// }
 		g.roundHandler.my_time.Mux.Unlock()
 
-		// send out the msg
-		g.SendTLCMessage(msgToSend)
 		// stop the ack listening for the last unconfirmed msg
 		g.roundHandler.roundCounter.Mux.Lock()
 		currentMsg := g.roundHandler.roundCounter.roundCounter[g.name][currentRound]
@@ -217,8 +237,8 @@ func (r *RoundHandler) generateOriginText(prevRound uint32) string {
 
 	subStrs := make([]string, 0)
 	for ind, msg := range msgs {
-		subStrs = append(subStrs, fmt.Sprintf("origin%d %s ID%d %d", ind, msg.Origin, ind, msg.ID))
+		subStrs = append(subStrs, fmt.Sprintf("origin%d %s ID%d %d", ind+1, msg.Origin, ind+1, msg.ID))
 	}
 	// TODO: whether there is a space after the comma
-	return strings.Join(subStrs, ", ")
+	return strings.Join(subStrs, ",")
 }

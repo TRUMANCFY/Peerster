@@ -30,8 +30,8 @@ const DEBUG = false
 const DEBUGFILE = false
 const DEBUGROUTE = false
 const DEBUGSEARCH = false
-const DEBUGTLC = false
-const DEBUGROUND = false
+const DEBUGTLC = true
+const DEBUGROUND = true
 
 const HW1OUTPUT = false
 const HW3OUTPUT = true

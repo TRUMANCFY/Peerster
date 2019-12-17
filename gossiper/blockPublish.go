@@ -82,18 +82,22 @@ func (g *Gossiper) AnnounceFile(f *File) {
 		if DEBUGROUND {
 			fmt.Printf("The round is %d \n", g.roundHandler.my_time.round)
 		}
-		g.roundHandler.my_time.Mux.Lock()
+		// g.roundHandler.my_time.Mux.Lock()
 
-		if g.roundHandler.firstRound {
-			fmt.Println("Send First Round TLC")
-			go g.SendTLCMessage(tlcMessage)
-			g.roundHandler.messageChan <- tlcMessage
-			g.roundHandler.firstRound = false
-		} else {
-			fmt.Println("Send Additional Round TLC")
-			g.roundHandler.messageChan <- tlcMessage
-		}
-		g.roundHandler.my_time.Mux.Unlock()
+		// if g.roundHandler.sendRound == 0 {
+		// 	fmt.Println("Send First Round TLC")
+		// 	go g.SendTLCMessage(tlcMessage)
+		// 	g.roundHandler.messageChan <- tlcMessage
+		// 	g.roundHandler.sendRound = false
+		// } else {
+		// 	fmt.Println("Send Additional Round TLC")
+		// 	g.roundHandler.messageChan <- tlcMessage
+		// }
+		fmt.Println("+++++")
+		fmt.Println(tlcMessage.Origin)
+		g.roundHandler.messageChan <- tlcMessage
+
+		// g.roundHandler.my_time.Mux.Unlock()
 	}
 }
 
@@ -122,6 +126,11 @@ func (g *Gossiper) SendTLCMessage(tlcMessage *TLCMessage) {
 		for {
 			select {
 			case ackReply := <-observer:
+
+				if ackReply == nil {
+					continue
+				}
+
 				if DEBUGTLC {
 					fmt.Printf("ACK Received from %s with ID %d \n", ackReply.Origin, ackReply.ID)
 				}

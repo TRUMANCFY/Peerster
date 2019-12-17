@@ -19,7 +19,7 @@ sleep 1
 
 sleep 2
 cd client/
-./client -UIPort=8001 -file=QishanWang.png &
+./client -UIPort=8001 -file=4.png &
 sleep 1
 ./client -UIPort=8002 -file=2.png &
 sleep 1
@@ -31,9 +31,9 @@ sleep 1
 sleep 1
 ./client -UIPort=8003 -file=3.png &
 sleep 1
-./client -UIPort=8005 -file=4.png &
+./client -UIPort=8005 -file=QishanWang.png &
 sleep 1
-./client -UIPort=8001 -file=gui_test.txt &
+# ./client -UIPort=8001 -file=gui_test.txt &
 cd ..
 
 sleep 100
